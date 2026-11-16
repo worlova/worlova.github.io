@@ -1,36 +1,39 @@
 # Valentina Orlova — portfolio
 
-The published build of valentina's portfolio: one `index.html`, its fonts, images and videos, and the CV. No build step, no dependencies, no server code — any static host will serve it as it is.
+The published build of Valentina's portfolio: one `index.html`, its fonts, images and videos, and the CV. No build step, no dependencies, no server code — any static host will serve it as it is.
 
 ## Publishing it on GitHub Pages
 
-1. **Create the repository.** On GitHub, new repository, named exactly `<your-username>.github.io`, public, with no README, .gitignore or licence (this folder already has its first commit).
+1. **Create the repository.** On GitHub, new repository, named exactly `worlova.github.io`, public, with no README, .gitignore or licence (this folder already has its first commit).
 2. **Push this folder:**
 
    ```bash
    cd ~/Desktop/valentina-orlova-portfolio
-   git remote add origin https://github.com/<your-username>/<your-username>.github.io.git
+   git remote add origin https://github.com/worlova/worlova.github.io.git
    git branch -M main
    git push -u origin main
    ```
 
 3. **Turn Pages on.** Repository → Settings → Pages → Build and deployment → Source: *Deploy from a branch*, branch `main`, folder `/ (root)`. Save.
-4. Wait a minute or two. The site is then at `https://<your-username>.github.io`.
+4. Wait a minute or two. The site is then at `https://worlova.github.io`, and at `https://www.worlova.com` once the DNS below is in place.
 
-### Using your own domain
+### www.worlova.com
 
-1. Put the domain in a file called `CNAME` in this folder (one line, no `https://`, e.g. `valentinaorlova.com`), commit and push.
-2. At your domain registrar, add these DNS records:
+The `CNAME` file in this folder already holds `www.worlova.com`, so GitHub serves the site there once the DNS is pointed at it.
 
-   | Type | Name | Value |
-   | --- | --- | --- |
-   | A | `@` | `185.199.108.153` |
-   | A | `@` | `185.199.109.153` |
-   | A | `@` | `185.199.110.153` |
-   | A | `@` | `185.199.111.153` |
-   | CNAME | `www` | `<your-username>.github.io.` |
+At the registrar for `worlova.com`, add:
 
-3. Repository → Settings → Pages → Custom domain: type the domain, save, and tick **Enforce HTTPS** once the certificate is issued (usually within the hour).
+   | Type | Name | Value | What it does |
+   | --- | --- | --- | --- |
+   | CNAME | `www` | `worlova.github.io.` | the site itself |
+   | A | `@` | `185.199.108.153` | so `worlova.com` redirects to `www` |
+   | A | `@` | `185.199.109.153` | |
+   | A | `@` | `185.199.110.153` | |
+   | A | `@` | `185.199.111.153` | |
+
+(The four A records are optional and only make the bare domain redirect to the www one. If your registrar offers ALIAS or ANAME on the root, point that at `worlova.github.io.` instead.)
+
+Then: repository → Settings → Pages → Custom domain → `www.worlova.com` → Save, and tick **Enforce HTTPS** once the certificate is issued, usually within the hour. DNS changes can take anywhere from minutes to a day to spread.
 
 ## What is in here
 
