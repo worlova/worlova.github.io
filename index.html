@@ -955,7 +955,6 @@ body.is-editing .lb-keys { display: none; }
     <div class="mail-stage">
       <div class="glow" aria-hidden="true"><i></i><i></i><i></i></div>
     <form class="mail" id="mail" novalidate>
-      <input type="text" name="_honey" id="c-honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="display:none">
       <div class="row">
         <span class="lab">To</span>
         <span class="to" id="to" data-email>vorlova.design@gmail.com</span>
@@ -1038,10 +1037,8 @@ const SITE = {
     { label: "Illustration",         tone: "mint" }
   ],
   strengths: ["Agility", "Ownership mentality", "Dedication to craft", "Quick turnaround", "Clear communication", "Product thinking", "Collaboration"],
-  // Contact form submissions are emailed to you through FormSubmit (formsubmit.co).
-  // The first message triggers a one-time confirmation email to this address; confirm it to start delivery.
-  // After confirming, FormSubmit gives you a random alias you can put here instead of the address.
-  formEndpoint: "https://formsubmit.co/ajax/vorlova.design@gmail.com",
+  // The contact form composes the message in the visitor's own email client and sends it to SITE.email.
+  // There is no server and no form service behind it, so there is nothing that can stop delivering.
   projectsIntro: ["Project highlights"],   // section title between the About card and the projects (each item is its own line)
   projectsDesc: "Clients building in Marketplaces, Logistics, Web3, Social Impact Tech, Fintech, Tax, and more.",   // line under the projects section title
   projectsBadge: "Reach out for full case studies",   // badge below the projects section title; opens an email to SITE.email
@@ -1980,10 +1977,11 @@ function setupContact() {
   const form = document.getElementById("mail");
   const sendBtn = form.querySelector('button[type="submit"]');
   const validEmail = v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
-  function openMailApp(subject, body) {
-    const href = `mailto:${SITE.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    try { window.location.href = href; } catch (err) { /* the address is shown above */ }
-  }
+  /* The form composes the message in the visitor's own email client. There is no server and no form
+     service behind it, so there is nothing that can quietly stop delivering: whatever the visitor
+     sends arrives as an ordinary email, from their address, which is also the one to reply to.
+     Belt and braces: the text is put on their clipboard first, so a machine with no mail client
+     set up still leaves them holding the message rather than wondering whether it went. */
   form.addEventListener("submit", async e => {
     e.preventDefault();
     const fromEl = document.getElementById("c-from"), msgEl = document.getElementById("c-message"), subjEl = document.getElementById("c-subject");
@@ -1992,28 +1990,18 @@ function setupContact() {
     if (!validEmail(from)) { status.textContent = "Add your email address so I can reply."; fromEl.focus(); return; }
     if (!message) { status.textContent = "Write a message first."; msgEl.focus(); return; }
 
-    sendBtn.disabled = true; sendBtn.textContent = "Sending…"; status.textContent = "";
-    try {
-      const res = await fetch(SITE.formEndpoint, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", "Accept": "application/json" },
-        body: JSON.stringify({
-          email: from, _replyto: from, _subject: `Portfolio: ${subject}`, subject, message,
-          _template: "table", _captcha: "false", _honey: document.getElementById("c-honey").value
-        })
-      });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok || !(data.success === true || data.success === "true")) throw new Error(data.message || `HTTP ${res.status}`);
-      form.reset();
-      sendBtn.textContent = "Sent";
-      status.textContent = `Thanks, your message was sent. I'll reply to ${from}.`;
-      setTimeout(() => { sendBtn.textContent = "Send"; sendBtn.disabled = false; }, 4000);
-    } catch (err) {
-      // Sending isn't possible here (offline, blocked, or the service refused): hand off to the visitor's email app
-      sendBtn.textContent = "Send"; sendBtn.disabled = false;
-      status.textContent = `The message couldn't be sent from this page, so your email app should open with it instead. If it doesn't, write to ${SITE.email}.`;
-      openMailApp(subject, `${message}\n\nReply to: ${from}`);
-    }
+    const body = `${message}\n\nReply to: ${from}`;
+    let copied = false;
+    try { await navigator.clipboard.writeText(`To: ${SITE.email}\nSubject: ${subject}\n\n${body}`); copied = true; }
+    catch (err) { /* clipboard refused (no permission, or an insecure origin): the mail app still opens */ }
+
+    sendBtn.disabled = true; sendBtn.textContent = "Opening…";
+    status.textContent = copied
+      ? `Opening your email app with the message. If nothing happens, it's on your clipboard – send it to ${SITE.email}.`
+      : `Opening your email app with the message. If nothing happens, write to ${SITE.email}.`;
+    try { window.location.href = `mailto:${SITE.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`; }
+    catch (err) { status.textContent = `This browser couldn't open an email app. ${copied ? "The message is on your clipboard – send it to" : "Please write to"} ${SITE.email}.`; }
+    setTimeout(() => { sendBtn.textContent = "Send"; sendBtn.disabled = false; }, 3000);
   });
 }
 
