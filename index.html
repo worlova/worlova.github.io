@@ -729,15 +729,7 @@ body.is-editing .lb-keys { display: none; }
 .pill.pill-outline { background: transparent; color: #ffffff; border-color: #ffffff; }
 .pill:disabled { opacity: .6; cursor: default; }
 /* The CV opens in the lightbox like a case study: the PDF fills the panel, with the download button pinned over the bottom */
-.cv-doc { background: var(--surface); border-radius: var(--radius); overflow: hidden; height: clamp(360px, 70vh, 1100px); }
-.cv-doc object, .cv-doc iframe { display: block; width: 100%; height: 100%; border: 0; }
 /* Where the browser won't embed the PDF (the artifact frame, and most phones), the pages show as images instead */
-.cv-pages { height: 100%; overflow: auto; overscroll-behavior: contain; background: #ffffff; }
-.cv-pages img { display: block; width: 100%; height: auto; }
-.cv-actions { position: sticky; bottom: clamp(12px, 2.4vh, 24px); z-index: 2; display: flex; justify-content: center; margin-top: clamp(16px, 2.4vh, 26px); pointer-events: none; }
-.cv-actions .pill { pointer-events: auto; display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 12px 34px rgba(0, 0, 0, .55); }
-.cv-actions .pill svg { width: 17px; height: 17px; flex: none; }
-#lb.is-cv .lb-keys [data-go="prev"], #lb.is-cv .lb-keys [data-go="next"] { display: none; }   /* nothing to step through on the CV */
 .form-status { color: var(--muted); font-size: 14px; text-align: center; }
 .form-status:empty { display: none; }
 /* Contact form: clear glass, a see-through dark pane with light text and a white Send button */
@@ -1065,7 +1057,7 @@ const SITE = {
    in both places. Home card logos are 20px tall; "cardLogo" (optional) tunes the card only: { height: 8–20 (px), white: true }. "sections" is optional: leave it out
    and the page uses the three template sections in CASE_STUDY_TEMPLATE below. */
 const PROJECTS = [
-  { slug: "one-system", title: "HubFlow", subtitle: "AI-automated appointment scheduling for freight brokers, carriers, and shippers", kind: "Design system",
+  { slug: "hubflow", title: "HubFlow", subtitle: "AI-automated appointment scheduling for freight brokers, carriers, and shippers", kind: "Design system",
     tags: ["Design systems", "Web", "iOS"], mock: "system", palette: "lagoon", seed: 23, featured: true,
     overview: "HubFlow is an AI-powered platform that schedules and automates appointments for freight brokers, carriers, and enterprise shippers. It handles every scheduling channel (email, phone, and portal) as well as multi-stop and other complex workflows.\n\nI was the third person to join the team and its first product designer. I worked directly with the founders to set the design direction, led the early research sessions, and owned the user experience through the first year of non-stop product development.",
     role: "Design system lead", client: "B2B software company", year: "2024", industries: ["Logistics", "AI", "B2B SaaS", "0 → 1"], logoAdjust: 4, hideExtra: true,
@@ -1083,7 +1075,7 @@ const PROJECTS = [
     problem: "Getting a load from point A to point B is no easy task. The main challenge in freight scheduling is managing all the moving parts while keeping costs low, meeting deadlines, and using resources efficiently.\n\n1. ==Manual Processes==: Many schedulers still rely on spreadsheets or outdated systems that require a lot of human effort and attention to detail.\n2. ==Constant Updates==: Delays, cancellations, and changing priorities mean schedules often shift on the fly, which adds to the workload.\n3. ==Complex Variables==: Accounting for traffic, weather, driver availability, and delivery windows all at once is a juggling act.\n4. ==Communication Overload==: Keeping everyone – from drivers to warehouses to customers – informed and on the same page can feel like a full-time job.\n5. ==Repetitive Tasks==: There’s a lot of back-and-forth coordination, like matching loads to drivers or rerouting shipments, which can be time-consuming and frustrating.",
     solution: "==HubFlow uses AI== to automate shipment scheduling. It integrates with existing transportation management systems (TMS) and puts AI agents to work on tasks like booking shipment appointments and managing loads.\n\nBy connecting to APIs already in place, HubFlow reads and updates load information in real time, which streamlines scheduling and cuts down on manual work.",
     logo: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDYiIGhlaWdodD0iMTA2IiB2aWV3Qm94PSIwIDAgMTA2IDEwNiIgZmlsbD0ibm9uZSI+PHBhdGggZD0iTTkwLjkyNTggOTYuNzM3NkM5MS41NzI0IDk2LjY0ODIgOTIuMDY5OSA5Ni4xMjM1IDkyLjEyNDMgOTUuNDczNkw5OS4zNjYgOC44MjM3MkM5OS40NzQ3IDcuNTI4ODYgOTguMzU1MSA2LjQ2NzM1IDk3LjA2NzggNi42NDQzNkM4NS4zMDMxIDguMjYyMzEgNzYuMjM2MiAxNy44MjYyIDc1LjI0NzEgMjkuNjYwNEw3MS4yMDM4IDc4LjAzNzlDNzAuMjc1IDg5LjE0ODcgNzkuODgxMiA5OC4yNTYxIDkwLjkyNTggOTYuNzM3NloiIGZpbGw9IndoaXRlIi8+PHBhdGggZD0iTTEzLjg3NDQgMTAuNTE5OUMxMy45Mjg3IDkuODcwMDIgMTQuNDI2NiA5LjM0NDc5IDE1LjA3MjYgOS4yNTU5NUMyNi4xMTcyIDcuNzM3MSAzNS43MjM3IDE2Ljg0NTEgMzQuNzk1MSAyNy45NTUxTDMwLjc1MTcgNzYuMzMzMUMyOS43NjI2IDg4LjE2NzQgMjAuNjk1NCA5Ny43MzEyIDguOTMwODUgOTkuMzQ5MUM3LjY0MzYyIDk5LjUyNTkgNi41MjQwNSA5OC40NjQ2IDYuNjMyMjQgOTcuMTcwMUwxMy44NzQ0IDEwLjUxOTlaIiBmaWxsPSJ3aGl0ZSIvPjxwYXRoIGQ9Ik01MC43OTc0IDM3LjczOEM1MS42MjI1IDM1LjU3NzUgNTQuNjM1OCAzNS40NjMgNTUuNjIyNSAzNy41NTQ2QzU3Ljk0MjEgNDIuNDcwOCA2Mi4wNzc0IDQ2LjI5NTggNjcuMTU5MSA0OC4yMjUyTDY4Ljk3NTEgNDguOTE0NkM3MS4zMDA0IDQ5Ljc5NzUgNzEuMzAwNCA1My4wODczIDY4Ljk3NTEgNTMuOTcwMUM2Mi44MjE4IDU2LjMwNjQgNTguMDY2OSA2MS4zMTcxIDU2LjA1NjEgNjcuNTg0OEw1NS4zNjA1IDY5Ljc1MzFDNTQuNTc1NSA3Mi4xOTk3IDUxLjE0ODUgNzIuMjkzMSA1MC4yMzE5IDY5Ljg5MjJDNDguMDE4MSA2NC4wOTU3IDQzLjQzMzkgNTkuNTIwNSAzNy42MzMgNTcuMzE4NUwzNy4yOTc4IDU3LjE5MDhDMzQuODczNCA1Ni4yNzA0IDM0Ljg3MzQgNTIuODQwOSAzNy4yOTc4IDUxLjkyMDVDNDMuMzExOSA0OS42MzcxIDQ4LjA2NDYgNDQuODkzNyA1MC4zNTk4IDM4Ljg4MzlMNTAuNzk3NCAzNy43MzhaIiBmaWxsPSJ3aGl0ZSIvPjwvc3ZnPg==" },
-  { slug: "readable-analytics", title: "Orb", subtitle: "The orchestration layer for onchain finance", kind: "Web app",
+  { slug: "orb", title: "Orb", subtitle: "The orchestration layer for onchain finance", kind: "Web app",
     tags: ["B2B SaaS", "Data"], mock: "browser-dashboard", palette: "iris", seed: 5, featured: true,
     overview: "Orb is the team behind Orby Kit, an SDK that brings a native, chain-abstracted experience to any app.\n\nI joined as the founding product designer and owned design end to end, from the user experience to the marketing collateral. The core idea never changed, but the product’s form, look, and feel evolved significantly over time. What started as a ==DEX== (decentralized exchange) grew into an ==SDK for third-party apps==.",
     problem: "Crypto UX is confusing, and it’s getting more confusing with every new “improvement.” Complex gas systems and tokens, fragmented accounts, and a bevy of token standards and security trade-offs add up to a subpar experience for seasoned and new crypto users alike.",
@@ -1105,7 +1097,7 @@ const PROJECTS = [
       { file: "img/orb/06-acc-day", w: 1782, h: 8000, widths: [600, 1200, 1782], size: 0.7, outline: "medium", caption: "ux/acc day at ETH CC’24", alt: "The ux/acc site: a pixel-type “Make crypto simple again” hero, a grid of ux/acc evangelist logos from Orb Labs, WalletConnect, dynamic, Privy and others, photos and talk cards from ux/acc day at ETH CC’24 in Brussels, and a row of tweets about crypto UX" },
     ],
     logo: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxODAiIGhlaWdodD0iMTgwIiB2aWV3Qm94PSIwIDAgMTgwIDE4MCIgZmlsbD0ibm9uZSI+PHBhdGggZD0iTTMxLjYwMjQgMTI4LjI2NUMzOC42OTE2IDEyOC4zMyA0NS41MjkxIDEzMC45MDEgNTAuOTA1MiAxMzUuNTIyQzYxLjYyNjUgMTQ0LjcyNiA3NS4yNTMyIDE0OS44NTMgODkuMzg0NyAxNTBDOTYuNDk0MiAxNTAuMDM4IDEwMy4zNjEgMTUyLjU5NCAxMDguNzY0IDE1Ny4yMTRDMTE0LjE2NyAxNjEuODM1IDExNy43NTYgMTY4LjIyMSAxMTguODk0IDE3NS4yMzdDOTkuMjEzMSAxODEuOTA4IDc3LjgyODkgMTgxLjU2MiA1OC4zNzM5IDE3NC4yNTdDMzguOTE4OCAxNjYuOTUyIDIyLjU5MjYgMTUzLjEzOSAxMi4xNjg4IDEzNS4xNjVDMTcuNjI5MSAxMzAuNjQ0IDI0LjUxMzIgMTI4LjE5OSAzMS42MDI0IDEyOC4yNjVaTTE3NC44NzIgNjAuNTg2OUMxNzguMjU2IDcwLjA4OTkgMTc5Ljk5MSA4MC4xMDE4IDE4MCA5MC4xODk1QzE4MC4wMDEgMTA1LjgyNyAxNzUuOTI3IDEyMS4xOTUgMTY4LjE3OCAxMzQuNzc5QzE2MC40MjkgMTQ4LjM2MyAxNDkuMjcyIDE1OS42OTMgMTM1LjgwOCAxNjcuNjUyQzEzMS4yMzIgMTYyLjIyOCAxMjguNzIxIDE1NS4zNiAxMjguNzIxIDE0OC4yNjVDMTI4LjcyMSAxNDEuMTY4IDEzMS4yMzIgMTM0LjMgMTM1LjgwOCAxMjguODc2QzE0NC45NzMgMTE4LjA2OSAxNDkuOTk4IDEwNC4zNTggMTQ5Ljk4NCA5MC4xODk1QzE0OS45ODggODMuMTE2OSAxNTIuNDg1IDc2LjI3MTggMTU3LjAzNyA3MC44NTc1QzE2MS41ODggNjUuNDQzNiAxNjcuOTA0IDYxLjgwNjkgMTc0Ljg3MiA2MC41ODY5Wk01Ny43ODggODMuNTIzNUM2MC43OTM3IDY0LjkzMDIgNzguMzA2MSA1Mi4yOTMyIDk2LjkwNDIgNTUuMjk3OUMxMTUuNTAyIDU4LjMwMjkgMTI4LjE0MyA3NS44MTE3IDEyNS4xMzcgOTQuNDA1M0MxMjIuMTMxIDExMi45OTggMTA0LjYxOCAxMjUuNjM0IDg2LjAyMDQgMTIyLjYzQzY3LjQyMjQgMTE5LjYyNSA1NC43ODI0IDEwMi4xMTYgNTcuNzg4IDgzLjUyMzVaTTQ1LjQ0OTEgMTEuODA2N0M0OS45MzE5IDE3LjMwMjYgNTIuMzIzMyAyNC4yMDg0IDUyLjIwMDEgMzEuMjk4OUM1Mi4wNzY4IDM4LjM4OTIgNDkuNDQ3MiA0NS4yMDcxIDQ0Ljc3NjMgNTAuNTQ0VjUwLjUxMzdDMzUuNDQxMSA2MS4xNzkzIDMwLjE4MDYgNzQuODAzMyAyOS45MjY3IDg4Ljk3MzdDMjkuODIwNyA5Ni4wNjQzIDI3LjIwNTIgMTAyLjg4OSAyMi41NDM4IDEwOC4yMzNDMTcuODgyNiAxMTMuNTc5IDExLjQ3NzMgMTE3LjA5OSA0LjQ2NTcxIDExOC4xN0MxLjQ2NjM2IDEwOS4wODEgLTAuMDQxNTQ4MyA5OS41NjQ5IDAuMDAwODcwNjMyIDg5Ljk5MzJDMC4wMDI0MzkzNyA3NC4xMTA2IDQuMjA4MDkgNTguNTExMyAxMi4xOTAzIDQ0Ljc3OTNDMjAuMTcyNSAzMS4wNDczIDMxLjY0NyAxOS42NzExIDQ1LjQ0OTEgMTEuODA2N1pNNjIuNDEyIDQuMzM1OTdDODIuMjE0NiAtMi4wNDM1MyAxMDMuNjE4IC0xLjM2NjIgMTIyLjk3NiA2LjI1Mzk0QzE0Mi4zMzYgMTMuODc0MSAxNTguNDU2IDI3Ljk2NjMgMTY4LjU5MyA0Ni4xMzA5VjQ2LjE3MDlDMTYzLjA2OCA1MC42MDI3IDE1Ni4xNSA1Mi45MzUxIDE0OS4wNjggNTIuNzUzOUMxNDEuOTg2IDUyLjU3MjcgMTM1LjE5OCA0OS44ODk0IDEyOS45MDYgNDUuMTgwN0MxMTkuMjg5IDM1Ljc1NTEgMTA1LjY3MiAzMC40MDA1IDkxLjQ3NjUgMzAuMDY4NEM4NC4zNjQ2IDI5LjkyNzUgNzcuNTM1MSAyNy4yNjA1IDcyLjIwOTkgMjIuNTQ1OUM2Ni44ODQ4IDE3LjgzMTQgNjMuNDEyIDExLjM3NjUgNjIuNDEyIDQuMzM1OTdaIiBmaWxsPSJ3aGl0ZSIvPjwvc3ZnPg==" },
-  { slug: "prototype-lab", title: "Benny App", subtitle: "Check EBT balance on the go, shop and earn\u00a0rewards",   // "earn rewards" kept together so "rewards" never sits alone on a line
+  { slug: "benny-ebt-app", title: "Benny App", subtitle: "Check EBT balance on the go, shop and earn\u00a0rewards",   // "earn rewards" kept together so "rewards" never sits alone on a line
     kind: "Prototype",
     tags: ["Prototyping", "Motion"], mock: "phone-proto", palette: "saffron", seed: 12, featured: true,
     overview: "A collection of interactive prototypes built to test ideas with real people before anything goes into production.",
@@ -1121,7 +1113,7 @@ const PROJECTS = [
       { file: "img/benny/05-search-filters", w: 2576, h: 1207, caption: "Search filters", alt: "Search filters: the offers list, the filter sheet before and after choosing filters, and the filtered results" },
       { file: "img/benny/06-signup-flow", w: 2576, h: 1207, caption: "Signup flow", alt: "Signup flow: phone number, text code, email, email code, ZIP code, and a question about how people found Benny" },
       { file: "img/benny/07-transaction-details", w: 2576, h: 1207, caption: "Transaction details", alt: "Transaction details: EBT transactions filtered by SNAP, EBT cash, and missing receipts, plus two transaction detail sheets" },
-      { file: "img/benny/08-landing", w: 1976, h: 7996, widths: [600, 1200, 1976], outline: true, caption: "Promotional landing page", alt: "The Benny promotional landing page: earn cash back on SNAP, partner store logos, deals near you on a map, instant EBT balance and transaction checks, linking a debit or credit card, security, FAQs, app store links, and the footer" }
+      { file: "img/benny/08-landing", w: 1976, h: 7996, size: 0.7, widths: [600, 1200, 1976], outline: true, caption: "Promotional landing page", alt: "The Benny promotional landing page: earn cash back on SNAP, partner store logos, deals near you on a map, instant EBT balance and transaction checks, linking a debit or credit card, security, FAQs, app store links, and the footer" }
     ],
     logo: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMCAwIDIwIDIwIiBmaWxsPSJub25lIj48cGF0aCBkPSJNMTAuNDE5OSA5LjAzMDM1QzEyLjM2NTIgNi45Njk3NiAxNS41NDgyIDYuNzAwMjYgMTcuODEzNSA4LjQwODI4QzE5LjQ4OTEgOS42NzE1NyAyMC4zMTU3IDExLjc1NzIgMTkuODg4NyAxMy44NjQzQzE5LjQyMzkgMTYuMTU2MiAxNy41OSAxNy44MTQxIDE1LjQxOCAxOC4xODU2QzEzLjA2MSAxOC41ODg5IDEwLjc1MjEgMTcuNDgwNiA5LjYwNzQyIDE1LjQwNzNDOC40NTI2NyAxMy4zMTU1IDguNzkyODYgMTAuNzU0NCAxMC40MTk5IDkuMDMwMzVaTTYuMzM1ODZlLTA3IDEuMjUwMDhDNC4zMDQxNyAxLjIzMDk2IDcuOTU5ODggNC42OTI4NiA4LjAzNzExIDkuMDgxMTNMOC4wNTg1OSAxNy44OTY2TDAuNzA4OTg1IDE3Ljg5ODVDMC4zMjg1MzIgMTcuODk4NSAtMC4wMDA1MjY5NzEgMTcuNTM5NSA2LjMzNTg2ZS0wNyAxNy4xNDk1VjEuMjUwMDhaIiBmaWxsPSJ3aGl0ZSIvPjwvc3ZnPg==" },
   { slug: "benny-for-business", title: "Benny for Business", subtitle: "An SDK for online merchants to accept payment in EBT dollars", kind: "Web app",
@@ -1136,7 +1128,7 @@ const PROJECTS = [
     logo: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMCAwIDIwIDIwIiBmaWxsPSJub25lIj48cGF0aCBkPSJNMTAuNDE5OSA5LjAzMDM1QzEyLjM2NTIgNi45Njk3NiAxNS41NDgyIDYuNzAwMjYgMTcuODEzNSA4LjQwODI4QzE5LjQ4OTEgOS42NzE1NyAyMC4zMTU3IDExLjc1NzIgMTkuODg4NyAxMy44NjQzQzE5LjQyMzkgMTYuMTU2MiAxNy41OSAxNy44MTQxIDE1LjQxOCAxOC4xODU2QzEzLjA2MSAxOC41ODg5IDEwLjc1MjEgMTcuNDgwNiA5LjYwNzQyIDE1LjQwNzNDOC40NTI2NyAxMy4zMTU1IDguNzkyODYgMTAuNzU0NCAxMC40MTk5IDkuMDMwMzVaTTYuMzM1ODZlLTA3IDEuMjUwMDhDNC4zMDQxNyAxLjIzMDk2IDcuOTU5ODggNC42OTI4NiA4LjAzNzExIDkuMDgxMTNMOC4wNTg1OSAxNy44OTY2TDAuNzA4OTg1IDE3Ljg5ODVDMC4zMjg1MzIgMTcuODk4NSAtMC4wMDA1MjY5NzEgMTcuNTM5NSA2LjMzNTg2ZS0wNyAxNy4xNDk1VjEuMjUwMDhaIiBmaWxsPSJ3aGl0ZSIvPjwvc3ZnPg==" },   // same logo as Benny App
   { slug: "benny-apply", title: "Benny Apply", subtitle: "The easiest way to access government benefits", kind: "Mobile",
     tags: ["Product Design", "Web Design", "Design System"], mock: "phone-form", palette: "saffron", seed: 33, featured: false,
-    overview: "Benny Apply is a vetting tool that lets low-income individuals check whether they qualify for subsidized internet or phone service. Once they are pre-qualified, they choose a plan and submit it to the government for final approval. Later, Benny Apply extended its offering to medical bill negotiation.\n\nI joined as their first Product Designer and stayed through the messy early stages of MVP validation, up until Benny’s flagship products, [Benny App](#prototype-lab) and [Benny for Business](#benny-for-business), went live.", problem: "", solution: "",   // empty for now: the Intro shows the card line; Problem / Solution show the template prompts
+    overview: "Benny Apply is a vetting tool that lets low-income individuals check whether they qualify for subsidized internet or phone service. Once they are pre-qualified, they choose a plan and submit it to the government for final approval. Later, Benny Apply extended its offering to medical bill negotiation.\n\nI joined as their first Product Designer and stayed through the messy early stages of MVP validation, up until Benny’s flagship products, [Benny App](#benny-ebt-app) and [Benny for Business](#benny-for-business), went live.", problem: "", solution: "",   // empty for now: the Intro shows the card line; Problem / Solution show the template prompts
     role: "Sole Product Designer", year: "2023-2024", industries: ["Social impact tech", "B2C", "0 → 1"], hideExtra: true,   // Role, Services and Year copied from Benny App as a starting point
     images: [   // her cover illustration is the hero; then a titled recording, and the full pages on lighter panels
       { file: "img/benny-apply/01-cover", w: 1800, h: 900, caption: "", alt: "An illustrated city skyline with pins over the rooftops marking benefit programs: SNAP, ACP internet and phone, and healthcare" },
@@ -1154,7 +1146,7 @@ const PROJECTS = [
     ],
     thumb: { file: "img/benny-apply/thumb-city", w: 1000, h: 1075, alt: "A phone showing Benny’s “Review Home Internet offers in your area” screen with a recommended $0/mo Xfinity plan, in front of an illustrated city skyline panel", motion: "float", size: 0.8 },
     logo: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMCAwIDIwIDIwIiBmaWxsPSJub25lIj48cGF0aCBkPSJNMTAuNDE5OSA5LjAzMDM1QzEyLjM2NTIgNi45Njk3NiAxNS41NDgyIDYuNzAwMjYgMTcuODEzNSA4LjQwODI4QzE5LjQ4OTEgOS42NzE1NyAyMC4zMTU3IDExLjc1NzIgMTkuODg4NyAxMy44NjQzQzE5LjQyMzkgMTYuMTU2MiAxNy41OSAxNy44MTQxIDE1LjQxOCAxOC4xODU2QzEzLjA2MSAxOC41ODg5IDEwLjc1MjEgMTcuNDgwNiA5LjYwNzQyIDE1LjQwNzNDOC40NTI2NyAxMy4zMTU1IDguNzkyODYgMTAuNzU0NCAxMC40MTk5IDkuMDMwMzVaTTYuMzM1ODZlLTA3IDEuMjUwMDhDNC4zMDQxNyAxLjIzMDk2IDcuOTU5ODggNC42OTI4NiA4LjAzNzExIDkuMDgxMTNMOC4wNTg1OSAxNy44OTY2TDAuNzA4OTg1IDE3Ljg5ODVDMC4zMjg1MzIgMTcuODk4NSAtMC4wMDA1MjY5NzEgMTcuNTM5NSA2LjMzNTg2ZS0wNyAxNy4xNDk1VjEuMjUwMDhaIiBmaWxsPSJ3aGl0ZSIvPjwvc3ZnPg==" },   // same logo as Benny App
-  { slug: "launch-site", title: "Brex", subtitle: "Business credit cards, banking, expense management and more", kind: "Web design",
+  { slug: "brex", title: "Brex", subtitle: "Business credit cards, banking, expense management and more", kind: "Web design",
     tags: ["Web design", "Marketing"], mock: "browser-landing", palette: "cobalt", seed: 44, featured: false,
     overview: "Brex is a platform that gives businesses corporate credit cards, cash management accounts, and AI-powered spend and expense management software.\n\nI joined as a Senior Product Designer on the Banking team (also known as Cash), where I focused on core money movement, account management, and card rewards.\n\nOver time, my responsibilities grew to include leading Treasury Management and the redesign of the banking experience in Brex’s native app: sending and receiving funds, viewing recent account activity, and opening new spend accounts.",
     problem: "Most projects were rooted in customer pain points. For instance, the money transfer experience needed a lot of attention because some table-stakes functionality hadn’t been built yet. Another example was the mobile app, which had been neglected in an era when people manage their finances on the go. Other projects had a clear business goal, like growing deposit volume by offering favorable reward terms.",
@@ -1183,13 +1175,13 @@ const PROJECTS = [
       { section: "extra14" },   // heading above the rewards recording
       { video: "img/brex/07-rewards-conversion", w: 1440, h: 1000, size: 0.7, alt: "Screen recording of the One Brex rewards flow: a welcome to higher rewards, the daily payments offer with points multipliers for rideshare, travel, restaurants and software, and a new credit limit to review before adding funds" },
       { section: "extra17" },   // heading above the Rewind 2020 film
-      { video: "img/brex/11-rewind-2020", w: 1080, h: 1080, size: 0.7, audio: true, alt: "Brex’s Rewind 2020 film: a founder at a desk under a neon sign, “You’ve been doing things differently”, then a personalised year in review — the businesses they spent with, their purchase counts, the amount donated and to how many organisations — closing on “Let’s keep up and make 2021 different. Together.”" },
+      { video: "img/brex/11-rewind-2020", w: 1080, h: 1080, size: 0.49, audio: true, alt: "Brex’s Rewind 2020 film: a founder at a desk under a neon sign, “You’ve been doing things differently”, then a personalised year in review — the businesses they spent with, their purchase counts, the amount donated and to how many organisations — closing on “Let’s keep up and make 2021 different. Together.”" },
       { section: "extra15" },   // heading above the card customization recording
-      { video: "img/brex/05-card-customization", w: 1920, h: 1614, size: 0.7, alt: "Screen recording of the Brex cards dashboard: opening a virtual card’s menu and choosing Customize design, then a dialog with Color, Pattern, Logo, Text and Symbols tabs, naming the card and saving it" },
+      { video: "img/brex/05-card-customization", w: 1920, h: 1614, size: 0.49, alt: "Screen recording of the Brex cards dashboard: opening a virtual card’s menu and choosing Customize design, then a dialog with Color, Pattern, Logo, Text and Symbols tabs, naming the card and saving it" },
     ],
     thumb: { file: "img/brex/thumb-coins", w: 768, h: 758, alt: "Three Brex coins in purple, orange and blue tumbling over a list of cash accounts: Primary Cash Account, Taxes, Design Offsite and Savings Funds", motion: "float", size: 0.8 },
     logo: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTIuOTkyNiAzLjE3MTk2QzEyLjIxMzEgNC4yMjYwMSAxMi4wMjI1IDQuNTc3MzUgMTEuMjY4OSA0LjU3NzM1SDBWMTguMDc2MUg0LjQyMTgzQzUuNDE3OTMgMTguMDc2MSA2LjM4ODA1IDE3LjU5MDMgNy4wMDczNiAxNi43NzkyQzcuODE3MjQgMTUuNjk5MSA3LjkyNTUxIDE1LjM3MzggOC43MDUwNyAxNS4zNzM4SDIwVjEuODc1SDE1LjU1MjJDMTQuNTU2MSAxLjg3NSAxMy41ODYgMi4zNjA4MiAxMi45OTI2IDMuMTcxOTZaTTE2LjQ5NjMgMTEuODkwNkgxMS43OEMxMC43NTc5IDExLjg5MDYgOS44MTM3NyAxMi4zMjQ0IDkuMTk0NDYgMTMuMTU3MkM4LjM4NDU4IDE0LjIzNzMgOC4yMjQzNCAxNC41NjI2IDcuNDcwNzcgMTQuNTYyNkgzLjQ3NzdWOC4wODIxOEg4LjE5NDAyQzkuMjE2MTEgOC4wODIxOCAxMC4xNjAyIDcuNTk2MzYgMTAuNzc5NiA2Ljc4NTIyQzExLjU4OTQgNS43MzExNyAxMS44MDE2IDUuNDEwMTggMTIuNTMzNiA1LjQxMDE4SDE2LjQ5NjNWMTEuODkwNloiIGZpbGw9IndoaXRlIi8+PC9zdmc+" },
-  { slug: "content-editor", title: "Release Banking", subtitle: "Banking, capital, and bookkeeping for multifamily investors", kind: "Web app",
+  { slug: "release", title: "Release Banking", subtitle: "Banking, capital, and bookkeeping for multifamily investors", kind: "Web app",
     tags: ["Publishing", "Web"], mock: "browser-editor", palette: "rose", seed: 18, featured: false,
     overview: "Release provides revenue-based financing for commercial real estate and multifamily owners, letting them access capital against their portfolio’s rental income without equity dilution, property liens, or personal guarantees.\n\nI came in as the sole Product Designer to help build the banking layer on top of the existing financing product.\n\nOver the years, the product matured into Release 2.0 and became self-sufficient on the UX front.",
     problem: "Financial complexity makes running a multifamily real estate business inefficient and challenging. Banks are slow and inflexible, with rigid terms and added debt. Private capital takes equity and comes with punitive rates and terms.\n\n**Banks offer inadequate cash management:**\n- Clunky user experience, physical paperwork, in-person visits, and long processing times.\n- A one-size-fits-all approach leaves owners without much-needed industry-specific tools.\n- Owners with multiple entities or properties are stuck with poor visibility, limited integrations, and disorganized bookkeeping.",
@@ -1209,7 +1201,7 @@ const PROJECTS = [
       { file: "img/release/10-home-pricing-pages", w: 2600, h: 5702, widths: [650, 1300, 2600], transparent: true, caption: "Home and pricing pages", alt: "The Release marketing site: the home page and the pricing page, full length" },
     ],
     logo: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHJ4PSIxMCIgZmlsbD0id2hpdGUiLz48cGF0aCBkPSJNOC4wMjUwMyA0LjVWMTMuNjMxNEM4LjAyNTAzIDEzLjYzMTQgOC4wNjkyNSAxNS42MjQxIDYuNSAxNi41IiBmaWxsPSJibGFjayIvPjxwYXRoIGQ9Ik02LjUwMDEzIDE2LjVWNy4zNjg2MUM2LjUwMDEzIDcuMzY4NjEgNi40NTU5MiA1LjM3NTkxIDguMDI1MTcgNC41IiBmaWxsPSJibGFjayIvPjxwYXRoIGQ9Ik0xMS4xNDQ0IDEyLjIyOTlMMTMuODg2MyAxNC45NDUySDExLjgzNDRDMTEuNjM3MyAxNC45NDUyIDExLjQ0ODMgMTQuODY3NiAxMS4zMDkgMTQuNzI5Nkw4LjkzMjE3IDEyLjM3NThDOC44NzkxIDEyLjMyMzIgOC44MzcwMSAxMi4yNjA3IDguODA4MyAxMi4xOTJDOC43Nzk2MiAxMi4xMjMzIDguNzY0ODUgMTIuMDQ5NiA4Ljc2NDg4IDExLjk3NTNWMTEuMjE0MUM4Ljc2NDg4IDExLjA5NzYgOC44MTE1NCAxMC45ODYgOC44OTQ2NyAxMC45MDM2QzguOTc3NzcgMTAuODIxMyA5LjA5MDQ4IDEwLjc3NSA5LjIwOCAxMC43NzVIMTAuNDI1NEMxMS43MjI2IDEwLjc3NSAxMi43NzM5IDkuNjk1OTIgMTIuNzczOSA4LjM2NDUyQzEyLjc3MzkgNy4wMzMxMiAxMS43MjI2IDUuOTU0MDEgMTAuNDI1NCA1Ljk1NDAxSDkuMjIyMTdDOS4xMDA4IDUuOTU0MDEgOC45ODQ0NSA1LjkwNjI0IDguODk4NjUgNS44MjEyN0M4LjgxMjg1IDUuNzM2MjUgOC43NjQ2NSA1LjYyMDk1IDguNzY0NjUgNS41MDA3M1Y0LjVIMTAuNDI1NEMxMS42MTY5IDQuNSAxMi42Nzk4IDUuMDY3ODEgMTMuMzY4NyA1Ljk1NDAxQzEzLjkwMTkgNi42NDY2IDE0LjE5MDcgNy40OTM1MSAxNC4xOTA3IDguMzY0NTJDMTQuMTkwNyA5LjIzNTU3IDEzLjkwMTkgMTAuMDgyNSAxMy4zNjg3IDEwLjc3NUMxMi44MjU3IDExLjQ3MjMgMTIuMDUyMyAxMS45NzI2IDExLjE2NjcgMTIuMTU0NkMxMS4xNTg3IDEyLjE1NjEgMTEuMTUxMyAxMi4xNTk4IDExLjE0NTIgMTIuMTY1MkMxMS4xMzkyIDEyLjE3MDYgMTEuMTM0OCAxMi4xNzc2IDExLjEzMjUgMTIuMTg1NEMxMS4xMzAyIDEyLjE5MzEgMTEuMTMwMSAxMi4yMDEzIDExLjEzMjMgMTIuMjA5MUMxMS4xMzQ0IDEyLjIxNjkgMTEuMTM4NyAxMi4yMjQgMTEuMTQ0NiAxMi4yMjk1TDExLjE0NDQgMTIuMjI5OVoiIGZpbGw9ImJsYWNrIi8+PC9zdmc+" },
-  { slug: "trip-planner", title: "Prime Meridian", subtitle: "AI-native consumer tax preparation and e-filing platform", kind: "Mobile",
+  { slug: "prime-meridian", title: "Prime Meridian", subtitle: "AI-native consumer tax preparation and e-filing platform", kind: "Mobile",
     tags: ["Travel", "Mobile"], mock: "phone-list", palette: "moss", seed: 31, featured: false,
     overview: "Prime Meridian is an AI-native consumer tax preparation and e‑filing platform that offers 100% free federal and state tax filing in the US. It’s backed by General Catalyst.\n\nI was brought in on a short timeline to establish the company’s web presence and define its visual voice. I worked alongside the founders to get the website live in time for the 2026 tax season and the fundraising announcement. The site is built and published on Framer.",
     role: "Product designer", client: "Travel startup", year: "2023", industries: ["Tax", "AI", "B2C"], hideProblemSolution: true, hideExtra: true,
@@ -1218,7 +1210,7 @@ const PROJECTS = [
       { video: "img/prime-meridian/landing-page-recording", w: 1280, h: 638, caption: "", alt: "Screen recording of the Prime Meridian website scrolling: the hero (“File your 2025 tax return. Federal $0. State $0.”), complicated tax situations by filer type, the three-step flow, and the pricing comparison" },
     ],
     logo: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHJ4PSIyIiBmaWxsPSJ3aGl0ZSIvPjxwYXRoIGQ9Ik0xMi42MjA4IDEzLjY3NjFDMTIuMzU0OSAxMy4wMzY0IDEyLjA4NTMgMTIuNDAzOSAxMS44MTIyIDExLjc3ODZDMTEuNTQ2MyAxMS4xNDYxIDExLjI4MDQgMTAuNTEgMTEuMDE0NCA5Ljg3MDM1QzEwLjk0MjYgOS43MDUwNCAxMC44NTk5IDkuNTAwMiAxMC43NjY1IDkuMjU1ODJDMTAuNjczIDkuMDExNDUgMTAuNTc5NiA4Ljc0MTkyIDEwLjQ4NjIgOC40NDcyNEMxMC4zOTI3IDguMTUyNTUgMTAuMzAyOSA3Ljg1MDY4IDEwLjIxNjYgNy41NDE2MkMxMC4yMzEgNy44MzYzMSAxMC4yMzgyIDguMTE2NjIgMTAuMjM4MiA4LjM4MjU1QzEwLjI0NTQgOC42NDEzIDEwLjI0NTQgOC44OTI4NiAxMC4yMzgyIDkuMTM3MjNDMTAuMjM4MiA5LjMzMTI5IDEwLjIzNDYgOS41NDMzMiAxMC4yMjc0IDkuNzczMzJDMTAuMjI3NCAxMC4wMDMzIDEwLjIyMzggMTAuMjQwNSAxMC4yMTY2IDEwLjQ4NDlDMTAuMjA5NCAxMC43MjkyIDEwLjIwMjMgMTAuOTc3MiAxMC4xOTUxIDExLjIyODhDMTAuMTk1MSAxMS40NzMxIDEwLjE5NTEgMTEuNzEwMyAxMC4xOTUxIDExLjk0MDNDMTAuMTg3OSAxMi4xMiAxMC4xODA3IDEyLjI5NjEgMTAuMTczNSAxMi40Njg2QzEwLjE2NjMgMTIuNjQxMSAxMC4xNTU1IDEyLjc4MTMgMTAuMTQxMiAxMi44ODkxQzEwLjI3MDUgMTIuODgxOSAxMC40MTQzIDEyLjg3NDcgMTAuNTcyNCAxMi44Njc1QzEwLjczNzcgMTIuODYwMyAxMC44NjcxIDEyLjg1NjcgMTAuOTYwNSAxMi44NTY3VjEzLjU2ODNIOC42MzE4NFYxMi45NzUzQzguODE4NzEgMTIuOTY4MSA4Ljk2NjA1IDEyLjkzOTQgOS4wNzM4NiAxMi44ODkxQzkuMTgxNjYgMTIuODMxNiA5LjI2MDczIDEyLjczNDUgOS4zMTEwNCAxMi41OThDOS4zNjEzNSAxMi40NjE0IDkuMzg2NSAxMi4yNjc0IDkuMzg2NSAxMi4wMTU4TDkuNTA1MDkgNy42Mjc4N0M5LjUxMjI4IDcuNDQ4MTkgOS41MTU4NyA3LjI3NTY5IDkuNTE1ODcgNy4xMTAzOEM5LjUyMzA2IDYuOTQ1MDcgOS41MzAyNSA2LjgwODUxIDkuNTM3NDQgNi43MDA3QzkuNDIyNDQgNi43MDc4OCA5LjI4NTg4IDYuNzE1MDcgOS4xMjc3NiA2LjcyMjI2QzguOTY5NjQgNi43MjIyNiA4Ljg0MDI3IDYuNzI1ODUgOC43Mzk2NSA2LjczMzA0VjYuMDIxNDhIMTAuODg1MUwxMi41ODg0IDEwLjIyNjFDMTIuNjYwMyAxMC40MTMgMTIuNzM1OCAxMC42MTQyIDEyLjgxNDggMTAuODI5OUMxMi45MDExIDExLjA0NTUgMTIuOTgzNyAxMS4yNTc1IDEzLjA2MjggMTEuNDY2QzEzLjE0MTkgMTEuNjc0NCAxMy4yMTAxIDExLjg1NzcgMTMuMjY3NiAxMi4wMTU4SDEzLjI3ODRDMTMuMzcxOSAxMS43ODU4IDEzLjQ2MTcgMTEuNTQ4NiAxMy41NDggMTEuMzA0MkMxMy42MzQyIDExLjA1MjcgMTMuNzIwNCAxMC44MTkxIDEzLjgwNjcgMTAuNjAzNUMxNC4wOTQyIDkuODQxNiAxNC4zODUzIDkuMDgzMzIgMTQuNjggOC4zMjg2NUMxNC45ODE4IDcuNTY2NzggMTUuMjgzNyA2Ljc5NzczIDE1LjU4NTYgNi4wMjE0OEgxNy43NzQxVjYuNjE0NDVDMTcuNjA4OCA2LjYxNDQ1IDE3LjQ2NSA2LjYzOTYgMTcuMzQyOCA2LjY4OTkxQzE3LjIyNzkgNi43NDAyMyAxNy4xNDE2IDYuODM3MjYgMTcuMDg0MSA2Ljk4MTAxQzE3LjAyNjYgNy4xMTc1NyAxNy4wMDE0IDcuMzMzMTkgMTcuMDA4NiA3LjYyNzg3TDE3LjIxMzUgMTIuMDE1OEMxNy4yMjc4IDEyLjE4ODMgMTcuMjI3OCAxMi4zNTM2IDE3LjIxMzUgMTIuNTExN0MxNy4yMDYzIDEyLjY2OTggMTcuMTk5MSAxMi43OTU2IDE3LjE5MTkgMTIuODg5MUMxNy4zMTQxIDEyLjg3NDcgMTcuNDU0MyAxMi44Njc1IDE3LjYxMjQgMTIuODY3NUMxNy43Nzc3IDEyLjg2MDMgMTcuOTA3MSAxMi44NTY3IDE4LjAwMDUgMTIuODU2N1YxMy41NjgzSDE1LjE5NzRWMTIuOTc1M0MxNS4zNzcxIDEyLjk2ODEgMTUuNTI0NSAxMi45MzU4IDE1LjYzOTUgMTIuODc4M0MxNS43NTQ1IDEyLjgyMDggMTUuODM3MSAxMi43MjAyIDE1Ljg4NzQgMTIuNTc2NEMxNS45Mzc3IDEyLjQyNTUgMTUuOTU1NyAxMi4yMDYzIDE1Ljk0MTMgMTEuOTE4OEwxNS44MTIgOS4yMTI3QzE1LjgxMiA5LjExOTI2IDE1LjgwNDggOC45ODI3IDE1Ljc5MDQgOC44MDMwMkMxNS43NzYgOC42MjMzMyAxNS43NjUyIDguNDI5MjcgMTUuNzU4IDguMjIwODNDMTUuNzUwOSA4LjAxMjQgMTUuNzQzNyA3LjgxNDc1IDE1LjczNjUgNy42Mjc4N0MxNS43MTQ5IDcuNjc4MTggMTUuNjg5OCA3LjcyODUgMTUuNjYxIDcuNzc4ODFDMTUuNjM5NSA3LjgyOTEyIDE1LjYyMTUgNy44Nzk0MyAxNS42MDcxIDcuOTI5NzRMMTMuMzk3IDEzLjY3NjFIMTIuNjIwOFoiIGZpbGw9ImJsYWNrIi8+PHBhdGggZD0iTTIgMTIuOTc1OEMyLjIwMTI0IDEyLjk2ODYgMi4zNTU3NyAxMi45MzYzIDIuNDYzNTggMTIuODc4OEMyLjU3MTM5IDEyLjgxNDEgMi42NDY4NiAxMi43MDYzIDIuNjg5OTggMTIuNTU1NEMyLjczMzExIDEyLjM5NzIgMi43NTQ2NyAxMi4xODE2IDIuNzU0NjcgMTEuOTA4NVY3LjYwNjgyQzIuNzU0NjcgNy40MjcxMyAyLjc1ODI2IDcuMjU0NjQgMi43NjU0NSA3LjA4OTMzQzIuNzc5ODIgNi45MjQwMSAyLjc5MDYgNi43OTQ2NCAyLjc5Nzc5IDYuNzAxMkMyLjY3NTYxIDYuNzA4MzkgMi41MzU0NSA2LjcxNTU4IDIuMzc3MzMgNi43MjI3N0MyLjIxOTIxIDYuNzIyNzcgMi4wOTM0MyA2LjcyNjM2IDIgNi43MzM1NVY2LjAyMTk5QzIuNDY3MTcgNi4wMTQ4MSAyLjkzNzk0IDYuMDExMjEgMy40MTIzMSA2LjAxMTIxQzMuODg2NjcgNi4wMTEyMSA0LjM2MTAzIDYuMDA3NjIgNC44MzUzOSA2LjAwMDQzQzUuNDg5NDQgNS45OTMyNCA2LjA1MzY0IDYuMDc1OSA2LjUyOCA2LjI0ODRDNy4wMDIzNiA2LjQxMzcxIDcuMzY1MzIgNi42Njg4NiA3LjYxNjg4IDcuMDEzODZDNy44Njg0MyA3LjM1MTY3IDcuOTk0MjEgNy43OTAxIDcuOTk0MjEgOC4zMjkxNUM3Ljk5NDIxIDguNjE2NjUgNy45MzMxMiA4LjkwNDE1IDcuODEwOTQgOS4xOTE2NUM3LjY5NTk0IDkuNDcxOTYgNy41MDkwNyA5LjczNDMgNy4yNTAzMyA5Ljk3ODY3QzYuOTk4NzcgMTAuMjE1OSA2LjY2NDU2IDEwLjQwOTkgNi4yNDc3IDEwLjU2MDhDNS44MzgwMiAxMC43MTE4IDUuMzQyMSAxMC43OTQ0IDQuNzU5OTMgMTAuODA4OEM0LjY0NDkzIDEwLjgwODggNC41MzM1MiAxMC44MDg4IDQuNDI1NzEgMTAuODA4OEM0LjMxNzkxIDEwLjgwODggNC4yMTM2OSAxMC44MDUyIDQuMTEzMDcgMTAuNzk4VjExLjk1MTZDNC4xMTMwNyAxMi4xNTI5IDQuMTA5NDcgMTIuMzM2MSA0LjEwMjI5IDEyLjUwMTVDNC4wOTUxIDEyLjY2NjggNC4wODQzMiAxMi43OTYxIDQuMDY5OTQgMTIuODg5NkM0LjE2MzM4IDEyLjg4MjQgNC4yNjc1OSAxMi44Nzg4IDQuMzgyNTkgMTIuODc4OEM0LjQ5NzU5IDEyLjg3MTYgNC42MTI1OSAxMi44NjggNC43Mjc1OCAxMi44NjhDNC44NDk3NyAxMi44NjA4IDQuOTQzMiAxMi44NTcyIDUuMDA3ODkgMTIuODU3MlYxMy41Njg4SDJWMTIuOTc1OFpNNC4xMTMwNyAxMC4xMTg4QzQuMjA2NSAxMC4xMjYgNC4yOTYzNCAxMC4xMzMyIDQuMzgyNTkgMTAuMTQwNEM0LjQ2ODg0IDEwLjE0NzYgNC41NjIyNyAxMC4xNTEyIDQuNjYyOSAxMC4xNTEyQzUuMDY1MzkgMTAuMTUxMiA1LjQwMzE5IDEwLjA3OTMgNS42NzYzMSA5LjkzNTU0QzUuOTU2NjEgOS43OTE4IDYuMTY4NjQgOS41ODY5NSA2LjMxMjM4IDkuMzIxMDJDNi40NTYxMyA5LjA0NzkgNi41MjggOC43MTcyOCA2LjUyOCA4LjMyOTE1QzYuNTI4IDcuOTc2OTcgNi40Nzc2OSA3LjY4OTQ3IDYuMzc3MDcgNy40NjY2NkM2LjI3NjQ1IDcuMjQzODUgNi4xNDM0OCA3LjA3NDk1IDUuOTc4MTcgNi45NTk5NUM1LjgxMjg2IDYuODM3NzcgNS42Mjk1OSA2Ljc1NTExIDUuNDI4MzQgNi43MTE5OUM1LjIyNzEgNi42Njg4NiA1LjAyNTg2IDYuNjQ3MyA0LjgyNDYxIDYuNjQ3M0M0LjYzNzc0IDYuNjQ3MyA0LjQ5MDQgNi42NzYwNSA0LjM4MjU5IDYuNzMzNTVDNC4yODE5NyA2Ljc5MTA1IDQuMjEwMSA2Ljg5NTI2IDQuMTY2OTcgNy4wNDYyQzQuMTMxMDQgNy4xODk5NSA0LjExMzA3IDcuMzg3NiA0LjExMzA3IDcuNjM5MTZWMTAuMTE4OFoiIGZpbGw9ImJsYWNrIi8+PC9zdmc+" },
-  { slug: "onboarding-rebuilt", title: "Onboarding, rebuilt", subtitle: "AI-powered bookkeeping and financial workflows for CPAs", kind: "Mobile",
+  { slug: "wurthy", title: "Onboarding, rebuilt", subtitle: "AI-powered bookkeeping and financial workflows for CPAs", kind: "Mobile",
     tags: ["Fintech", "Mobile"], mock: "phone-onboarding", palette: "ember", seed: 7, featured: true,
     overview: "Wurthy is a platform that lets CPA firms grow capacity, work faster, and move from compliance into advisory. It connects to the tools CPAs and their SMB clients already use and automates the tedious day-to-day work of reconciliations, bookkeeping, AR, and AP. It also gives CPAs a trusted AI team member, Wes.\n\nI joined a tight-knit team to lead design for the financial products workstream, alongside the founding designer, who owns the core advisory experience. More details coming soon, once the product is in customers’ hands.",
     role: "Lead product designer", client: "Mobile bank", year: "2025", industries: ["Fintech", "AI", "B2B SaaS"], logoWhite: true, hideProblemSolution: true, logoAdjust: -2,
@@ -1232,7 +1224,7 @@ const PROJECTS = [
     extraTitle: "Testing value proposition in the CPA community",
     extra: "To see how our value proposition landed with CPAs, I supported the partnership lead with marketing collateral. We created conference materials and built a targeted landing page with messaging written specifically for CPAs. Later, we tightened the messaging across the main website, and the For Partners page now lives there.",
     logo: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjkiIGhlaWdodD0iNzUiIHZpZXdCb3g9IjAgMCA2OSA3NSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPG1hc2sgaWQ9Im1hc2swXzE2Nl8xOSIgc3R5bGU9Im1hc2stdHlwZTpsdW1pbmFuY2UiIG1hc2tVbml0cz0idXNlclNwYWNlT25Vc2UiIHg9Ii0yIiB5PSItMyIgd2lkdGg9IjgzIiBoZWlnaHQ9Ijk1Ij4KPHBhdGggZD0iTTQ0LjQxNjggLTEuMzQxODlMLTEuNDIyMDIgNjYuNjQ5M0MtMi4wMzk0OCA2Ny41NjUyIC0xLjc5NzU4IDY4LjgwODIgLTAuODgxNzE4IDY5LjQyNTZMMzEuNDU1NiA5MS4yMjdDMzIuMzcxNCA5MS44NDQ1IDMzLjYxNDQgOTEuNjAyNiAzNC4yMzE5IDkwLjY4NjdMODAuMDcwNyAyMi42OTU2QzgwLjY4ODIgMjEuNzc5NyA4MC40NDYzIDIwLjUzNjcgNzkuNTMwNCAxOS45MTkyTDQ3LjE5MzIgLTEuODgyMTlDNDYuMjc3MyAtMi40OTk2NSA0NS4wMzQzIC0yLjI1Nzc1IDQ0LjQxNjggLTEuMzQxODlaIiBmaWxsPSJ3aGl0ZSIvPgo8L21hc2s+CjxnIG1hc2s9InVybCgjbWFzazBfMTY2XzE5KSI+CjxwYXRoIGQ9Ik0xNC45ODQ2IDU4LjQxMzhDMTAuODYzMiA1NS42MzUyIDUuMjY5NjUgNTYuNzIzOCAyLjQ5MTA1IDYwLjg0NTJDLTAuMjg3NTQzIDY0Ljk2NjYgMC44MDEwMTIgNzAuNTYwMSA0LjkyMjQxIDczLjMzODdDOS4wNDM4IDc2LjExNzMgMTQuNjM3NCA3NS4wMjg3IDE3LjQxNTkgNzAuOTA3NEMyMC4xOTQ1IDY2Ljc4NiAxOS4xMDYgNjEuMTkyNCAxNC45ODQ2IDU4LjQxMzhaIiBmaWxsPSIjMDEyM0ZBIi8+CjxwYXRoIGQ9Ik0zMy45OTA1IDMwLjIyMjRDMjkuODY5MSAyNy40NDM4IDI0LjI3NTUgMjguNTMyNCAyMS40OTY5IDMyLjY1MzhDMTguNzE4MyAzNi43NzUyIDE5LjgwNjkgNDIuMzY4NyAyMy45MjgzIDQ1LjE0NzNDMjguMDQ5NyA0Ny45MjU5IDMzLjY0MzIgNDYuODM3MyAzNi40MjE4IDQyLjcxNTlDMzkuMjAwNCAzOC41OTQ2IDM4LjExMTggMzMuMDAxIDMzLjk5MDUgMzAuMjIyNFoiIGZpbGw9IiMwMTIzRkEiLz4KPHBhdGggZD0iTTQ1LjIxNyA1OC4yOTM3QzQxLjA5NTYgNTUuNTE1MSAzNS41MDIxIDU2LjYwMzcgMzIuNzIzNSA2MC43MjUxQzI5Ljk0NDkgNjQuODQ2NCAzMS4wMzM0IDcwLjQ0IDM1LjE1NDggNzMuMjE4NkMzOS4yNzYyIDc1Ljk5NzIgNDQuODY5OCA3NC45MDg2IDQ3LjY0ODQgNzAuNzg3MkM1MC40MjcgNjYuNjY1OCA0OS4zMzg0IDYxLjA3MjMgNDUuMjE3IDU4LjI5MzdaIiBmaWxsPSIjMDEyM0ZBIi8+CjxwYXRoIGQ9Ik02NC4yMjI5IDMwLjEwMjNDNjAuMTAxNSAyNy4zMjM3IDU0LjUwNzkgMjguNDEyMyA1MS43MjkzIDMyLjUzMzZDNDguOTUwNyAzNi42NTUgNTAuMDM5MyA0Mi4yNDg2IDU0LjE2MDcgNDUuMDI3MkM1OC4yODIxIDQ3LjgwNTggNjMuODc1NiA0Ni43MTcyIDY2LjY1NDIgNDIuNTk1OEM2OS40MzI4IDM4LjQ3NDQgNjguMzQ0MyAzMi44ODA5IDY0LjIyMjkgMzAuMTAyM1oiIGZpbGw9IiMwMTIzRkEiLz4KPHBhdGggZD0iTTUyLjk5NzMgMi4wMzFDNDguODc1OSAtMC43NDc1OTIgNDMuMjgyMyAwLjM0MDk2MiA0MC41MDM3IDQuNDYyMzZDMzcuNzI1MiA4LjU4Mzc1IDM4LjgxMzcgMTQuMTc3MyA0Mi45MzUxIDE2Ljk1NTlDNDcuMDU2NSAxOS43MzQ1IDUyLjY1IDE4LjY0NTkgNTUuNDI4NiAxNC41MjQ1QzU4LjIwNzIgMTAuNDAzMSA1Ny4xMTg3IDQuODA5NiA1Mi45OTczIDIuMDMxWiIgZmlsbD0iIzAxMjNGQSIvPgo8L2c+Cjwvc3ZnPgo=" },
-  { slug: "studio-storefront", title: "Black Hound Aviation", subtitle: "The premier flight school near Austin, Texas", kind: "Web design",
+  { slug: "black-hound-aviation", title: "Black Hound Aviation", subtitle: "The premier flight school near Austin, Texas", kind: "Web design",
     tags: ["E-commerce", "Web design"], mock: "browser-shop", palette: "coral", seed: 9, featured: false,
     overview: "Black Hound Aviation is the premier flight school near Austin, Texas. It offers flight lessons with expert instructors and proven training programs.\n\nWhen the business came under new management, I was brought in to take a fresh look at the school’s branding and website.\n\nI worked with the new leadership to establish an approachable yet upscale aesthetic that emphasizes the school’s long history, good standing in the local community, and top-notch training standards.\n\nThe site is built and published entirely on Framer. The approach proved to scale well when the team acquired another flight school and asked me to bring it up to par with Black Hound.",
     role: "Product and web designer", client: "Ceramics studio", year: "2024", industries: ["Aviation", "B2C"], hideProblemSolution: true, hideExtra: true,
@@ -1243,13 +1235,13 @@ const PROJECTS = [
       { file: "img/black-hound/03-select-pages", w: 2600, h: 2342, caption: "Select pages", alt: "Five Black Hound Aviation pages side by side: the home page, Become a Private Pilot, Take a Discovery Flight, What Our Students Are Saying, and Black Hound Instructors" }
     ],
     logo: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTkuOTA3NCA0LjgzNTY4QzE4Ljk1NDQgNC44MDg2MyAxMy45OTQ1IDQuNTY1MjMgMTMuMzU5MiA0LjUxNzlDMTIuNzMwNSA0LjQ2NzE5IDExLjczNDUgMy40MzYxIDExLjIyODMgMy4wNzA5OUMxMS4xNjU0IDMuMDIzNjYgMTEuMDg5MyAzIDExLjAwOTkgM0g4Ljc0NjY1QzUuNTkwMDIgMyAxLjI2MjA3IDUuOTkxODUgMC4yMjk3MTQgOS45MTY3NkMxLjEyOTcyIDExLjQ1ODMgMi45NTk1IDEyLjczNjIgNC40MTUzOSAxMy40MTU3QzUuMDU3MyAxMy43MDk4IDUuNzE5MDcgMTMuOTUzMiA2LjQwNzMxIDE0LjEwODdDNi40MDczMSAxMy42NDkgNi40NTY5NCAxMy4xOTYgNi41MzYzNSAxMi43NDYzQzYuNzg0NTEgMTEuMzE2MyA3LjQxNjUgOS45MDY2MSA4LjUyODI3IDguOTcwMThMOC41Nzc5IDkuMDI3NjVDNy4zMDA2OSAxMC43NTE4IDcuMDAyOSAxMi45MDE4IDcuMTY4MzQgMTUuMDA0NkM2LjU0NjI4IDE0Ljg4NjMgNS43ODUyNSAxNC43Njc5IDUuMTkyOTcgMTQuNTU1QzMuMzQ5OTQgMTMuOTI2MiAxLjY2MjQ0IDEyLjc0MyAwLjUzNDEyNyAxMS4xMTY5QzAuMzgxOTIxIDEwLjg5MzggMC4yMzk2NCAxMC42NTM3IDAuMTE3MjEzIDEwLjQwMzZDMC4wMjEyNTcyIDEwLjkxNCAtMC4wMTg0NDgxIDExLjQzNDcgMC4wMDgwMjI1MyAxMS45Njg4QzAuNDE4MzE4IDE2LjU1NjMgNS4wNTA2OSAxOC44MTQ2IDguNTc0NTkgMTcuNzMyOEM4LjgwNjIxIDE3LjY2MTggOC45ODE1OCAxNy40NTIyIDguOTkxNTEgMTcuMjAyQzkuMDM0NTIgMTYuMDg2NCA5LjU5NzAyIDEyLjM2NzcgMTAuMzQ4MSAxMS43NzI3QzEwLjU2MzIgMTEuNTQ2MiAxMC44MTE0IDExLjM5MDcgMTEuMTAyNSAxMS4zMjMxQzEzLjE3MzkgMTAuOTk1MiAxNC40ODQyIDExLjIxNDkgMTUuMjc4MyAxMS4yNjU2QzE1LjM1NDQgMTEuMjY5IDE1LjQyNzIgMTEuMjU1NSAxNS40OTM0IDExLjIxODNMMTYuNDg2IDEwLjY3NEwxNi45NzI0IDEwLjQyMzhDMTguMDU3NyAxMC4zNDI3IDE5LjAzMDUgOS41ODU0NSAxOS40MjQzIDcuNDY1OEMxOS40NDc0IDcuMzQ0MSAxOS40OTcxIDcuMjMyNTQgMTkuNTY2NSA3LjEzMTEyQzE5Ljk2MDMgNi41NDk2NSAxOS45NTA0IDYuMDA4NzUgMjAgNC45MzcxQzIwIDQuODc5NjMgMTkuOTYwMyA0LjgzMjMgMTkuOTA0IDQuODI4OTJMMTkuOTA3NCA0LjgzNTY4WiIgZmlsbD0id2hpdGUiLz48L3N2Zz4=" },
-  { slug: "support-assistant", hidden: true, title: "Essenvia", subtitle: "Platform to manage medical device registration. Keep products legally sellable", kind: "Mobile",
+  { slug: "essenvia", hidden: true, title: "Essenvia", subtitle: "Platform to manage medical device registration. Keep products legally sellable", kind: "Mobile",
     tags: ["Consumer AI", "Mobile"], mock: "phone-chat", palette: "iris", seed: 61, featured: false,
     overview: "Essenvia is a platform for the regulatory work that keeps a product portfolio on the market: registrations, submissions, change control, and the evidence to prove it. Medical device companies use it to stay compliant in their chosen markets and sell their products with peace of mind.",
     problem: "Getting a medical device approved by agencies like the FDA or European regulators requires massive, complex documentation. Without specialized tools, teams rely on manual processes that frequently lead to costly delays and rejections.\n\nInefficiency, high error rates, and administrative bottlenecks in regulatory submissions are common blockers to bringing a product to market.",
     role: "Lead product designer", client: "Consumer AI startup", year: "2025", industries: ["MedTech", "B2B SaaS", "0 → 1"], hideExtra: true,
     logo: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMC42MjUgMjAgMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xNC41MTQyIDguMjc0MjVMOC42NjQ5MiA5Ljc1Njc1VjcuNjk5NzFMNSA4LjYyNjk2VjEzLjg2MTdMMTQuNTEzMSAxMS40NDk4TDE0LjUxNDIgOC4yNzQyNVoiIGZpbGw9IndoaXRlIi8+PHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik01IDIwLjYyNUwxNC45NTE1IDE4LjEwMTdWMTQuOTA1Mkw1LjAwMTEgMTcuNDI2Nkw1IDIwLjYyNVpNNSAzLjE0ODI4VjYuMzIwNzhMMTQuOTUyMyAzLjgwMDI1VjAuNjI1TDUgMy4xNDgwMVYzLjE0ODI4WiIgZmlsbD0id2hpdGUiLz48L3N2Zz4=" },
-  { slug: "habit-tracker", title: "Yelp", subtitle: "The beloved platform for local businesses", kind: "Mobile",
+  { slug: "yelp", title: "Yelp", subtitle: "The beloved platform for local businesses", kind: "Mobile",
     tags: ["Wellness", "Mobile"], mock: "phone-rings", palette: "citrus", seed: 27, featured: false,
     overview: "Yelp is a crowdsourced platform that publishes user reviews, ratings, and recommendations for local businesses such as restaurants, shops, bars, and service providers.\n\nI joined as a Product Designer on the Home Professionals vertical – a newly formed team inside a larger product org – to build a marketplace for hiring local professionals like contractors, plumbers, or gardeners.\n\nAfter more than a year there, I moved to a team overseeing Yelp’s most visited surfaces: the search results page, business pages, and onboarding.",
     problem: "At Yelp, we faced the classic marketplace challenges:\n- How do we help service providers get more leads through Yelp, convert them into paying clients, and ultimately attribute those wins to Yelp?\n- How do we help buyers discover the best service providers on Yelp and make the handshake happen directly on the platform?\n\nBoth verticals – Home Services and Restaurants – share this struggle. When recommendations surface a 7-Eleven instead of the high-end restaurant someone was looking for, people lose trust in the platform and use it less often. This directly impacts the bottom line.",
@@ -1272,7 +1264,7 @@ const PROJECTS = [
     ],
     thumb: { file: "img/yelp/thumb-heart", w: 806, h: 1151, alt: "A tilted phone showing Yelp’s Add preferences step, “What are your favorite foods?”, with food photos to favorite, and a large red circle with a white heart over its right edge", motion: "float", size: "medium" },
     logo: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNOC41ODYzNiAxNC4xNzk2QzkuMTQzMzMgMTMuNTYwNiAxMC4xNjc2IDEzLjk3NTYgMTAuMTM4MSAxNC44MDg1TDkuOTg2NzYgMTkuMTM4NkM5Ljk2ODc0IDE5LjY3OCA5LjQ3NzY2IDIwLjA3NzkgOC45NDc2OSAxOS45ODYzQzcuODMxMDcgMTkuNzk5NSA2Ljc3MDI0IDE5LjM2NjggNS44NDkwNiAxOC43MzI0QzUuNDA3NjggMTguNDI2OSA1LjMzMzM5IDE3Ljc5NzcgNS42OTE4MyAxNy4zOTc0TDguNTg2MzYgMTQuMTc5NlpNMTEuNTI3OCAxNC40MzU1QzExLjA4MzUgMTMuNzMyOCAxMS43NjQzIDEyLjg1ODQgMTIuNTU1MSAxMy4xMTYyTDE2LjY3MDMgMTQuNDUzMUMxNy4xODI1IDE0LjYxOTIgMTcuNDMxMyAxNS4yMDAzIDE3LjIwMDYgMTUuNjg2NUMxNi43MTc4IDE2LjY5NzcgMTYuMDE3OSAxNy42MDI2IDE1LjE0NCAxOC4zMjYxQzE0LjcyOTMgMTguNjY5OCAxNC4xMDUxIDE4LjU2ODkgMTMuODIwNyAxOC4xMDkzTDExLjUyNzggMTQuNDM1NVpNMi45MDA4MiA5Ljg5ODM5QzMuMDcyNTkgOS4zOTE0NSAzLjY1MzM5IDkuMTUwNzggNC4xMzYxNyA5LjM4NDcyTDguMDI1ODIgMTEuMjgzMkM4Ljc3MjMyIDExLjY0NzkgOC42NTY3NiAxMi43NDc1IDcuODUxMDEgMTIuOTQ5MkwzLjY1Mzc1IDEzLjk5NkMzLjEyOTUgMTQuMTI2NSAyLjYxMzU1IDEzLjc2NTEgMi41NTEyMSAxMy4yMjg1QzIuNDE3OTIgMTIuMDgxIDIuNTQ4NDEgMTAuOTQ4IDIuOTAwODIgOS44OTgzOVpNMTQuMDE3IDYuNzM3MjZDMTQuMzE2MiA2LjI5MjY1IDE0Ljk0MDQgNi4yMDk3NSAxNS4zNDMyIDYuNTY1MzhDMTYuMTcyNiA3LjI5NzgyIDE2Ljg1MTggOC4yMTM3NiAxNy4zMTEgOS4yNzUzNEMxNy41MjQzIDkuNzY3NiAxNy4yNTcxIDEwLjM0IDE2LjczODcgMTAuNDg4MkwxMi41Nzk1IDExLjY4MzVDMTEuNzc5OCAxMS45MTE2IDExLjEzMTEgMTEuMDE2IDExLjU5NjEgMTAuMzI4MUwxNC4wMTcgNi43MzcyNlpNOS4yNjQxIDAuMDAyODgzQzkuNzgyNTEgLTAuMDM4NjMyMyAxMC4yMjQxIDAuMzczNTkgMTAuMjI0MSAwLjg5MjUzMVY5LjAyOTI1QzEwLjIyNDEgOS45Mzk1NSA5LjAxODIzIDEwLjI2NjEgOC41NjE5NSA5LjQ3NDU2TDQuNDk3NSAyLjQyODY2QzQuMjM2ODIgMS45Nzc5MyA0LjQxNTIgMS4zOTkxMSA0Ljg4MzI0IDEuMTc2NzFDNS41NTg1MSAwLjg1MzU4NSA2LjI3MjYxIDAuNTkwMjI1IDcuMDIxOTEgMC4zODg2MjVDNy43NzEzMSAwLjE4NzAwOCA4LjUyMDYyIDAuMDU5MjIzNSA5LjI2NDEgMC4wMDI4ODNaIiBmaWxsPSJ3aGl0ZSIvPjwvc3ZnPg==" },
-  { slug: "founder-handbook", title: "Houzz", subtitle: "Platform for finding inspiration, products, and pros to design a dream home", kind: "Web design",
+  { slug: "houzz", title: "Houzz", subtitle: "Platform for finding inspiration, products, and pros to design a dream home", kind: "Web design",
     tags: ["Web design", "Content"], mock: "browser-docs", palette: "lagoon", seed: 52, featured: false,
     overview: "Houzz is a visual inspiration and planning platform where people can browse millions of interior and exterior photos, save ideas, ask for advice, and hire a home improvement professional.\n\nI joined as a Graphic Designer and moved into a Product Designer role a year later. I worked on the ad revenue track, putting home improvement professionals in the spotlight.",
     problem: "Before the Houzz photo gallery became what it is today – a sophisticated feed with minimal noise – it was a heavier experience with more aggressive ad blocks. Advertisers, however, were fine with this: it drove impressions and high‑intent clicks.\n\nThen came the redesign. I was tasked with finding new ad formats that would be acceptable to advertisers and fit the new feed’s aesthetic.\n\nThe challenge was to match and then surpass the pre-redesign ad metrics.",
@@ -1293,11 +1285,12 @@ const PROJECTS = [
 
 /* Default case-study text. A project can override these with its own problem and solution,
    and can add extra sections ({ heading, text, layout: "wide" | "two" }) in a sections field. */
-/* The case study copy as last edited in the draft, baked in when this site was built.
-   The published site has no database: this is the only source of the text below. */
+/* The case study copy as last edited in the inline editor, kept here so the page carries its own text.
+   The editor still saves to the database under the project slug; those saved values win over this.
+   build-site.py refreshes this block from a fresh export (saved-content.jsonl) when it builds the public site. */
 const SAVED_COPY = {
   "benny-apply": {
-    "extra10": "Why the pivot? Benny Apply happened to launch around the time the government started tightening the social benefits budget, and the subsidized utilities program was shut down.\n\nWe made the hard decision to start over and find other ways to serve the community. One idea was to partner with the US government directly and become its go-to team for software development. After some attempts to break into the right circles, we pivoted again and took a closer look at SNAP recipients. [More about that in the Benny App case study](#prototype-lab).\n\nBelow is a page we set up in Framer for a conference in D.C.",
+    "extra10": "Why the pivot? Benny Apply happened to launch around the time the government started tightening the social benefits budget, and the subsidized utilities program was shut down.\n\nWe made the hard decision to start over and find other ways to serve the community. One idea was to partner with the US government directly and become its go-to team for software development. After some attempts to break into the right circles, we pivoted again and took a closer look at SNAP recipients. [More about that in the Benny App case study](#benny-ebt-app).\n\nBelow is a page we set up in Framer for a conference in D.C.",
     "extra10Title": "Benny pivots to serve the government directly",
     "extra7Title": "Benny Apply in action on mobile",
     "extra8": "We used Framer to set up a website for Benny Apply. We wanted it to feel warm – friendly, approachable, and “on your side.”",
@@ -1326,7 +1319,7 @@ const SAVED_COPY = {
     "title": "Benny for Business",
     "year": "2023-2024"
   },
-  "content-editor": {
+  "release": {
     "extra": "",
     "extraTitle": "",
     "overview": "Release provides revenue-based financing for commercial real estate and multifamily owners, letting them access capital against their portfolio’s rental income without equity dilution, property liens, or personal guarantees.\n\nI came in as the sole Product Designer to help build the banking layer on top of the existing lending product.\n\nOver the years, the product matured into Release 2.0 and is self-sufficient on the UX front.",
@@ -1340,7 +1333,7 @@ const SAVED_COPY = {
     "title": "Release",
     "year": "2024-2025"
   },
-  "founder-handbook": {
+  "houzz": {
     "extra": "",
     "extraTitle": "",
     "problem": "Before the Houzz photo gallery became what it is today – a sophisticated feed with minimal noise – it was a heavier experience with more aggressive ad blocks. Advertisers, however, were fine with this: it drove impressions and high‑intent clicks.\n\nThen came the redesign. I was tasked with finding new ad formats that would be acceptable to advertisers and fit the new feed’s aesthetic.\n\n**The challenge was to match and then surpass the pre-redesign ad metrics.**",
@@ -1352,7 +1345,7 @@ const SAVED_COPY = {
     "title": "Houzz",
     "year": "2016-2018"
   },
-  "habit-tracker": {
+  "yelp": {
     "extra3Title": "🔐 Reach out to see more",
     "problem": "At Yelp, we faced the classic marketplace challenges:\n\n==- How do we help service providers get more leads through Yelp, convert them into paying clients, and ultimately attribute those wins to Yelp?==\n\n==- How do we help buyers discover the best service providers on Yelp and make the handshake happen directly on the platform?==\n\nBoth verticals – Home Services and Restaurants – share this struggle. When recommendations surface a 7-Eleven instead of the high-end restaurant someone was looking for, people lose trust in the platform and use it less often. This directly impacts the bottom line.",
     "role": "Product Designer",
@@ -1363,7 +1356,7 @@ const SAVED_COPY = {
     "title": "Yelp",
     "year": "2018-2020"
   },
-  "launch-site": {
+  "brex": {
     "extra11": "The old mobile experience had a few problems. People found it hard to tell payment requests from regular account activity, the way to send money wasn’t obvious, and scheduled payments weren’t on mobile at all.\n\nWe took a hard look at how people used the app and built a quarter-long roadmap rooted in customer research. We rebuilt the Home surface for the spending account, made approval requests and money transfer options more prominent, added filtering by transaction status, and more.",
     "extra11Title": "Redesign of deposit account experience",
     "extra12": "Most people had no saved payees, and without one there was no way to start a transfer from the mobile app. Depositing funds wasn’t possible on mobile either.\n\nWe cleaned up the usability problems and added direct deposits and scheduled transfers. People could now add a payee in the app and manage their payments on the go.",
@@ -1385,7 +1378,7 @@ const SAVED_COPY = {
     "title": "Brex",
     "year": "2020-2022"
   },
-  "onboarding-rebuilt": {
+  "wurthy": {
     "extra": "Besides leading the new initiative, I supported the Director of Partnerships with various marketing projects. We created conference materials and built a targeted Framer landing page with messaging written specifically for CPAs. Later, that page evolved and migrated over to the main website.",
     "extra2": "I was fortunate to lead user experience for this new product initiative. Reach out if you want to know more.",
     "extra2Title": "🔐 New product offering",
@@ -1402,7 +1395,7 @@ const SAVED_COPY = {
     "title": "Wurthy",
     "year": "2025-2026"
   },
-  "one-system": {
+  "hubflow": {
     "extra": "",
     "extraTitle": "",
     "problem": "Getting a load from point A to point B is no easy task. The main challenge in freight scheduling is managing all the moving parts while keeping costs low, meeting deadlines, and using resources efficiently.\n\n- **Manual Processes** Many schedulers still rely on spreadsheets or outdated systems that require a lot of human effort and attention to detail.\n- **Constant Updates**: Delays, cancellations, and changing priorities mean schedules often shift on the fly, which adds to the workload.\n- **Complex Variables**: Accounting for traffic, weather, driver availability, and delivery windows all at once is a juggling act.\n- **Communication Overload**: Keeping everyone – from drivers to warehouses to customers – informed and on the same page can feel like a full-time job.\n- **Repetitive Tasks**: There’s a lot of back-and-forth coordination, like matching loads to drivers or rerouting shipments, which can be time-consuming and frustrating.",
@@ -1415,7 +1408,7 @@ const SAVED_COPY = {
     "title": "HubFlow",
     "year": "2024-2025"
   },
-  "prototype-lab": {
+  "benny-ebt-app": {
     "extra": "",
     "extraTitle": "For vendors",
     "overview": "Benny API is on a mission to modernize how millions of Americans access, check, and manage government benefits – such as SNAP (Supplemental Nutrition Assistance Program) and EBT.",
@@ -1428,7 +1421,7 @@ const SAVED_COPY = {
     "title": "Benny EBT App",
     "year": "2023-2024"
   },
-  "readable-analytics": {
+  "orb": {
     "extra18Title": "As the product matured, so did the marketing narrative",
     "extra20": "Orb held a full day of panels with industry leaders at ETH CC’24 in Brussels, Belgium. We set up this page for it, along with the rest of the marketing materials.",
     "extra20Title": "Socializing the product at industry events",
@@ -1444,7 +1437,7 @@ const SAVED_COPY = {
     "title": "Orb",
     "year": "2022-2025"
   },
-  "studio-storefront": {
+  "black-hound-aviation": {
     "extra": "",
     "extraTitle": "",
     "problem": "",
@@ -1457,7 +1450,7 @@ const SAVED_COPY = {
     "title": "Black Hound Aviation",
     "year": "2024"
   },
-  "support-assistant": {
+  "essenvia": {
     "extra": "",
     "extraTitle": "",
     "overview": "Essenvia is a platform for the regulatory work that keeps a product portfolio on the market: registrations, submissions, change control, and the evidence to prove it. Medical device companies use it to stay compliant in their chosen markets and sell their products with peace of mind.\n\nI joined as their first Product Designer to work alongside the founder and build the core regulatory submission experience.",
@@ -1470,7 +1463,7 @@ const SAVED_COPY = {
     "title": "Essenvia",
     "year": "2023"
   },
-  "team-scheduler": {
+  "visibly": {
     "overview": "A scheduling tool that shows who is free at a glance and books meetings in two clicks.",
     "problem": "",
     "role": "Co-Founder",
@@ -1482,7 +1475,7 @@ const SAVED_COPY = {
     "title": "Visibly",
     "year": "2023"
   },
-  "trip-planner": {
+  "prime-meridian": {
     "extra": "",
     "extraTitle": "",
     "overview": "Prime Meridian is an AI-native consumer tax preparation and e‑filing platform that offers 100% free federal and state tax filing in the US. It’s an IRS authorized e-file provider and is backed by General Catalyst.\n\nI was brought in on a short timeline to establish the company’s web presence and define its visual voice. I worked alongside the founders to get the website live in time for the 2026 tax season and the fundraising announcement. We iterated several times between late 2025 and early 2026 as we gained a deeper understanding of our users.\n\nThe site is built and published on Framer.",
@@ -1823,27 +1816,6 @@ function shot(im, eager, sizes = "(max-width: 820px) 100vw, 80vw") {
   return `<figure class="shot${im.outline ? " is-outlined" + (im.outline === "medium" ? " is-outlined-medium" : "") : ""}${im.transparent ? " is-transparent" : ""}${im.size ? " is-scaled" : ""}" style="--ar: ${(im.w / im.h).toFixed(4)}${im.size ? `; --shot-scale: ${im.size}` : ""}"><img src="${esc(f(ws[0]))}" srcset="${ws.map(w => `${esc(f(w))} ${w}w`).join(", ")}" sizes="${sizes}" width="${im.w}" height="${im.h}" alt="${esc(im.alt || im.caption || "")}"${eager ? "" : ' loading="lazy"'} decoding="async">${im.caption ? `<figcaption>${esc(im.caption)}</figcaption>` : ""}</figure>`;
 }
 
-const CV_VIEW = { cv: true, title: "CV" };   // a pseudo-project, so the CV routes and opens exactly like a case study
-function renderCV(el) {
-  const f = esc(SITE.resume);
-  el.innerHTML = `
-    <section class="wrap" style="padding-top: clamp(18px, 3vh, 34px)">
-      <div class="cv-doc">
-        <object data="${f}#toolbar=0&amp;navpanes=0&amp;view=FitH" type="application/pdf" aria-label="Valentina Orlova\u2019s CV">
-          <div class="cv-pages">
-            <img src="img/cv-page-1-1600.webp" width="1600" height="2071" loading="lazy" decoding="async" alt="Page 1 of Valentina Orlova\u2019s CV: contact details and experience, from independent work for early-stage startups back through Brex">
-            <img src="img/cv-page-2-1600.webp" width="1600" height="2071" loading="lazy" decoding="async" alt="Page 2 of Valentina Orlova\u2019s CV: experience at Yelp and Houzz, the skills list, and education">
-          </div>
-        </object>
-      </div>
-      <div class="cv-actions">
-        <a class="pill" data-cv-download href="${f}" download>
-          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 1.75v8.5M4.5 7.25 8 10.75l3.5-3.5M2.25 13.75h11.5"/></svg>
-          <span>Download Resume</span>
-        </a>
-      </div>
-    </section>`;
-}
 function renderProject(p, el = document.getElementById("view-project")) {
   const i = PROJECTS.indexOf(p);
   const titleTag = el.id === "lb-body" ? "h2" : "h1";   // the lightbox sits over Home, which already has the page's H1
@@ -2052,31 +2024,7 @@ function applySite() {
   document.querySelectorAll("[data-mailto]").forEach(el => el.href = "mailto:" + SITE.email);
   document.querySelectorAll("[data-linkedin]").forEach(el => el.href = SITE.linkedin);
   document.querySelectorAll("[data-telegram]").forEach(el => el.href = SITE.telegram);
-  document.querySelectorAll("[data-resume]").forEach(el => { if (SITE.resume) { el.href = "#cv"; el.hidden = false; } });
-  // In the artifact frame a plain download link hands the viewer nothing, so ask the platform to save the file.
-  // Outside that frame (a normal browser) claude.use doesn't exist and the link's own download attribute works.
-  document.addEventListener("click", async e => {
-    const a = e.target instanceof Element && e.target.closest("[data-cv-download]");
-    if (!a || e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
-    if (!(window.claude && typeof window.claude.use === "function")) return;
-    e.preventDefault();
-    if (a.dataset.busy) return;
-    a.dataset.busy = "1";
-    const label = a.querySelector("span"), was = label.textContent;
-    label.textContent = "Preparing\u2026";
-    try {
-      const downloads = await window.claude.use("downloads");
-      const res = await fetch(a.href);
-      if (!res.ok) throw new Error("fetch " + res.status);
-      const blob = await res.blob();
-      if (!downloads) { window.open(a.href, "_blank", "noopener,noreferrer"); return; }
-      await downloads.save({ filename: "Valentina-Orlova-Resume.pdf", data: blob });
-    } catch (err) {
-      if (!err || err.code !== "declined") { try { window.open(a.href, "_blank", "noopener,noreferrer"); } catch (e2) {} }
-    } finally {
-      label.textContent = was; delete a.dataset.busy;
-    }
-  });
+  document.querySelectorAll("[data-resume]").forEach(el => { if (SITE.resume) { el.href = SITE.resume; el.target = "_blank"; el.rel = "noopener"; el.hidden = false; } });   // the CV opens as a PDF in its own tab
   document.getElementById("year").textContent = new Date().getFullYear();
 
   const ICONS = {
@@ -2144,9 +2092,8 @@ function openLightbox(project) {
   }
   if (project !== LB.project) {
     if (ro) LB.body.querySelectorAll(".cover").forEach(c => ro.unobserve(c));
-    if (project.cv) { renderCV(LB.body); } else { renderProject(project, LB.body); watchCovers(LB.body); }
-    LB.el.classList.toggle("is-cv", !!project.cv);
-    LB.el.querySelector(".lb-panel").setAttribute("aria-label", project.cv ? "CV" : "Case study");
+    renderProject(project, LB.body); watchCovers(LB.body);
+    LB.el.querySelector(".lb-panel").setAttribute("aria-label", "Case study");
     LB.project = project;
     LB.body.scrollTop = 0;
   }
@@ -2159,13 +2106,13 @@ function closeLightboxUI() {
   if (returnFocus && returnFocus.isConnected) returnFocus.focus({ preventScroll: true });
 }
 // Closing goes back to the projects on Home, at the same scroll position the lightbox opened from
-function requestClose() { location.hash = LB.project && LB.project.cv ? "top" : "projects"; }
+function requestClose() { location.hash = "projects"; }
 LB.el.querySelector(".lb-close").addEventListener("click", requestClose);
 LB.el.addEventListener("click", e => { if (e.target === LB.el) requestClose(); });
 document.addEventListener("keydown", e => { if (e.key === "Escape" && LB.open) requestClose(); });
 // Left/right arrows step through case studies in the lightbox (not while typing or editing)
 function stepProject(dir) {
-  if (!LB.open || (LB.project && LB.project.cv)) return;
+  if (!LB.open) return;
   // Step from the address, which updates at once, so quick presses never skip or repeat a project
   const cur = PROJECTS.findIndex(p => p.slug === decodeURIComponent(location.hash.slice(1)));
   const i = cur >= 0 ? cur : PROJECTS.indexOf(LB.project), n = PROJECTS.length;
@@ -2191,10 +2138,11 @@ LB.el.querySelector(".lb-keys").addEventListener("click", e => {
   if (b.dataset.go === "close") requestClose(); else stepProject(b.dataset.go === "prev" ? -1 : 1);
 });
 
+const HOME_TITLE = document.title;   // the <title> in the markup; a case study swaps in "<name> - <case study>" and Home puts this back
 function route() { if (EDIT.on) stopEditing(); routeView(); updateEditBar(); }
 function routeView() {
   const id = decodeURIComponent(location.hash.slice(1));
-  const project = PROJECTS.find(p => p.slug === id) || (id === "cv" && SITE.resume ? CV_VIEW : undefined);
+  const project = PROJECTS.find(p => p.slug === id);
 
   if (project && useLightbox()) {
     if (currentView !== "home") {
@@ -2205,7 +2153,7 @@ function routeView() {
     }
     setMenu(false);
     openLightbox(project);
-    document.title = `${project.title} - Valentina Orlova`;
+    document.title = `${SITE.name} - ${project.title}`;
     return;
   }
 
@@ -2217,11 +2165,11 @@ function routeView() {
 
   if (project && project !== currentProject) {
     if (ro) VIEWS.project.querySelectorAll(".cover").forEach(c => ro.unobserve(c));
-    if (project.cv) { renderCV(VIEWS.project); } else { renderProject(project); watchCovers(VIEWS.project); }
+    renderProject(project); watchCovers(VIEWS.project);
   }
   Object.entries(VIEWS).forEach(([k, el]) => { el.hidden = k !== view; });
-  document.title = view === "project" ? `${project.title} - Valentina Orlova`
-    : "Valentina Orlova - Product & Web Design for Early-Stage Companies";
+  document.title = view === "project" ? `${SITE.name} - ${project.title}`
+    : HOME_TITLE;
   currentView = view; currentProject = project || null;
 
   setMenu(false);
@@ -2471,7 +2419,7 @@ function commit() {
   const p = EDIT.project, vals = readFields(EDIT.root, p);
   if (cardChanged(vals, pickFields(p))) EDIT.cardsDirty = true;
   Object.assign(p, vals);
-  if (openProject() === p) document.title = `${p.title} - Valentina Orlova`;
+  if (openProject() === p) document.title = `${SITE.name} - ${p.title}`;
   if (fieldsKey(vals) === fieldsKey(storedFields(p.slug))) {
     if (!EDIT.writing && !EDIT.queue.size) { EDIT.failed = false; setStatus("saved"); }
   } else {
@@ -2523,7 +2471,7 @@ async function restoreOriginal() {
   const f = n => EDIT.root.querySelector(`[data-field="${n}"]`);
   for (const n of Object.keys(CS_FIELDS)) if (f(n)) f(n).textContent = n === "tags" ? p.tags.join(", ") : (p[n] || "");
   renderLogoSlot(EDIT.root, p);
-  document.title = `${p.title} - Valentina Orlova`;
+  document.title = `${SITE.name} - ${p.title}`;
   setStatus("saving");
   try { await EDIT.db.collection(CS_COLLECTION).doc(p.slug).delete(); delete EDIT.overrides[p.slug]; EDIT.failed = false; setStatus("saved"); }
   catch (e) { EDIT.failed = true; setStatus("error"); }
@@ -2589,7 +2537,7 @@ function onOverrides(snap) {
     if (cardChanged(next, pickFields(p))) cards = true;
     Object.assign(p, JSON.parse(JSON.stringify(next)));
     const root = rootFor(p);
-    if (root) { syncView(root, p); document.title = `${p.title} - Valentina Orlova`; }
+    if (root) { syncView(root, p); document.title = `${SITE.name} - ${p.title}`; }
   });
   if (cards) refreshCards();
   updateRestore();
