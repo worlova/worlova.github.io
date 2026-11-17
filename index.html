@@ -25,7 +25,7 @@
 <!-- Fonts are files of this site (no request to Google before the first paint); the About portrait loads early because it is the largest thing on the first screen -->
 <link rel="preload" href="fonts/inter-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/cormorant-garamond-latin-600-italic.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" as="image" type="image/avif" imagesrcset="img/about/portrait-480.avif 480w, img/about/portrait-800.avif 800w, img/about/portrait-1200.avif 1200w" imagesizes="(max-width: 999px) 91vw, (max-width: 1319px) 900px, (max-width: 1500px) 52vw, 48vw" fetchpriority="high">
+<link rel="preload" as="image" type="image/webp" imagesrcset="img/about/avatar-128.webp 128w, img/about/avatar-256.webp 256w" imagesizes="64px" fetchpriority="high">   <!-- the About card opens collapsed, so only the avatar is needed up front; the full portrait loads when it is expanded -->
 <style>
 /* Self-hosted fonts (Latin): Inter variable (weight 300–600, optical size 14–32) and Cormorant Garamond italic 400 / 500 / 600 */
 @font-face { font-family: "Inter"; font-style: normal; font-weight: 300 600; font-display: swap; src: url("fonts/inter-latin-opsz-normal.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
@@ -318,11 +318,40 @@ h2 { font-size: clamp(34px, 3.8vw, 44px); line-height: 1.08; letter-spacing: -0.
   transform: translate(-50%, -50%) translateY(var(--lift, 0px)) scale(var(--s, .5));
 }
 /* The first card: about me. Text on the left half, photo on the right half */
-.tile-about {
-  grid-column: 1 / -1; aspect-ratio: auto; min-height: clamp(380px, 38vw, 500px);
-  background: rgba(255, 255, 255, .10); display: grid;
+.tile-about { grid-column: 1 / -1; aspect-ratio: auto; background: rgba(255, 255, 255, .10); display: block; }
+/* Collapsed by default. The peek is the whole card until it is opened; opened, the card is exactly as it was before. */
+.about-peek {
+  width: 100%; display: grid; align-items: center;
+  grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "title avatar" "excerpt avatar";
+  column-gap: clamp(18px, 2.4vw, 32px);
+  padding: clamp(20px, 2.4vw, 28px) clamp(20px, 3vw, 36px);
+  background: none; border: 0; color: inherit; font: inherit; text-align: left; cursor: pointer;
+  border-radius: inherit;
+  animation: about-nudge 5.5s ease-in-out 2.5s infinite;   /* two small hops, then a long rest */
+}
+.about-title { grid-area: title; }
+.about-excerpt { grid-area: excerpt; }
+.about-avatar { grid-area: avatar; align-self: center; width: clamp(68px, 7vw, 88px); aspect-ratio: 1; border-radius: 12px; object-fit: cover; display: block; }
+.about-avatar-mark { display: grid; place-items: center; background: rgba(255, 255, 255, .10); }
+.about-avatar-mark svg { width: 56%; height: auto; aspect-ratio: 1887 / 1781; color: #fff; opacity: .94; }
+.about-chevron { display: none; }   /* hidden for now: the nudge is the invitation */
+/* The first two lines of the bio, faded out at the bottom so it reads as a preview */
+.about-excerpt {
+  display: block; margin-top: 10px; max-width: 62ch;
+  color: var(--muted); font-size: 15px; line-height: 1.55; max-height: 3.1em; overflow: hidden;
+  mask-image: linear-gradient(to bottom, #000 0 1.2em, rgba(0, 0, 0, .18) 2.9em);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0 1.2em, rgba(0, 0, 0, .18) 2.9em);
+}
+@keyframes about-nudge {   /* hop, short pause, hop, then still for the rest of the cycle */
+  0%, 7%, 13%, 20%, 100% { translate: 0 0; }
+  3.5%  { translate: 0 -7px; }
+  16.5% { translate: 0 -7px; }
+}
+.tile-about:hover .about-peek, .about-peek:focus-visible { animation: none; }   /* once they are on it, stop asking */
+.about-body { display: grid; min-height: clamp(380px, 38vw, 500px);
   grid-template-columns: minmax(0, 1fr) 50%; grid-template-areas: "text photo";   /* desktop: photo takes half the card */
 }
+@media (prefers-reduced-motion: reduce) { .about-peek { animation: none; } }
 /* Photo fills the card height, which is set by the text column (bio, details, 80px, buttons); the photo crops to fit.
    The photo sits inside with 8px top, right and bottom; no padding on the text side. */
 .about-photo { grid-area: photo; padding: 8px 8px 8px 0; align-self: stretch; display: grid; }
@@ -337,13 +366,10 @@ h2 { font-size: clamp(34px, 3.8vw, 44px); line-height: 1.08; letter-spacing: -0.
 }
 /* The text column fills the card height so the My Process button can sit on the card bottom */
 .tile-about .tile-text { container: about-text / inline-size; grid-area: text; align-self: stretch; display: flex; flex-direction: column; padding: clamp(28px, 3.4vw, 44px) clamp(28px, 3.4vw, 44px) clamp(26px, 3vw, 40px); }
-.tile-about h3 { font-size: clamp(34px, 4vw, 56px); line-height: 1.02; letter-spacing: -0.005em; }
-/* One sentence per line; if the second is too long it breaks greedily ("I design products / 0 → 1.") */
-.tile-about .tile-text > h3#about-h { max-width: none; text-wrap: wrap; }
-/* H3 styling (as the workflow step titles): Inter 400, 22–28px */
-.tile-about #about-h { font-family: var(--font-body); font-style: normal; font-weight: 400; font-size: clamp(22px, 2.4vw, 28px); line-height: 1.25; letter-spacing: -0.02em; font-variant-numeric: normal; font-feature-settings: normal; }
-#about-h span { display: block; text-wrap: balance; }   /* one sentence per line; a sentence that has to wrap splits evenly */
-#about-h span.s { display: inline-block; }   /* line 1 holds two sentences; when it doesn’t fit it breaks between them first, and only splits a sentence on very narrow screens */
+/* The title, in both states (as the workflow step titles): Inter 400, 22–28px */
+.about-title, .tile-about #about-h { font-family: var(--font-body); font-style: normal; font-weight: 400; font-size: clamp(22px, 2.4vw, 28px); line-height: 1.25; letter-spacing: -0.02em; font-variant-numeric: normal; font-feature-settings: normal; max-width: none; text-wrap: wrap; }
+.about-title > span, .tile-about #about-h > span { display: block; text-wrap: balance; }   /* one sentence per line; a sentence that has to wrap splits evenly */
+   /* line 1 holds two sentences; when it doesn’t fit it breaks between them first, and only splits a sentence on very narrow screens */
 .tile-about .tile-text p { color: var(--body); margin-top: 18px; font-size: 17px; line-height: 1.55; text-wrap: pretty; }   /* pretty: no one-word last lines */
 .tile-about .tile-text > h3 + p { margin-top: 22px; }
 .tile-about .about-meta { margin: 30px 0 80px;   /* 80px between the bio details and the buttons */ grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 22px clamp(28px, 2.8vw, 40px); }
@@ -396,7 +422,11 @@ h2 { font-size: clamp(34px, 3.8vw, 44px); line-height: 1.08; letter-spacing: -0.
 .how > h3 { font-size: calc(clamp(39px, 6.2vw, 73px) - 5pt); line-height: 1.1; letter-spacing: -0.02em; text-align: center; }   /* section title (H3): Inter 400 */
 /* Tablets and phones (under 1000px): photo stacks above the text as a landscape 3:2 image to save height */
 @media (max-width: 999px) {
-  .tile-about { grid-template-columns: 1fr; grid-template-areas: "photo" "text"; }
+  .about-body { grid-template-columns: 1fr; grid-template-areas: "photo" "text"; }
+  /* phones: the avatar sits beside the title and the preview runs the full width under it */
+  .about-peek { grid-template-areas: "title avatar" "excerpt excerpt"; }
+  .about-avatar { align-self: start; }
+  .about-excerpt { margin-top: 14px; }
   .about-photo { padding: 8px; }
   .about-photo::before { padding-top: 66.6667%; }   /* the visible image is 3:2 */
   .tile-about .photo { object-position: 50% 10%; }   /* landscape crop: keep the top of the head in frame */
@@ -1628,14 +1658,24 @@ function portraitSet(ext) { return [480, 800, 1200].map(w => `${esc(SITE.photo)}
 function renderCards() {
   const aboutCard = `
     <article class="tile tile-about" id="about" aria-labelledby="about-h">
+      <!-- Collapsed: the title, the first two lines of the bio fading out, and the portrait thumbnail on the right -->
+      <button class="about-peek" type="button" aria-expanded="false" aria-controls="about-body">
+        <span class="about-title"><span>Hi, I’m Valentina.</span> <span>I love building products 0&nbsp;→&nbsp;1.</span></span>
+        <span class="about-excerpt" aria-hidden="true">I’ve been designing digital products for 10 years. What still keeps things fresh is the process itself: the messy early phase, plus the knowledge and spark my clients bring to the table. I learn something from every project and hope that never stops.</span>
+        ${SITE.photo
+          ? `<img class="about-avatar" src="img/about/avatar-128.webp" srcset="img/about/avatar-128.webp 128w, img/about/avatar-256.webp 256w" sizes="88px" width="128" height="128" alt="" aria-hidden="true">`
+          : `<span class="about-avatar about-avatar-mark"><svg viewBox="0 0 1887 1781" aria-hidden="true"><use href="#logo-mark"/></svg></span>`}
+        <svg class="about-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 6 8 10.5 12.5 6"/></svg>
+      </button>
+      <div class="about-body" id="about-body" hidden>
       <div class="about-photo">${SITE.photo
-        ? `<div class="tile-visual"><picture><source type="image/avif" srcset="${portraitSet("avif")}" sizes="${PORTRAIT_SIZES}"><img class="photo" src="${esc(SITE.photo)}-800.webp" srcset="${portraitSet("webp")}" sizes="${PORTRAIT_SIZES}" width="1200" height="1410" alt="${esc(SITE.name)}" fetchpriority="high"></picture></div>`
+        ? `<div class="tile-visual"><picture><source type="image/avif" srcset="${portraitSet("avif")}" sizes="${PORTRAIT_SIZES}"><img class="photo" src="${esc(SITE.photo)}-800.webp" srcset="${portraitSet("webp")}" sizes="${PORTRAIT_SIZES}" width="1200" height="1410" alt="${esc(SITE.name)}" loading="lazy" decoding="async"></picture></div>`
         : `<div class="tile-visual cover" data-pal="portrait" data-seed="41">
              <canvas aria-hidden="true"></canvas>
              <svg class="about-logo" viewBox="0 0 1887 1781" aria-hidden="true"><use href="#logo-mark"/></svg>
            </div>`}</div>
       <div class="tile-text">
-        <h3 id="about-h"><span><span class="s">Hi, I’m Valentina.</span> <span class="s">Five-time sole Product Designer.</span></span> <span>I love building products 0&nbsp;→&nbsp;1.</span></h3>
+        <h3 id="about-h"><span>Hi, I’m Valentina.</span> <span>I love building products 0&nbsp;→&nbsp;1.</span></h3>
         <p>I’ve been designing digital products for 10 years. What still keeps things fresh is the process itself: the messy early phase, plus the knowledge and spark my clients bring to the table. I learn something from every project and hope that never stops.</p>
         <p>I took a break from a corporate career to pursue my passion for knowledge and mastery. Turns out, I’m happiest on the front lines of a new product.</p>
         <p>These days, when I’m not on a client project, I’m usually experimenting with AI tools and new workflows, or spending time outside with my family.</p>
@@ -1647,6 +1687,7 @@ function renderCards() {
           <a class="pill about-cta" href="#contact">Contact Me</a>
           <a class="pill pill-outline about-cta" href="#process">My Process<svg class="arrow-down" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2.5v11M3.5 9 8 13.5 12.5 9"/></svg></a>
         </div>
+      </div>
       </div>
     </article>`;
   const intro = `<div class="grid-intro" id="projects"><h2>${SITE.projectsIntro.map(t => `<span>${esc(t)}</span>`).join(" ")}</h2>${SITE.projectsDesc ? `<p class="grid-intro-desc">${esc(SITE.projectsDesc)}</p>` : ""}<a class="intro-badge" href="mailto:${esc(SITE.email)}" title="${esc(SITE.email)}"><svg class="intro-badge-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.5 4h15A2.5 2.5 0 0 1 22 6.5v.3l-9.4 6.1a1.1 1.1 0 0 1-1.2 0L2 6.8v-.3A2.5 2.5 0 0 1 4.5 4z"/><path d="M2 9.2l8.3 5.4a3.1 3.1 0 0 0 3.4 0L22 9.2v8.3a2.5 2.5 0 0 1-2.5 2.5h-15A2.5 2.5 0 0 1 2 17.5z"/></svg><span>${esc(SITE.projectsBadge)}</span></a></div>`;
@@ -1926,6 +1967,33 @@ function fit(cover) {
   st.style.setProperty("--dy", (crop * H * s).toFixed(1) + "px");
 }
 
+/* ---------- About card ---------- */
+/* Collapsed on load: the header carries the title and the avatar, and the rest is revealed on demand.
+   The full portrait is lazy, so a visitor who never opens the card never downloads it. */
+function setAbout(open) {
+  const card = document.getElementById("about"), body = document.getElementById("about-body"),
+        btn = card && card.querySelector(".about-peek");
+  if (!card || !body || !btn) return;
+  card.classList.toggle("is-open", open);
+  body.hidden = !open;
+  btn.hidden = open;
+  btn.setAttribute("aria-expanded", String(open));
+}
+function setupAbout() {
+  const btn = document.querySelector("#about .about-peek");
+  if (!btn || btn.dataset.wired) return;
+  btn.dataset.wired = "1";
+  btn.addEventListener("click", () => {
+    const open = btn.getAttribute("aria-expanded") !== "true";
+    setAbout(open);
+    if (!open) document.getElementById("about").scrollIntoView({ block: "nearest", behavior: "smooth" });
+  });
+}
+/* A link to #about (the nav, or a shared link) opens the card rather than scrolling to a closed one */
+function openAboutForHash() {
+  if (decodeURIComponent(location.hash.slice(1)) === "about") setAbout(true);
+}
+
 /* ---------- Contact ---------- */
 function setupContact() {
   const status = document.getElementById("status");
@@ -2126,7 +2194,7 @@ window.addEventListener("resize", () => {
   const h = decodeURIComponent(location.hash.slice(1));
   if (h === "cv" || PROJECTS.some(p => p.slug === h)) route();
 });
-window.addEventListener("hashchange", route);
+window.addEventListener("hashchange", () => { route(); openAboutForHash(); });
 // The intro animation plays once; without this it replays (and shifts scroll targets) when Home is shown again
 document.querySelectorAll(".rise").forEach(el => el.addEventListener("animationend", () => el.classList.remove("rise"), { once: true }));
 // A link to the page you're already on: no hashchange fires, so handle it here
@@ -2136,6 +2204,7 @@ document.addEventListener("click", e => {
   e.preventDefault();
   const id = location.hash.slice(1);
   route();
+  openAboutForHash();
   if (PROJECTS.some(p => p.slug === id)) (LB.open ? LB.body : window).scrollTo({ top: 0, behavior: "smooth" });
 });
 
@@ -2228,7 +2297,7 @@ function rootFor(p) {
 function refreshCards() {
   const grid = document.getElementById("grid");
   if (ro) grid.querySelectorAll(".cover").forEach(c => ro.unobserve(c));
-  renderCards(); watchCovers(grid);
+  renderCards(); watchCovers(grid); setupAbout();
 }
 function logoAdj(p) { return Number.isFinite(p.logoAdjust) && p.logoAdjust ? ` style="--logo-adj: ${p.logoAdjust}px"` : ""; }   // per-project case study logo size tweak (logoAdjust in PROJECTS, px)
 function logoImg(p, cls) { return p.logo ? `<img class="${cls}${p.logoWhite ? " proj-logo-white" : ""}"${logoAdj(p)} src="${esc(p.logo)}" alt="">` : ""; }
@@ -2552,9 +2621,11 @@ const waitForClaude = (ms = 10000) => new Promise(res => {
 
 renderCards();
 applySite();
+setupAbout();
 setupContact();
 watchCovers(document);
 route();
+openAboutForHash();
 
 const onScroll = () => head.classList.toggle("scrolled", window.scrollY > 8);
 window.addEventListener("scroll", onScroll, { passive: true }); onScroll();
