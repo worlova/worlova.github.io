@@ -167,7 +167,7 @@ h3, h4 { font-family: var(--font-body); font-weight: 400; text-wrap: balance; }
 .hero-home h1 .h1-line { display: block; text-wrap: balance; }   /* each half of the headline balances on its own */
 /* Two lines, one break after "design": the headline spans the full width and scales so
    "for early-stage & established companies" (about 13.6× the font size wide) fits on one line; 102px at most, 40px at least (phones wrap) */
-.hero-home > h1 { grid-column: 1 / -1; font-size: clamp(40px, calc(100cqi / 13.9), 102px); }
+.hero-home > h1 { grid-column: 1 / -1; font-size: clamp(33px, calc(100cqi / 13.9 - 7px), 95px); }   /* 7px off every stop (Nov 17) */
 @media (max-width: 1320px) { .hero-home > * { grid-column: 2 / span 10; } }   /* a wider headline column on laptops and tablets, so the longer headline keeps to 3 lines */
 @media (max-width: 960px) { .hero-home > * { grid-column: 1 / -1; } }
 @property --sheen { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
@@ -327,7 +327,7 @@ h2 { font-size: clamp(34px, 3.8vw, 44px); line-height: 1.08; letter-spacing: -0.
   padding: clamp(20px, 2.4vw, 28px) clamp(20px, 3vw, 36px);
   background: none; border: 0; color: inherit; font: inherit; text-align: left; cursor: pointer;
   border-radius: inherit;
-  animation: about-nudge 5.5s ease-in-out 2.5s infinite;   /* two small hops, then a long rest */
+  animation: about-nudge 2.6s ease-in-out 2s 1 both;   /* a notification shake, once, again a second later, then still */
 }
 .about-title { grid-area: title; }
 .about-excerpt { grid-area: excerpt; }
@@ -342,10 +342,16 @@ h2 { font-size: clamp(34px, 3.8vw, 44px); line-height: 1.08; letter-spacing: -0.
   mask-image: linear-gradient(to bottom, #000 0 1.2em, rgba(0, 0, 0, .18) 2.9em);
   -webkit-mask-image: linear-gradient(to bottom, #000 0 1.2em, rgba(0, 0, 0, .18) 2.9em);
 }
-@keyframes about-nudge {   /* hop, short pause, hop, then still for the rest of the cycle */
-  0%, 7%, 13%, 20%, 100% { translate: 0 0; }
-  3.5%  { translate: 0 -7px; }
-  16.5% { translate: 0 -7px; }
+@keyframes about-nudge {   /* side to side, a beat, side to side again, then it stops asking */
+  0%, 17%, 56%, 73%, 100% { translate: 0 0; }
+  3%  { translate: -6px 0; }
+  7%  { translate:  6px 0; }
+  11% { translate: -4px 0; }
+  14% { translate:  3px 0; }
+  59% { translate: -6px 0; }
+  63% { translate:  6px 0; }
+  67% { translate: -4px 0; }
+  70% { translate:  3px 0; }
 }
 .tile-about:hover .about-peek, .about-peek:focus-visible { animation: none; }   /* once they are on it, stop asking */
 .about-body { display: grid; min-height: clamp(380px, 38vw, 500px);
