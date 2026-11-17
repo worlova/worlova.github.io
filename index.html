@@ -160,7 +160,7 @@ h3, h4 { font-family: var(--font-body); font-weight: 400; text-wrap: balance; }
 .hero-home {
   container-type: inline-size;
   display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 20px;
-  padding-top: calc(clamp(56px, 9vw, 120px) - 25px); padding-bottom: calc(clamp(40px, 5vw, 64px) + 55px);
+  padding-top: calc(clamp(56px, 9vw, 120px) - 25px); padding-bottom: calc(clamp(40px, 5vw, 64px) + 20px);   /* -35px in all (Nov 18) */
 }
 .hero-home > * { grid-column: 3 / span 8; text-align: center; }
 .hero-home > .status { justify-self: center; }
@@ -301,7 +301,7 @@ h2 { font-size: clamp(34px, 3.8vw, 44px); line-height: 1.08; letter-spacing: -0.
 .tile-text .tags { margin-top: 14px; }
 /* Section title between the About card and the project cards: the project card title style (Inter 500), full width */
 /* Title at the left edge with its description directly below, both left-aligned */
-.grid-intro { grid-column: 1 / -1; padding: clamp(56px, 7vw, 96px) 0 clamp(20px, 2.6vw, 32px); text-align: center; scroll-margin-top: 84px; }
+.grid-intro { grid-column: 1 / -1; padding: calc(clamp(56px, 7vw, 96px) + 10px) 0 clamp(20px, 2.6vw, 32px);   /* +10px above "Project highlights" (Nov 18) */ text-align: center; scroll-margin-top: 84px; }
 .grid-intro h2 { font-family: var(--font-body); font-style: normal; font-weight: 400; font-size: calc(clamp(39px, 6.2vw, 73px) - 5pt); line-height: 1.1; letter-spacing: -0.02em; color: var(--text); font-variant-numeric: normal; font-feature-settings: normal; }   /* H2: same look as the case study titles in the lightbox and the section titles */
 /* Each item in SITE.projectsIntro is its own line; a line that has to wrap splits evenly */
 .grid-intro h2 span { display: block; text-wrap: balance; }
@@ -330,7 +330,7 @@ h2 { font-size: clamp(34px, 3.8vw, 44px); line-height: 1.08; letter-spacing: -0.
 }
 .about-title { grid-area: title; }
 .about-excerpt { grid-area: excerpt; }
-.about-avatar { grid-area: avatar; align-self: center; width: clamp(68px, 7vw, 88px); aspect-ratio: 1; border-radius: 12px; object-fit: cover; display: block; }
+.about-avatar { grid-area: avatar; align-self: center; width: clamp(68px, 7vw, 88px); height: auto; aspect-ratio: 1;   /* height:auto, or the img’s height attribute wins and the square stretches */ border-radius: 12px; object-fit: cover; display: block; }
 .about-avatar-mark { display: grid; place-items: center; background: rgba(255, 255, 255, .10); }
 .about-avatar-mark svg { width: 56%; height: auto; aspect-ratio: 1887 / 1781; color: #fff; opacity: .94; }
 .about-chevron { display: none; }   /* hidden for now */
@@ -348,7 +348,12 @@ h2 { font-size: clamp(34px, 3.8vw, 44px); line-height: 1.08; letter-spacing: -0.
    The photo sits inside with 8px top, right and bottom; no padding on the text side. */
 .about-photo { grid-area: photo; padding: 8px 8px 8px 0; align-self: stretch; display: grid; }
 .about-photo::before { content: ""; grid-area: 1 / 1; padding-top: 0; }   /* no minimum ratio on desktop (it was 7:8, which made wide screens taller than the text) */
-.tile.tile-about, .tile.tile-about:hover { transform: none; background-color: rgba(255, 255, 255, .10); transition: none; }
+/* Collapsed, the card is a button, so it lifts and lightens on hover like the project cards below.
+   Opened it is not clickable any more, so it sits still. */
+.tile.tile-about.is-open, .tile.tile-about.is-open:hover { transform: none; background-color: rgba(255, 255, 255, .10); transition: none; }
+.tile-about .about-avatar { transition: transform .2s cubic-bezier(0, 0, .2, 1); }
+.tile-about:not(.is-open):hover .about-avatar { transform: translateY(-4px); }
+@media (prefers-reduced-motion: reduce) { .tile-about .about-avatar { transition: none; } .tile-about:hover .about-avatar { transform: none; } }
 .tile-about .tile-visual { grid-area: 1 / 1; position: relative; overflow: hidden; width: 100%; height: auto; border-radius: 8px; }   /* 16px card corner minus the 8px inset */
 .tile-about .tile-visual canvas, .tile-about .photo { position: absolute; inset: 0; width: 100%; height: 100%; }
 .tile-about .photo { object-fit: cover; object-position: 50% 30%; }
@@ -1652,7 +1657,7 @@ function renderCards() {
     <article class="tile tile-about" id="about" aria-labelledby="about-h">
       <!-- Collapsed: the title, the first two lines of the bio fading out, and the portrait thumbnail on the right -->
       <button class="about-peek" type="button" aria-expanded="false" aria-controls="about-body">
-        <span class="about-title"><span>Hi, I’m Valentina, 5 times a Founding Designer.</span> <span>I love building products 0&nbsp;→&nbsp;1.</span></span>
+        <span class="about-title"><span>Hi, I’m Valentina, 4 times a Founding Designer.</span> <span>I love building products 0&nbsp;→&nbsp;1.</span></span>
         <span class="about-excerpt" aria-hidden="true">I’ve been designing digital products for 10 years. What still keeps things fresh is the process itself: the messy early phase, plus the knowledge and spark my clients bring to the table. I learn something from every project and hope that never stops.</span>
         ${SITE.photo
           ? `<img class="about-avatar" src="img/about/avatar-128.webp" srcset="img/about/avatar-128.webp 128w, img/about/avatar-256.webp 256w" sizes="88px" width="128" height="128" alt="" aria-hidden="true">`
@@ -1667,7 +1672,7 @@ function renderCards() {
              <svg class="about-logo" viewBox="0 0 1887 1781" aria-hidden="true"><use href="#logo-mark"/></svg>
            </div>`}</div>
       <div class="tile-text">
-        <h3 id="about-h"><span>Hi, I’m Valentina, 5 times a Founding Designer.</span> <span>I love building products 0&nbsp;→&nbsp;1.</span></h3>
+        <h3 id="about-h"><span>Hi, I’m Valentina, 4 times a Founding Designer.</span> <span>I love building products 0&nbsp;→&nbsp;1.</span></h3>
         <p>I’ve been designing digital products for 10 years. What still keeps things fresh is the process itself: the messy early phase, plus the knowledge and spark my clients bring to the table. I learn something from every project and hope that never stops.</p>
         <p>I took a break from a corporate career to pursue my passion for knowledge and mastery. Turns out, I’m happiest on the front lines of a new product.</p>
         <p>These days, when I’m not on a client project, I’m usually experimenting with AI tools and new workflows, or spending time outside with my family.</p>
