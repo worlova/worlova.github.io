@@ -32,7 +32,7 @@
 @font-face { font-family: "Cormorant Garamond"; font-style: italic; font-weight: 400; font-display: swap; src: url("fonts/cormorant-garamond-latin-400-italic.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
 @font-face { font-family: "Cormorant Garamond"; font-style: italic; font-weight: 500; font-display: swap; src: url("fonts/cormorant-garamond-latin-500-italic.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
 @font-face { font-family: "Cormorant Garamond"; font-style: italic; font-weight: 600; font-display: swap; src: url("fonts/cormorant-garamond-latin-600-italic.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
-@font-face { font-family: "Pixelify Sans"; font-style: normal; font-weight: 400; font-display: swap; src: url("fonts/pixelify-sans-latin-400-normal.woff2") format("woff2"); }   /* SIL OFL 1.1, licence in fonts/pixelify-sans-OFL.txt */
+@font-face { font-family: "Geist Pixel"; font-style: normal; font-weight: 400; font-display: swap; src: url("fonts/geist-pixel-latin-400-normal.woff2") format("woff2"); }   /* SIL OFL 1.1, licence in fonts/geist-pixel-OFL.txt */
 :root {
   /* Layout: full width with 40px side margins on a 12-column grid; headline on 8 centered columns, project cards on all 12 */
   --bg: #000000;
@@ -166,11 +166,11 @@ h3, h4 { font-family: var(--font-body); font-weight: 400; text-wrap: balance; }
 .hero-home > * { grid-column: 3 / span 8; text-align: center; }
 .hero-home > .status { justify-self: center; }
 .hero-home h1 .h1-line { display: block; text-wrap: balance; }
-/* Three voices in one headline (Nov 18): Inter for the plain words, a pixel face for "early-stage", the Cormorant italic kept for "& established".
+/* Three voices in one headline (Nov 18): Inter for the plain words, Geist Pixel for "early-stage", the Cormorant italic kept for "& established".
    Each face is scaled so its x-height matches the Cormorant's, so the mix sits on one optical size. */
 .hero-home h1 .h1-inter { font-family: var(--font-body); font-style: normal; font-weight: 400; letter-spacing: -0.035em; font-size: var(--h1-inter-scale, .77em); font-variant-numeric: normal; font-feature-settings: normal; }
 .hero-home h1 .h1-line.h1-inter { font-size: var(--h1-inter-scale, .77em); }
-.hero-home h1 .h1-pixel { font-family: "Pixelify Sans", var(--font-body); font-style: normal; font-weight: 400; letter-spacing: -0.01em; font-size: var(--h1-pixel-scale, .89em); white-space: nowrap; }   /* each half of the headline balances on its own */
+.hero-home h1 .h1-pixel { font-family: "Geist Pixel", ui-monospace, monospace; font-style: normal; font-weight: 400; letter-spacing: -0.02em; font-size: var(--h1-pixel-scale, .74em); white-space: nowrap; }   /* each half of the headline balances on its own */
 /* Two lines, one break after "design": the headline spans the full width and scales so
    "for early-stage & established companies" (about 13.6× the font size wide) fits on one line; 102px at most, 40px at least (phones wrap) */
 .hero-home > h1 { grid-column: 1 / -1; font-size: clamp(33px, calc(100cqi / 13.9 - 7px), 95px); }   /* 7px off every stop (Nov 17) */
