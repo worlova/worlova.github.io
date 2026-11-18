@@ -166,7 +166,7 @@ h3, h4 { font-family: var(--font-body); font-weight: 400; text-wrap: balance; }
 .hero-home {
   container-type: inline-size;
   display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 20px;
-  padding-top: calc(clamp(56px, 9vw, 120px) - 25px); padding-bottom: calc(clamp(40px, 5vw, 64px) - 10px);   /* -65px in all (Nov 18) */
+  padding-top: calc(clamp(56px, 9vw, 120px) - 25px); padding-bottom: calc((clamp(40px, 5vw, 64px) - 10px) * 1.2);   /* -65px in all (Nov 18); headline → About card +20% (Nov 18) */
 }
 .hero-home > * { grid-column: 3 / span 8; text-align: center; }
 .hero-home > .status { justify-self: center; }
@@ -369,11 +369,10 @@ h2 { font-size: clamp(34px, 3.8vw, 44px); line-height: 1.08; letter-spacing: -0.
 }
 /* Photo fills the card height, which is set by the text column (bio, details, 80px, buttons); the photo crops to fit.
    The photo sits inside with 8px top, right and bottom; no padding on the text side. */
-/* Desktop: a small portrait anchored to the card's bottom-right corner, 8px from the right and bottom edges.
-   It is 40% of the width the photo had when it filled half the card (50% of the card minus 8px), cropped square. */
-.about-photo { grid-area: photo; padding: 8px 8px 8px 0; align-self: end; justify-self: end; display: grid;
-  width: calc((125% - 8px) * .4 + 8px); }   /* the photo column is 40% of the card, so half the card is 125% of it */
-.about-photo::before { content: ""; grid-area: 1 / 1; padding-top: 100%; }   /* square (Nov 18) */
+/* Desktop: the photo fills the whole photo column – 40% of the card's width and its full height, inset 8px
+   from the top, right and bottom edges – and crops to fit rather than stretching (Nov 18). */
+.about-photo { grid-area: photo; padding: 8px 8px 8px 0; align-self: stretch; justify-self: stretch; display: grid; }
+.about-photo::before { content: ""; grid-area: 1 / 1; padding-top: 0; }   /* no fixed ratio on desktop: the card's height sets it */
 /* Collapsed, the card is a button, so it lifts and lightens on hover like the project cards below.
    Opened it is not clickable any more, so it sits still. */
 .tile.tile-about.is-open, .tile.tile-about.is-open:hover { transform: none; background-color: rgba(255, 255, 255, .10); transition: none; }
@@ -393,7 +392,7 @@ h2 { font-size: clamp(34px, 3.8vw, 44px); line-height: 1.08; letter-spacing: -0.
    /* line 1 holds two sentences; when it doesn’t fit it breaks between them first, and only splits a sentence on very narrow screens */
 .tile-about .tile-text p { color: var(--body); margin-top: 18px; font-size: 17px; line-height: 1.55; text-wrap: pretty; }   /* pretty: no one-word last lines */
 .tile-about .tile-text > h3 + p { margin-top: 22px; }
-.tile-about .about-meta { margin: 30px 0 80px;   /* 80px between the bio details and the buttons */ grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 22px clamp(28px, 2.8vw, 40px); }
+.tile-about .about-meta { margin: 30px 0 40px;   /* 40px between the bio details and the buttons (was 80px, −50% Nov 18) */ grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 22px clamp(28px, 2.8vw, 40px); }
 /* Six equal columns; Areas of expertise and Core strengths each span two (columns 1–4) */
 .tile-about .about-meta > div { grid-column: span 2; }
 /* About card details: each label sits above its value */
