@@ -360,12 +360,15 @@ h2 { font-size: clamp(34px, 3.8vw, 44px); line-height: 1.08; letter-spacing: -0.
   -webkit-mask-image: linear-gradient(to bottom, #000 0 1.2em, rgba(0, 0, 0, .18) 2.9em);
 }
 .about-body { display: grid; min-height: clamp(380px, 38vw, 500px);
-  grid-template-columns: minmax(0, 1fr) 50%; grid-template-areas: "text photo";   /* desktop: photo takes half the card */
+  grid-template-columns: 60% minmax(0, 1fr); grid-template-areas: "text photo";   /* desktop: the copy takes 60% of the card */
 }
 /* Photo fills the card height, which is set by the text column (bio, details, 80px, buttons); the photo crops to fit.
    The photo sits inside with 8px top, right and bottom; no padding on the text side. */
-.about-photo { grid-area: photo; padding: 8px 8px 8px 0; align-self: stretch; display: grid; }
-.about-photo::before { content: ""; grid-area: 1 / 1; padding-top: 0; }   /* no minimum ratio on desktop (it was 7:8, which made wide screens taller than the text) */
+/* Desktop: a small portrait anchored to the card's bottom-right corner, 8px from the right and bottom edges.
+   It is 40% of the width the photo had when it filled half the card (50% of the card minus 8px), at the photo's own 1200:1410 ratio. */
+.about-photo { grid-area: photo; padding: 8px 8px 8px 0; align-self: end; justify-self: end; display: grid;
+  width: calc((125% - 8px) * .4 + 8px); }   /* the photo column is 40% of the card, so half the card is 125% of it */
+.about-photo::before { content: ""; grid-area: 1 / 1; padding-top: 117.5%; }   /* 1410 / 1200 */
 /* Collapsed, the card is a button, so it lifts and lightens on hover like the project cards below.
    Opened it is not clickable any more, so it sits still. */
 .tile.tile-about.is-open, .tile.tile-about.is-open:hover { transform: none; background-color: rgba(255, 255, 255, .10); transition: none; }
@@ -445,7 +448,7 @@ h2 { font-size: clamp(34px, 3.8vw, 44px); line-height: 1.08; letter-spacing: -0.
 /* Tablets and phones (under 1000px): photo stacks above the text as a landscape 3:2 image to save height */
 @media (max-width: 999px) {
   .about-body { grid-template-columns: 1fr; grid-template-areas: "photo" "text"; }
-  .about-photo { padding: 8px; }
+  .about-photo { padding: 8px; width: auto; align-self: stretch; justify-self: stretch; }
   .about-photo::before { padding-top: 66.6667%; }   /* the visible image is 3:2 */
   .tile-about .photo { object-position: 50% 10%; }   /* landscape crop: keep the top of the head in frame */
 }
