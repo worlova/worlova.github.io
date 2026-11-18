@@ -644,7 +644,7 @@ body:has(#grid:empty) :is(#process, #contact), body:has(#grid:empty) > .site-foo
 .next-link.fwd { flex-direction: row-reverse; text-align: right; justify-self: end; }
 .next-text { min-width: 0; }
 .next .mono { color: var(--muted); display: block; margin-bottom: 8px; }
-.next-link h2 { font-size: clamp(24px, 2.4vw, 34px); line-height: 1.05; transition: color .2s; }
+.next-link h2 { font-family: var(--font-body); font-style: normal; font-weight: 400; letter-spacing: -0.02em; font-variant-numeric: normal; font-feature-settings: normal; font-size: clamp(20px, 2vw, 28px); line-height: 1.15; transition: color .2s; }   /* Inter (Nov 18), sized to the italic it replaced: same x-height, not the same nominal size */
 .next-link:hover h2 { color: var(--muted); }
 .thumb {
   flex: none; width: clamp(112px, 11vw, 152px); aspect-ratio: 16 / 10; border-radius: 10px;
