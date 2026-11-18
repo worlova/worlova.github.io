@@ -25,7 +25,7 @@
 <!-- Fonts are files of this site (no request to Google before the first paint); the About portrait loads early because it is the largest thing on the first screen -->
 <link rel="preload" href="fonts/inter-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/cormorant-garamond-latin-600-italic.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" as="image" type="image/webp" imagesrcset="img/about/avatar-128.webp 128w, img/about/avatar-256.webp 256w" imagesizes="64px" fetchpriority="high">   <!-- the About card opens collapsed, so only the avatar is needed up front; the full portrait loads when it is expanded -->
+<link rel="preload" as="image" type="image/webp" imagesrcset="img/about/avatar-128.webp 128w, img/about/avatar-256.webp 256w, img/about/avatar-512.webp 512w" imagesizes="(max-width: 799px) 76px, 170px" fetchpriority="high">   <!-- the About card opens collapsed, so only the avatar is needed up front; the full portrait loads when it is expanded -->
 <style>
 /* Self-hosted fonts (Latin): Inter variable (weight 300–600, optical size 14–32) and Cormorant Garamond italic 400 / 500 / 600 */
 @font-face { font-family: "Inter"; font-style: normal; font-weight: 300 600; font-display: swap; src: url("fonts/inter-latin-opsz-normal.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
@@ -160,7 +160,7 @@ h3, h4 { font-family: var(--font-body); font-weight: 400; text-wrap: balance; }
 .hero-home {
   container-type: inline-size;
   display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 20px;
-  padding-top: calc(clamp(56px, 9vw, 120px) - 25px); padding-bottom: calc(clamp(40px, 5vw, 64px) + 20px);   /* -35px in all (Nov 18) */
+  padding-top: calc(clamp(56px, 9vw, 120px) - 25px); padding-bottom: calc(clamp(40px, 5vw, 64px) - 10px);   /* -65px in all (Nov 18) */
 }
 .hero-home > * { grid-column: 3 / span 8; text-align: center; }
 .hero-home > .status { justify-self: center; }
@@ -301,8 +301,10 @@ h2 { font-size: clamp(34px, 3.8vw, 44px); line-height: 1.08; letter-spacing: -0.
 .tile-text .tags { margin-top: 14px; }
 /* Section title between the About card and the project cards: the project card title style (Inter 500), full width */
 /* Title at the left edge with its description directly below, both left-aligned */
-.grid-intro { grid-column: 1 / -1; padding: calc(clamp(56px, 7vw, 96px) + 10px) 0 clamp(20px, 2.6vw, 32px);   /* +10px above "Project highlights" (Nov 18) */ text-align: center; scroll-margin-top: 84px; }
-.grid-intro h2 { font-family: var(--font-body); font-style: normal; font-weight: 400; font-size: calc(clamp(39px, 6.2vw, 73px) - 5pt); line-height: 1.1; letter-spacing: -0.02em; color: var(--text); font-variant-numeric: normal; font-feature-settings: normal; }   /* H2: same look as the case study titles in the lightbox and the section titles */
+.grid-intro { grid-column: 1 / -1; padding: calc(clamp(56px, 7vw, 96px) + 40px) 0 clamp(20px, 2.6vw, 32px);   /* +40px above "Project highlights" (Nov 18) */ text-align: center; scroll-margin-top: 84px; }
+/* H2 family, −12pt in all: −5pt (Nov 13) and −7pt more (Nov 18). Shared by Project highlights, My Process, Contact and the case study title in the lightbox.
+   The 28px floor keeps phones in proportion: the clamp bottoms out at 39px, so a flat −12pt would cut 29% there against 14% on desktop. */
+.grid-intro h2 { font-family: var(--font-body); font-style: normal; font-weight: 400; font-size: max(28px, calc(clamp(39px, 6.2vw, 73px) - 12pt)); line-height: 1.1; letter-spacing: -0.02em; color: var(--text); font-variant-numeric: normal; font-feature-settings: normal; }   /* H2: same look as the case study titles in the lightbox and the section titles */
 /* Each item in SITE.projectsIntro is its own line; a line that has to wrap splits evenly */
 .grid-intro h2 span { display: block; text-wrap: balance; }
 .grid-intro-desc { margin: 16px auto 0; max-width: none; color: var(--body); font-size: clamp(16px, 1.4vw, 18px); line-height: 1.5; text-wrap: balance; }   /* description under "Project highlights": one line wherever it fits, balanced lines on narrow screens */
@@ -322,15 +324,20 @@ h2 { font-size: clamp(34px, 3.8vw, 44px); line-height: 1.08; letter-spacing: -0.
 /* Collapsed by default. The peek is the whole card until it is opened; opened, the card is exactly as it was before. */
 .about-peek {
   width: 100%; display: grid; align-items: center;
-  grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "title avatar" "excerpt avatar";
-  column-gap: clamp(18px, 2.4vw, 32px);
+  grid-template-columns: minmax(0, 1fr); grid-template-areas: "title" "excerpt";
   padding: clamp(20px, 2.4vw, 28px) clamp(20px, 3vw, 36px);
+  padding-right: clamp(190px, 20vw, 230px);   /* keeps the text clear of the thumbnail */
   background: none; border: 0; color: inherit; font: inherit; text-align: left; cursor: pointer;
   border-radius: inherit;
 }
 .about-title { grid-area: title; }
 .about-excerpt { grid-area: excerpt; }
-.about-avatar { grid-area: avatar; align-self: center; width: clamp(68px, 7vw, 88px); height: auto; aspect-ratio: 1;   /* height:auto, or the img’s height attribute wins and the square stretches */ border-radius: 12px; object-fit: cover; display: block; }
+/* The thumbnail fills the card's height, inset 10px from the top, right and bottom edges.
+   The corner is concentric with the card's (16px outer radius, 10px inset). */
+.about-avatar {
+  position: absolute; top: 10px; right: 10px; height: calc(100% - 20px); width: auto; aspect-ratio: 1;
+  border-radius: 6px; object-fit: cover; display: block;
+}
 .about-avatar-mark { display: grid; place-items: center; background: rgba(255, 255, 255, .10); }
 .about-avatar-mark svg { width: 56%; height: auto; aspect-ratio: 1887 / 1781; color: #fff; opacity: .94; }
 .about-chevron { display: none; }   /* hidden for now */
@@ -351,9 +358,7 @@ h2 { font-size: clamp(34px, 3.8vw, 44px); line-height: 1.08; letter-spacing: -0.
 /* Collapsed, the card is a button, so it lifts and lightens on hover like the project cards below.
    Opened it is not clickable any more, so it sits still. */
 .tile.tile-about.is-open, .tile.tile-about.is-open:hover { transform: none; background-color: rgba(255, 255, 255, .10); transition: none; }
-.tile-about .about-avatar { transition: transform .2s cubic-bezier(0, 0, .2, 1); }
-.tile-about:not(.is-open):hover .about-avatar { transform: translateY(-4px); }
-@media (prefers-reduced-motion: reduce) { .tile-about .about-avatar { transition: none; } .tile-about:hover .about-avatar { transform: none; } }
+
 .tile-about .tile-visual { grid-area: 1 / 1; position: relative; overflow: hidden; width: 100%; height: auto; border-radius: 8px; }   /* 16px card corner minus the 8px inset */
 .tile-about .tile-visual canvas, .tile-about .photo { position: absolute; inset: 0; width: 100%; height: 100%; }
 .tile-about .photo { object-fit: cover; object-position: 50% 30%; }
@@ -416,14 +421,19 @@ h2 { font-size: clamp(34px, 3.8vw, 44px); line-height: 1.08; letter-spacing: -0.
 .about-cta { display: inline-flex; align-items: center; gap: 8px; }
 @media (max-width: 420px) { .about-ctas .pill { padding-inline: 16px; } }   /* keeps both buttons on one row on small phones */
 .about-cta .arrow-down { width: 15px; height: 15px; flex: none; }
-.how > h3 { font-size: calc(clamp(39px, 6.2vw, 73px) - 5pt); line-height: 1.1; letter-spacing: -0.02em; text-align: center; }   /* section title (H3): Inter 400 */
+.how > h3 { font-size: max(28px, calc(clamp(39px, 6.2vw, 73px) - 12pt)); line-height: 1.1; letter-spacing: -0.02em; text-align: center; }   /* section title (H3): Inter 400 */
+/* Under 800px, a thumbnail filling the card's height would squeeze the title past two lines, which makes the card
+   taller and the thumbnail wider again. So it becomes a fixed square tucked into the top-right corner, still 10px
+   from both edges, and the preview runs the full width under the title. */
+@media (max-width: 799px) {
+  .about-peek { padding-right: 20px; }
+  .about-title { padding-right: 84px; }
+  .about-avatar { height: 76px; width: 76px; }
+  .about-excerpt { margin-top: 14px; }
+}
 /* Tablets and phones (under 1000px): photo stacks above the text as a landscape 3:2 image to save height */
 @media (max-width: 999px) {
   .about-body { grid-template-columns: 1fr; grid-template-areas: "photo" "text"; }
-  /* phones: the avatar sits beside the title and the preview runs the full width under it */
-  .about-peek { grid-template-areas: "title avatar" "excerpt excerpt"; }
-  .about-avatar { align-self: start; }
-  .about-excerpt { margin-top: 14px; }
   .about-photo { padding: 8px; }
   .about-photo::before { padding-top: 66.6667%; }   /* the visible image is 3:2 */
   .tile-about .photo { object-position: 50% 10%; }   /* landscape crop: keep the top of the head in frame */
@@ -467,7 +477,7 @@ body:has(#grid:empty) :is(#process, #contact), body:has(#grid:empty) > .site-foo
 .proj-title-row { display: flex; align-items: flex-start; gap: calc(.22em + 8px); font-size: clamp(54px, 9vw, 102px); }   /* logo-to-title gap: +8px (Nov 13) */
 .proj-title-row .proj-title { font-size: 1em; min-width: 0; line-height: 1; letter-spacing: -0.015em; text-wrap: wrap; }   /* H2 in the lightbox, H1 on the phone page */
 /* In the lightbox the title takes the H3 section-title look (Inter 400, up to 73px, like "My Process"); the logo stays .62× and centered on the first line */
-#lb-body .proj-title-row { font-size: calc(clamp(39px, 6.2vw, 73px) - 5pt); }
+#lb-body .proj-title-row { font-size: max(28px, calc(clamp(39px, 6.2vw, 73px) - 12pt)); }
 #lb-body .proj-title-row .proj-title { font-family: var(--font-body); font-style: normal; font-weight: 400; line-height: 1.1; letter-spacing: -0.02em; font-variant-numeric: normal; font-feature-settings: normal; }
 #lb-body .proj-logo { height: 1.1em; }
 .proj-logo { flex: none; display: flex; align-items: center; height: 1em; }      /* one title line tall (line-height 1) */
@@ -694,7 +704,7 @@ body.is-editing .lb-keys { display: none; }
 
 /* Contact */
 .contact { text-align: center; overflow-x: clip; }
-.contact h3 { font-size: calc(clamp(39px, 6.2vw, 73px) - 5pt); line-height: 1.1; letter-spacing: -0.02em; margin-inline: auto; }   /* section title (H3): Inter 400 */
+.contact h3 { font-size: max(28px, calc(clamp(39px, 6.2vw, 73px) - 12pt)); line-height: 1.1; letter-spacing: -0.02em; margin-inline: auto; }   /* section title (H3): Inter 400 */
 .mail-stage { position: relative; width: max-content; max-width: min(600px, 100%); margin: 64px auto 0; }   /* the card hugs the address, so its padding reads the same on all four sides */
 .mail {
   position: relative; z-index: 1;
@@ -1660,7 +1670,7 @@ function renderCards() {
         <span class="about-title"><span>Hi, I’m Valentina, 4 times a Founding Designer.</span> <span>I love building products 0&nbsp;→&nbsp;1.</span></span>
         <span class="about-excerpt" aria-hidden="true">I’ve been designing digital products for 10 years. What still keeps things fresh is the process itself: the messy early phase, plus the knowledge and spark my clients bring to the table. I learn something from every project and hope that never stops.</span>
         ${SITE.photo
-          ? `<img class="about-avatar" src="img/about/avatar-128.webp" srcset="img/about/avatar-128.webp 128w, img/about/avatar-256.webp 256w" sizes="88px" width="128" height="128" alt="" aria-hidden="true">`
+          ? `<img class="about-avatar" src="img/about/avatar-128.webp" srcset="img/about/avatar-128.webp 128w, img/about/avatar-256.webp 256w, img/about/avatar-512.webp 512w" sizes="(max-width: 520px) 76px, 170px" width="128" height="128" alt="" aria-hidden="true">`
           : `<span class="about-avatar about-avatar-mark"><svg viewBox="0 0 1887 1781" aria-hidden="true"><use href="#logo-mark"/></svg></span>`}
         <svg class="about-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 6 8 10.5 12.5 6"/></svg>
       </button>
