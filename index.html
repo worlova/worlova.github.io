@@ -32,6 +32,7 @@
 @font-face { font-family: "Cormorant Garamond"; font-style: italic; font-weight: 400; font-display: swap; src: url("fonts/cormorant-garamond-latin-400-italic.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
 @font-face { font-family: "Cormorant Garamond"; font-style: italic; font-weight: 500; font-display: swap; src: url("fonts/cormorant-garamond-latin-500-italic.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
 @font-face { font-family: "Cormorant Garamond"; font-style: italic; font-weight: 600; font-display: swap; src: url("fonts/cormorant-garamond-latin-600-italic.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Pixelify Sans"; font-style: normal; font-weight: 400; font-display: swap; src: url("fonts/pixelify-sans-latin-400-normal.woff2") format("woff2"); }   /* SIL OFL 1.1, licence in fonts/pixelify-sans-OFL.txt */
 :root {
   /* Layout: full width with 40px side margins on a 12-column grid; headline on 8 centered columns, project cards on all 12 */
   --bg: #000000;
@@ -164,7 +165,12 @@ h3, h4 { font-family: var(--font-body); font-weight: 400; text-wrap: balance; }
 }
 .hero-home > * { grid-column: 3 / span 8; text-align: center; }
 .hero-home > .status { justify-self: center; }
-.hero-home h1 .h1-line { display: block; text-wrap: balance; }   /* each half of the headline balances on its own */
+.hero-home h1 .h1-line { display: block; text-wrap: balance; }
+/* Three voices in one headline (Nov 18): Inter for the plain words, a pixel face for "early-stage", the Cormorant italic kept for "& established".
+   Each face is scaled so its x-height matches the Cormorant's, so the mix sits on one optical size. */
+.hero-home h1 .h1-inter { font-family: var(--font-body); font-style: normal; font-weight: 400; letter-spacing: -0.035em; font-size: var(--h1-inter-scale, .77em); font-variant-numeric: normal; font-feature-settings: normal; }
+.hero-home h1 .h1-line.h1-inter { font-size: var(--h1-inter-scale, .77em); }
+.hero-home h1 .h1-pixel { font-family: "Pixelify Sans", var(--font-body); font-style: normal; font-weight: 400; letter-spacing: -0.01em; font-size: var(--h1-pixel-scale, .89em); white-space: nowrap; }   /* each half of the headline balances on its own */
 /* Two lines, one break after "design": the headline spans the full width and scales so
    "for early-stage & established companies" (about 13.6× the font size wide) fits on one line; 102px at most, 40px at least (phones wrap) */
 .hero-home > h1 { grid-column: 1 / -1; font-size: clamp(33px, calc(100cqi / 13.9 - 7px), 95px); }   /* 7px off every stop (Nov 17) */
@@ -955,7 +961,7 @@ body.is-editing .lb-keys { display: none; }
 <main id="view-home">
   <section class="hero hero-home wrap">
     <p class="status mono rise"><span class="dot" aria-hidden="true"></span>Available for new projects</p>
-    <h1 class="rise d1"><span class="h1-line">Product &amp; Web design</span> <span class="h1-line">for <span style="white-space:nowrap">early-stage</span> &amp;&nbsp;established companies</span></h1>
+    <h1 class="rise d1"><span class="h1-line h1-inter">Product Design for</span> <span class="h1-line"><span class="h1-pixel">early-stage</span> &amp;&nbsp;established <span class="h1-inter">companies</span></span></h1>
   </section>
 
   <section class="wrap rise d3" aria-label="Projects">
@@ -1273,7 +1279,7 @@ const PROJECTS = [
     problem: "Before the Houzz photo gallery became what it is today – a sophisticated feed with minimal noise – it was a heavier experience with more aggressive ad blocks. Advertisers, however, were fine with this: it drove impressions and high‑intent clicks.\n\nThen came the redesign. I was tasked with finding new ad formats that would be acceptable to advertisers and fit the new feed’s aesthetic.\n\nThe challenge was to match and then surpass the pre-redesign ad metrics.",
     solution: "Information-heavy blocks, some spanning multiple columns, didn’t pass the internal quality check, so we were forced into a much smaller ad unit.\n\nEventually, we took a leap of faith and ran an experiment with a native-looking photo card featuring only a logo and a call to action. Clicks led to a lightbox view where people could learn more about the business and start a conversation. We also created a sponsored article format to capitalize on organic search traffic.\n\nThe ad experiment showed a 30% increase in impressions and an 11% increase in clicks.",
     role: "Web designer", client: "Startup accelerator", year: "2024", industries: ["Marketplace", "B2B", "B2C"], logoAdjust: -4, hideExtra: true,
-    thumb: { file: "img/houzz/feed-pointer", w: 1000, h: 1020, alt: "The Houzz photo feed with native ads: a sponsored Bosch photo and a Fisher & Paykel ad, with a hand pointer on one of its product tags", motion: "float", size: "small" },   // Home card: 20% smaller, slowly floats and sways; the hand pointer is part of the image
+    thumb: { file: "img/houzz/feed-hand", w: 1000, h: 1020, alt: "The Houzz photo feed with native ads: a sponsored Bosch photo and a Fisher & Paykel ad, with a hand pointer on one of its product tags", motion: "float", size: "small" },   // Home card: 20% smaller, slowly floats and sways; the hand pointer is part of the image
     images: [   // cover first; Before / After side by side right after Problem / Solution, then the rest stacked
       { file: "img/houzz/01-cover", w: 2600, h: 1763, caption: "", alt: "A Fisher & Paykel ad card and a sponsored Bosch photo from the Houzz feed, over a Fisher & Paykel sponsored article on a green background" },
       [{ file: "img/houzz/02-before", w: 2188, h: 1485, caption: "Before", alt: "Before: a large Pacific Sales ad block with a photo, a green promo bar, project thumbnails, a description, and a See My Projects button" },
