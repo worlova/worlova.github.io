@@ -435,6 +435,22 @@ h2 { font-size: clamp(34px, 3.8vw, 44px); line-height: 1.08; letter-spacing: -0.
 .tile-about .about-meta > div { grid-column: auto; }
 .tile-about .about-meta { row-gap: 26px; }
 .about-areas .tags { max-width: none; }
+/* Areas of expertise: on desktop, User Research, Iconography and Illustration always start a second row (Nov 18).
+   The break is a zero-height full-width item, used only when the copy column is wide enough for the first five; elsewhere the pills wrap where they fit. */
+.about-areas .tags li.tag-break { display: none; }
+@container about-text (min-width: 680px) {   /* only where the first five pills (about 657px) fit on one row */
+  .tile-about .about-meta .about-areas .tags { row-gap: 0; margin-bottom: -9px; }
+  .about-areas .tags > li { margin-bottom: 9px; }   /* the row gap moves onto the pills, so the empty break line adds no space */
+  .about-areas .tags > li.tag-break { display: block; flex-basis: 100%; height: 0; margin: 0; padding: 0; border: 0; background: none; }
+}
+/* Core strengths: the same break, before Clear communication, where the first four fit on one row (about 530px) */
+.about-list li.tag-break { display: none; }
+@container about-text (min-width: 560px) {
+  .tile-about .about-meta .about-list { row-gap: 0; margin-bottom: -6px; }
+  .tile-about .about-list > li { margin-bottom: 6px; }
+  .tile-about .about-list > li.tag-break { display: block; flex-basis: 100%; height: 0; margin: 0; padding: 0; }
+  .tile-about .about-list > li.tag-break::before { content: none; }
+}
 .tile-about .about-list { display: flex; flex-wrap: wrap; gap: 6px 13px; }   /* 22px → 13px between items (Nov 18) */
 @media (max-width: 600px) { .tile-about .tile-text > :not(.about-ctas):not(.about-meta) { max-width: none; } }
 /* Two buttons on the card bottom: Contact Me (solid) then My Process (outlined) */
@@ -1060,11 +1076,12 @@ const SITE = {
     { label: "Marketing Collateral", tone: "blue" },
     { label: "Deck Design",          tone: "orange" },
     { label: "Product Audit",        tone: "yellow" },
-    { label: "User Research",        tone: "neutral" },
+    { label: "User Research",        tone: "neutral", breakBefore: true },   /* starts the second row on wide screens */
     { label: "Iconography",          tone: "violet", keepWithNext: true },
     { label: "Illustration",         tone: "mint" }
   ],
   strengths: ["Agility", "Ownership mentality", "Dedication to craft", "Quick turnaround", "Clear communication", "Product thinking", "Collaboration"],
+  strengthsBreakBefore: "Clear communication",   /* starts the second row on wide screens */
   // The contact form composes the message in the visitor's own email client and sends it to SITE.email.
   // There is no server and no form service behind it, so there is nothing that can stop delivering.
   projectsIntro: ["Project highlights"],   // section title between the About card and the projects (each item is its own line)
@@ -1669,6 +1686,7 @@ function stage(kind, opts = {}) {
 function expertisePills() {
   const pill = t => `<li class="tone-${esc(t.tone)}">${esc(t.label)}</li>`, out = [], list = SITE.expertise;
   for (let i = 0; i < list.length; i++) {
+    if (list[i].breakBefore) out.push(`<li class="tag-break" aria-hidden="true"></li>`);
     if (list[i].keepWithNext && list[i + 1]) { out.push(`<li class="tag-pair"><ul>${pill(list[i])}${pill(list[i + 1])}</ul></li>`); i++; }
     else out.push(pill(list[i]));
   }
@@ -1708,7 +1726,7 @@ function renderCards() {
         <p>I’ve been designing digital products for 10 years, and it only gets more exciting with every project. In 2022, I took a break from my corporate career to partner with early-stage teams and build new products from scratch. Turns out, that’s where I thrive. Now I’m ready to bring that experience to companies of any size. Together, we’ll figure out how to get you where you want to be.</p>
         <dl class="proj-meta about-meta">
           <div class="about-areas"><dt>Areas of expertise</dt><dd><ul class="tags">${expertisePills()}</ul></dd></div>
-          <div><dt>Core strengths</dt><dd><ul class="about-list">${SITE.strengths.map(t => `<li>${esc(t)}</li>`).join("")}</ul></dd></div>
+          <div><dt>Core strengths</dt><dd><ul class="about-list">${SITE.strengths.map(t => (t === SITE.strengthsBreakBefore ? `<li class="tag-break" aria-hidden="true"></li>` : "") + `<li>${esc(t)}</li>`).join("")}</ul></dd></div>
         </dl>
         <div class="about-ctas">
           <a class="pill about-cta" href="#contact">Contact Me</a>
