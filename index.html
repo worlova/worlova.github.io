@@ -336,14 +336,20 @@ h2 { font-size: clamp(34px, 3.8vw, 44px); line-height: 1.08; letter-spacing: -0.
 /* Collapsed by default. The peek is the whole card until it is opened; opened, the card is exactly as it was before. */
 .about-peek {
   width: 100%; display: grid; align-items: center;
-  grid-template-columns: minmax(0, 1fr); grid-template-areas: "title" "excerpt";
+  grid-template-columns: minmax(0, 1fr); grid-template-areas: "title" "excerpt" "more";
   padding: clamp(20px, 2.4vw, 28px) clamp(20px, 3vw, 36px);
-  padding-right: clamp(190px, 20vw, 230px);   /* keeps the text clear of the thumbnail */
+  padding-right: clamp(200px, 21vw, 246px);   /* keeps the text clear of the thumbnail (which grew with the Read more row) */
   background: none; border: 0; color: inherit; font: inherit; text-align: left; cursor: pointer;
   border-radius: inherit;
 }
 .about-title { grid-area: title; }
 .about-excerpt { grid-area: excerpt; }
+/* "Read more ↓" under the faded preview. It is part of the card button, so the link and the whole card both open it (Nov 18). */
+.about-more { grid-area: more; justify-self: start; display: inline-flex; align-items: center; gap: 6px; margin-top: 12px;
+  color: #ffffff; font-size: 15px; font-weight: 500; line-height: 1.4; text-decoration: none; }
+.about-more svg { width: 14px; height: 14px; transition: transform .25s cubic-bezier(.2,.7,.2,1); }
+.tile-about:not(.is-open):hover .about-more svg, .about-peek:focus-visible .about-more svg { transform: translateY(2px); }
+@media (prefers-reduced-motion: reduce) { .about-more svg { transition: none; } }
 /* The thumbnail fills the card's height, inset 10px from the top, right and bottom edges.
    The corner is concentric with the card's (16px outer radius, 10px inset). */
 .about-avatar {
@@ -1714,6 +1720,7 @@ function renderCards() {
         ${SITE.photo
           ? `<img class="about-avatar" src="img/about/avatar-128.webp" srcset="img/about/avatar-128.webp 128w, img/about/avatar-256.webp 256w, img/about/avatar-512.webp 512w" sizes="(max-width: 520px) 76px, 170px" width="128" height="128" alt="" aria-hidden="true">`
           : `<span class="about-avatar about-avatar-mark"><svg viewBox="0 0 1887 1781" aria-hidden="true"><use href="#logo-mark"/></svg></span>`}
+        <span class="about-more">Read more<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2.5v11M3.5 9 8 13.5 12.5 9"/></svg></span>
         <svg class="about-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 6 8 10.5 12.5 6"/></svg>
       </button>
       <div class="about-body" id="about-body" hidden>
