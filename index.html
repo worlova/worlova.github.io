@@ -365,10 +365,10 @@ h2 { font-size: clamp(34px, 3.8vw, 44px); line-height: 1.08; letter-spacing: -0.
 /* Photo fills the card height, which is set by the text column (bio, details, 80px, buttons); the photo crops to fit.
    The photo sits inside with 8px top, right and bottom; no padding on the text side. */
 /* Desktop: a small portrait anchored to the card's bottom-right corner, 8px from the right and bottom edges.
-   It is 40% of the width the photo had when it filled half the card (50% of the card minus 8px), at the photo's own 1200:1410 ratio. */
+   It is 40% of the width the photo had when it filled half the card (50% of the card minus 8px), cropped square. */
 .about-photo { grid-area: photo; padding: 8px 8px 8px 0; align-self: end; justify-self: end; display: grid;
   width: calc((125% - 8px) * .4 + 8px); }   /* the photo column is 40% of the card, so half the card is 125% of it */
-.about-photo::before { content: ""; grid-area: 1 / 1; padding-top: 117.5%; }   /* 1410 / 1200 */
+.about-photo::before { content: ""; grid-area: 1 / 1; padding-top: 100%; }   /* square (Nov 18) */
 /* Collapsed, the card is a button, so it lifts and lightens on hover like the project cards below.
    Opened it is not clickable any more, so it sits still. */
 .tile.tile-about.is-open, .tile.tile-about.is-open:hover { transform: none; background-color: rgba(255, 255, 255, .10); transition: none; }
@@ -429,6 +429,13 @@ h2 { font-size: clamp(34px, 3.8vw, 44px); line-height: 1.08; letter-spacing: -0.
 @container about-text (max-width: 799px) { .tile-about .about-meta > div { grid-column: span 3; } }
 @container about-text (max-width: 399px) { .tile-about .about-meta { grid-template-columns: 1fr; } .tile-about .about-meta > div { grid-column: auto; } }
 .tile-about .tile-text > :not(.about-ctas):not(.about-meta) { max-width: 75%; }
+/* Inline details (Nov 18): the two groups stack, each running across the full copy width;
+   the pills and the strengths flow in a line and wrap, the strengths keeping their diamond markers. */
+.tile-about .about-meta, .tile-about .about-meta > div { grid-template-columns: 1fr; }
+.tile-about .about-meta > div { grid-column: auto; }
+.tile-about .about-meta { row-gap: 26px; }
+.about-areas .tags { max-width: none; }
+.tile-about .about-list { display: flex; flex-wrap: wrap; gap: 6px 13px; }   /* 22px → 13px between items (Nov 18) */
 @media (max-width: 600px) { .tile-about .tile-text > :not(.about-ctas):not(.about-meta) { max-width: none; } }
 /* Two buttons on the card bottom: Contact Me (solid) then My Process (outlined) */
 .about-ctas { display: flex; flex-wrap: wrap; gap: 10px; margin-top: auto; align-self: flex-start; }
@@ -449,8 +456,8 @@ h2 { font-size: clamp(34px, 3.8vw, 44px); line-height: 1.08; letter-spacing: -0.
 @media (max-width: 999px) {
   .about-body { grid-template-columns: 1fr; grid-template-areas: "photo" "text"; }
   .about-photo { padding: 8px; width: auto; align-self: stretch; justify-self: stretch; }
-  .about-photo::before { padding-top: 66.6667%; }   /* the visible image is 3:2 */
-  .tile-about .photo { object-position: 50% 10%; }   /* landscape crop: keep the top of the head in frame */
+  .about-photo::before { padding-top: 100%; }   /* square on narrow screens too (Nov 18) */
+  .tile-about .photo { object-position: 50% 20%; }
 }
 
 /* No layout jump on load: until the project cards are rendered, the sections below them keep their place but stay invisible */
@@ -532,7 +539,7 @@ body:has(#grid:empty) :is(#process, #contact), body:has(#grid:empty) > .site-foo
 /* Project page */
 .proj-intro {
   display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-  gap: 32px clamp(32px, 6vw, 80px); margin-top: clamp(36px, 5vw, 64px);
+  gap: 32px clamp(32px, 6vw, 80px); margin-top: clamp(25px, 3.5vw, 45px);   /* title → intro, 30% less (Nov 18) */
 }
 .proj-intro > .intro-text { color: var(--body); max-width: 52ch; text-wrap: pretty; }
 .intro-text > * + * { margin-top: 1em; }   /* paragraphs in the intro (blank line between them) */
@@ -773,7 +780,7 @@ body.is-editing .lb-keys { display: none; }
   transition: opacity .2s;
 }
 .pill:hover { opacity: .78; }
-.pill.pill-outline { background: transparent; color: #ffffff; border-color: rgba(255, 255, 255, .28); transition: border-color .2s; }   /* muted grey outline (Nov 18) */
+.pill.pill-outline { background: transparent; color: #ffffff; border-color: rgba(255, 255, 255, .14); transition: border-color .2s; }   /* muted grey outline, 50% darker (Nov 18) */
 .pill.pill-outline:hover { opacity: 1; border-color: rgba(255, 255, 255, .6); }
 .pill:disabled { opacity: .6; cursor: default; }
 /* The CV opens in the lightbox like a case study: the PDF fills the panel, with the download button pinned over the bottom */
@@ -1698,9 +1705,7 @@ function renderCards() {
            </div>`}</div>
       <div class="tile-text">
         <h3 id="about-h"><span>I’m Valentina, 4 times a Founding Designer.</span> <span>I love building products 0&nbsp;→&nbsp;1.</span></h3>
-        <p>I’ve been designing digital products for 10 years, and it only gets more exciting with every project.</p>
-        <p>In 2022, I took a break from my corporate career to partner with early-stage teams and build new products from scratch. Turns out, that’s where I thrive.</p>
-        <p>Now I’m ready to bring that experience to companies of any size. Together, we’ll figure out how to get you where you want to be.</p>
+        <p>I’ve been designing digital products for 10 years, and it only gets more exciting with every project. In 2022, I took a break from my corporate career to partner with early-stage teams and build new products from scratch. Turns out, that’s where I thrive. Now I’m ready to bring that experience to companies of any size. Together, we’ll figure out how to get you where you want to be.</p>
         <dl class="proj-meta about-meta">
           <div class="about-areas"><dt>Areas of expertise</dt><dd><ul class="tags">${expertisePills()}</ul></dd></div>
           <div><dt>Core strengths</dt><dd><ul class="about-list">${SITE.strengths.map(t => `<li>${esc(t)}</li>`).join("")}</ul></dd></div>
