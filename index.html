@@ -1905,11 +1905,11 @@ function renderProject(p, el = document.getElementById("view-project")) {
     <nav class="wrap next" aria-label="More projects">
       <a class="next-link prev" href="#${prev.slug}">
         ${prev.thumb ? `<div class="cover thumb tile-thumb-wrap">${thumbImg(prev, true)}</div>` : `<div class="cover center thumb" data-pal="${prev.palette}" data-seed="${prev.seed}"><canvas aria-hidden="true"></canvas>${stage(prev.mock, { still: true })}</div>`}
-        <div class="next-text"><span class="mono">Previous project</span><h2><span aria-hidden="true">←</span> ${esc(prev.title)}</h2></div>
+        <div class="next-text"><span class="mono">Previous</span><h2><span aria-hidden="true">←</span> ${esc(prev.title)}</h2></div>
       </a>
       <a class="next-link fwd" href="#${next.slug}">
         ${next.thumb ? `<div class="cover thumb tile-thumb-wrap">${thumbImg(next, true)}</div>` : `<div class="cover center thumb" data-pal="${next.palette}" data-seed="${next.seed}"><canvas aria-hidden="true"></canvas>${stage(next.mock, { still: true })}</div>`}
-        <div class="next-text"><span class="mono">Next project</span><h2>${esc(next.title)} <span aria-hidden="true">→</span></h2></div>
+        <div class="next-text"><span class="mono">Next</span><h2>${esc(next.title)} <span aria-hidden="true">→</span></h2></div>
       </a>
     </nav>`;
 }
