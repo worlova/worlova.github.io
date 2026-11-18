@@ -1048,7 +1048,6 @@ body.is-editing .lb-keys { display: none; }
     <div class="lb-keys" role="group" aria-label="Keyboard shortcuts">
       <button type="button" data-go="prev" aria-label="Previous case study (Left arrow)"><kbd aria-hidden="true">←</kbd><span>Prev</span></button>
       <button type="button" data-go="next" aria-label="Next case study (Right arrow)"><kbd aria-hidden="true">→</kbd><span>Next</span></button>
-      <button type="button" data-go="close" aria-label="Close (Escape)"><kbd aria-hidden="true">esc</kbd><span>Close</span></button>
     </div>
   </div>
 </div>
@@ -2177,7 +2176,11 @@ function closeLightboxUI() {
   if (returnFocus && returnFocus.isConnected) returnFocus.focus({ preventScroll: true });
 }
 // Closing goes back to the projects on Home, at the same scroll position the lightbox opened from
-function requestClose() { location.hash = "projects"; }
+function requestClose() {
+  // On a case study's own page (/<slug>/ on the public site), closing goes to the real Home page, at the projects
+  if (window.__ROUTE) { location.href = "/#projects"; return; }
+  location.hash = "projects";
+}
 LB.el.querySelector(".lb-close").addEventListener("click", requestClose);
 LB.el.addEventListener("click", e => { if (e.target === LB.el) requestClose(); });
 document.addEventListener("keydown", e => { if (e.key === "Escape" && LB.open) requestClose(); });
@@ -2185,7 +2188,7 @@ document.addEventListener("keydown", e => { if (e.key === "Escape" && LB.open) r
 function stepProject(dir) {
   if (!LB.open) return;
   // Step from the address, which updates at once, so quick presses never skip or repeat a project
-  const cur = PROJECTS.findIndex(p => p.slug === decodeURIComponent(location.hash.slice(1)));
+  const cur = PROJECTS.findIndex(p => p.slug === routeId());
   const i = cur >= 0 ? cur : PROJECTS.indexOf(LB.project), n = PROJECTS.length;
   location.hash = PROJECTS[(i + dir + n) % n].slug;
 }
@@ -2209,10 +2212,12 @@ LB.el.querySelector(".lb-keys").addEventListener("click", e => {
   if (b.dataset.go === "close") requestClose(); else stepProject(b.dataset.go === "prev" ? -1 : 1);
 });
 
-const HOME_TITLE = document.title;   // the <title> in the markup; a case study swaps in "<name> - <case study>" and Home puts this back
+const HOME_TITLE = window.__HOME_TITLE || document.title;   // the <title> in the markup; a case study swaps in "<name> - <case study>" and Home puts this back
 function route() { if (EDIT.on) stopEditing(); routeView(); updateEditBar(); }
+/* The address's #id, or, on a case study's own page (/<slug>/ on the public site), that case study */
+function routeId() { return decodeURIComponent(location.hash.slice(1)) || window.__ROUTE || ""; }
 function routeView() {
-  const id = decodeURIComponent(location.hash.slice(1));
+  const id = routeId();
   const project = PROJECTS.find(p => p.slug === id);
 
   if (project && useLightbox()) {
@@ -2264,7 +2269,7 @@ window.addEventListener("resize", () => {
   const mode = useLightbox();
   if (mode === lastLightboxMode) return;
   lastLightboxMode = mode;
-  const h = decodeURIComponent(location.hash.slice(1));
+  const h = routeId();
   if (h === "cv" || PROJECTS.some(p => p.slug === h)) route();
 });
 window.addEventListener("hashchange", () => { route(); openAboutForHash(); });
