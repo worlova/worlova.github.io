@@ -1913,6 +1913,7 @@ function renderProject(p, el = document.getElementById("view-project")) {
           <div data-row="role"${p.role ? "" : " hidden"}><dt>Role</dt><dd data-field="role">${esc(p.role || "")}</dd></div>
           <div data-row="tags"${p.tags.length ? "" : " hidden"}><dt>Services</dt><dd><ul class="tags">${p.tags.map(t => `<li>${esc(t)}</li>`).join("")}</ul><span class="tags-edit" data-field="tags" hidden>${esc(p.tags.join(", "))}</span></dd></div>
           <div data-row="year"${p.year ? "" : " hidden"}><dt>Year</dt><dd data-field="year">${esc(p.year || "")}</dd></div>
+          <div data-row="impact"><dt>Impact</dt><dd>${esc(p.impact || "Upon request")}</dd></div>
         </dl>
       </div>
     </section>
