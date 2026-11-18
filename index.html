@@ -175,6 +175,7 @@ h3, h4 { font-family: var(--font-body); font-weight: 400; text-wrap: balance; }
    Each face is scaled so its x-height matches the Cormorant's, so the mix sits on one optical size. */
 .hero-home h1 .h1-inter { font-family: var(--font-body); font-style: normal; font-weight: 400; letter-spacing: -0.035em; font-size: var(--h1-inter-scale, .77em); font-variant-numeric: normal; font-feature-settings: normal; }
 .hero-home h1 .h1-line.h1-inter { font-size: var(--h1-inter-scale, .77em); }
+.hero-home h1 .h1-gap { word-spacing: -0.044em; }   /* the space before early-stage, 20% narrower (Nov 18) */
 .hero-home h1 .h1-pixel { font-family: "Geist Pixel", ui-monospace, monospace; font-style: normal; font-weight: 400; letter-spacing: -0.02em; font-size: var(--h1-pixel-scale, .74em); white-space: nowrap; }   /* each half of the headline balances on its own */
 /* Two lines, one break after "design": the headline spans the full width and scales so
    "for early-stage & established companies" (about 13.6× the font size wide) fits on one line; 102px at most, 40px at least (phones wrap) */
@@ -398,6 +399,7 @@ h2 { font-size: clamp(34px, 3.8vw, 44px); line-height: 1.08; letter-spacing: -0.
 .tile-about .about-meta dt { color: #ffffff; }   /* "Areas of expertise" / "Core strengths" labels */
 /* Core strengths: list with small diamond bullets (a rotated square, centered on the first line) */
 .about-list { list-style: none; padding-left: 0; display: grid; gap: 4px; }
+.nowrap { white-space: nowrap; }   /* keeps a hyphenated word like early-stage on one line */
 .about-list li { position: relative; padding-left: 1.15em; color: var(--body); }
 .about-list li::before { content: ""; position: absolute; left: .22em; top: calc(.7em - 2.5px); width: 5px; height: 5px; background: rgba(244,243,241,.45); transform: rotate(45deg); }
 /* Areas of expertise: pills flow from the left; the 440px cap keeps rows to three pills at most */
@@ -433,7 +435,7 @@ h2 { font-size: clamp(34px, 3.8vw, 44px); line-height: 1.08; letter-spacing: -0.
    the pills and the strengths flow in a line and wrap, the strengths keeping their diamond markers. */
 .tile-about .about-meta, .tile-about .about-meta > div { grid-template-columns: 1fr; }
 .tile-about .about-meta > div { grid-column: auto; }
-.tile-about .about-meta { row-gap: 26px; }
+.tile-about .about-meta { row-gap: 34px; }   /* 26px → 34px between the two groups, +30% (Nov 18) */
 .about-areas .tags { max-width: none; }
 /* Areas of expertise: on desktop, User Research, Iconography and Illustration always start a second row (Nov 18).
    The break is a zero-height full-width item, used only when the copy column is wide enough for the first five; elsewhere the pills wrap where they fit. */
@@ -993,7 +995,7 @@ body.is-editing .lb-keys { display: none; }
 <main id="view-home">
   <section class="hero hero-home wrap">
     <p class="status mono rise"><span class="dot" aria-hidden="true"></span>Available for new projects</p>
-    <h1 class="rise d1"><span class="h1-line"><span class="h1-inter">Product Design for</span> <span class="h1-pixel">early-stage</span></span> <span class="h1-line">&amp;&nbsp;established <span class="h1-inter">companies</span></span></h1>
+    <h1 class="rise d1"><span class="h1-line"><span class="h1-inter">Product Design for</span><span class="h1-gap"> </span><span class="h1-pixel">early-stage</span></span> <span class="h1-line">&amp;&nbsp;established <span class="h1-inter">companies</span></span></h1>
   </section>
 
   <section class="wrap rise d3" aria-label="Projects">
@@ -1708,7 +1710,7 @@ function renderCards() {
       <!-- Collapsed: the title, the first two lines of the bio fading out, and the portrait thumbnail on the right -->
       <button class="about-peek" type="button" aria-expanded="false" aria-controls="about-body">
         <span class="about-title"><span>I’m Valentina, 4 times a Founding Designer.</span> <span>I love building products 0&nbsp;→&nbsp;1.</span></span>
-        <span class="about-excerpt" aria-hidden="true">I’ve been designing digital products for 10 years, and it only gets more exciting with every project. In 2022, I took a break from my corporate career to partner with early-stage teams and build new products from scratch. Turns out, that’s where I thrive.</span>
+        <span class="about-excerpt" aria-hidden="true">I’ve been designing digital products for 10 years, and it only gets more exciting with every project. In 2022, I took a break from my corporate career to partner with early-stage teams and build new products from scratch. Turns&nbsp;out, that’s where I thrive.</span>
         ${SITE.photo
           ? `<img class="about-avatar" src="img/about/avatar-128.webp" srcset="img/about/avatar-128.webp 128w, img/about/avatar-256.webp 256w, img/about/avatar-512.webp 512w" sizes="(max-width: 520px) 76px, 170px" width="128" height="128" alt="" aria-hidden="true">`
           : `<span class="about-avatar about-avatar-mark"><svg viewBox="0 0 1887 1781" aria-hidden="true"><use href="#logo-mark"/></svg></span>`}
@@ -1723,7 +1725,7 @@ function renderCards() {
            </div>`}</div>
       <div class="tile-text">
         <h3 id="about-h"><span>I’m Valentina, 4 times a Founding Designer.</span> <span>I love building products 0&nbsp;→&nbsp;1.</span></h3>
-        <p>I’ve been designing digital products for 10 years, and it only gets more exciting with every project. In 2022, I took a break from my corporate career to partner with early-stage teams and build new products from scratch. Turns out, that’s where I thrive. Now I’m ready to bring that experience to companies of any size. Together, we’ll figure out how to get you where you want to be.</p>
+        <p>I’ve been designing digital products for&nbsp;10&nbsp;years, and&nbsp;it&nbsp;only gets more exciting with&nbsp;every project. In&nbsp;2022, I&nbsp;took a&nbsp;break from&nbsp;my&nbsp;corporate career to&nbsp;partner with&nbsp;<span class="nowrap">early-stage</span> teams and&nbsp;build new products from&nbsp;scratch. Turns&nbsp;out, that’s where I&nbsp;thrive. Now I’m ready to&nbsp;bring that experience to&nbsp;companies of&nbsp;any size. Together, we’ll&nbsp;figure out how to&nbsp;get you where you want to&nbsp;be.</p>
         <dl class="proj-meta about-meta">
           <div class="about-areas"><dt>Areas of expertise</dt><dd><ul class="tags">${expertisePills()}</ul></dd></div>
           <div><dt>Core strengths</dt><dd><ul class="about-list">${SITE.strengths.map(t => (t === SITE.strengthsBreakBefore ? `<li class="tag-break" aria-hidden="true"></li>` : "") + `<li>${esc(t)}</li>`).join("")}</ul></dd></div>
