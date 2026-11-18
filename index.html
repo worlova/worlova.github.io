@@ -16,11 +16,16 @@
 <meta property="og:url" content="https://www.worlova.com/">
 <meta property="og:title" content="Valentina Orlova - Product &amp; Web Design for early-stage and established companies">
 <meta property="og:description" content="Valentina Orlova, product designer. More than ten years designing digital products, including in Silicon Valley.">
-<meta property="og:image" content="https://www.worlova.com/img/about/portrait-1200.webp">
+<meta property="og:image" content="https://www.worlova.com/img/social-share-projects.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Project cards from Valentina Orlova’s portfolio: HubFlow, Orb, Benny EBT App, and more below">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Valentina Orlova - Product &amp; Web Design for early-stage and established companies">
 <meta name="twitter:description" content="Valentina Orlova, product designer. More than ten years designing digital products, including in Silicon Valley.">
-<meta name="twitter:image" content="https://www.worlova.com/img/about/portrait-1200.webp">
+<meta name="twitter:image" content="https://www.worlova.com/img/social-share-projects.jpg">
+<meta name="twitter:image:alt" content="Project cards from Valentina Orlova’s portfolio: HubFlow, Orb, Benny EBT App, and more below">
 <meta name="description" content="Valentina Orlova, product designer. More than ten years designing digital products, including in Silicon Valley.">
 <!-- Fonts are files of this site (no request to Google before the first paint); the About portrait loads early because it is the largest thing on the first screen -->
 <link rel="preload" href="fonts/inter-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
@@ -119,10 +124,10 @@ h3, h4 { font-family: var(--font-body); font-weight: 400; text-wrap: balance; }
 .head-inner { height: 60px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
 .brand {
   color: #ffffff; white-space: nowrap;
-  font-family: var(--font-display); font-style: italic; font-weight: 600;
-  font-size: 25px; line-height: 1; letter-spacing: -0.005em;
+  font-family: var(--font-body); font-style: normal; font-weight: 500;   /* Inter (Nov 18); sized to the italic's x-height, not its nominal size */
+  font-size: 20px; line-height: 1; letter-spacing: -0.02em;
 }
-@media (max-width: 520px) { .brand { font-size: 20px; } }
+@media (max-width: 520px) { .brand { font-size: 17px; } }
 .head-right { display: flex; align-items: center; gap: clamp(16px, 2.4vw, 26px); }
 .site-nav { display: flex; gap: clamp(14px, 2.4vw, 26px); font-size: 16px; }
 .site-nav a {
@@ -765,7 +770,8 @@ body.is-editing .lb-keys { display: none; }
   transition: opacity .2s;
 }
 .pill:hover { opacity: .78; }
-.pill.pill-outline { background: transparent; color: #ffffff; border-color: #ffffff; }
+.pill.pill-outline { background: transparent; color: #ffffff; border-color: rgba(255, 255, 255, .28); transition: border-color .2s; }   /* muted grey outline (Nov 18) */
+.pill.pill-outline:hover { opacity: 1; border-color: rgba(255, 255, 255, .6); }
 .pill:disabled { opacity: .6; cursor: default; }
 /* The CV opens in the lightbox like a case study: the PDF fills the panel, with the download button pinned over the bottom */
 /* Where the browser won't embed the PDF (the artifact frame, and most phones), the pages show as images instead */
@@ -1674,7 +1680,7 @@ function renderCards() {
       <!-- Collapsed: the title, the first two lines of the bio fading out, and the portrait thumbnail on the right -->
       <button class="about-peek" type="button" aria-expanded="false" aria-controls="about-body">
         <span class="about-title"><span>I’m Valentina, 4 times a Founding Designer.</span> <span>I love building products 0&nbsp;→&nbsp;1.</span></span>
-        <span class="about-excerpt" aria-hidden="true">I’ve been designing digital products for 10 years, and it only gets more exciting with every project. In 2022, I took a break from a corporate career to partner with early-stage teams and build some products 0&nbsp;to&nbsp;1. Turns out, this is where I thrive the most.</span>
+        <span class="about-excerpt" aria-hidden="true">I’ve been designing digital products for 10 years, and it only gets more exciting with every project. In 2022, I took a break from my corporate career to partner with early-stage teams and build new products from scratch. Turns out, that’s where I thrive.</span>
         ${SITE.photo
           ? `<img class="about-avatar" src="img/about/avatar-128.webp" srcset="img/about/avatar-128.webp 128w, img/about/avatar-256.webp 256w, img/about/avatar-512.webp 512w" sizes="(max-width: 520px) 76px, 170px" width="128" height="128" alt="" aria-hidden="true">`
           : `<span class="about-avatar about-avatar-mark"><svg viewBox="0 0 1887 1781" aria-hidden="true"><use href="#logo-mark"/></svg></span>`}
@@ -1690,8 +1696,8 @@ function renderCards() {
       <div class="tile-text">
         <h3 id="about-h"><span>I’m Valentina, 4 times a Founding Designer.</span> <span>I love building products 0&nbsp;→&nbsp;1.</span></h3>
         <p>I’ve been designing digital products for 10 years, and it only gets more exciting with every project.</p>
-        <p>In 2022, I took a break from a corporate career to partner with early-stage teams and build some products 0&nbsp;to&nbsp;1. Turns out, this is where I thrive the most.</p>
-        <p>These days, when I’m not on a client project, I’m usually experimenting with AI tools and new workflows, or spending time outside with my family.</p>
+        <p>In 2022, I took a break from my corporate career to partner with early-stage teams and build new products from scratch. Turns out, that’s where I thrive.</p>
+        <p>Now I’m ready to bring that experience to companies of any size. Together, we’ll figure out how to get you where you want to be.</p>
         <dl class="proj-meta about-meta">
           <div class="about-areas"><dt>Areas of expertise</dt><dd><ul class="tags">${expertisePills()}</ul></dd></div>
           <div><dt>Core strengths</dt><dd><ul class="about-list">${SITE.strengths.map(t => `<li>${esc(t)}</li>`).join("")}</ul></dd></div>
