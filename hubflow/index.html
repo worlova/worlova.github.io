@@ -317,6 +317,7 @@ h2 { font-size: clamp(34px, 3.8vw, 44px); line-height: 1.08; letter-spacing: -0.
   .quote-band.is-collapsed .quote-more { display: inline-flex; justify-self: start; align-items: center; gap: 6px; margin-top: 16px; padding: 0;
     background: none; border: 0; color: #ffffff; font: inherit; font-size: 15px; font-weight: 500; line-height: 1.4; cursor: pointer; }
   .quote-more svg { width: 14px; height: 14px; flex: none; }
+  .quote-band figcaption { text-align: left; }   /* left-aligned on phones (Nov 19) */
 }
 /* Hovering a card dims the others to 70% (Nov 19) */
 #grid:has(> .tile:not(.is-open):hover) > .tile:not(:hover) { opacity: .7; }
@@ -1781,7 +1782,7 @@ const PORTRAIT_SIZES = "(max-width: 999px) 91vw, (max-width: 1319px) 900px, (max
 function portraitSet(ext) { return [480, 800, 1200].map(w => `${esc(SITE.photo)}-${w}.${ext} ${w}w`).join(", "); }
 /* Tools row: each mark in its brand colour on a black square (Nov 19). Marks: Simple Icons (CC0); ChatGPT and the full-colour Figma mark: Lobe Icons (MIT). */
 /* Testimonial shown between the 2nd and 3rd rows of project cards (Nov 19). Steve's words exactly as given; ==…== marks the phrases kept white, the rest is body grey. */
-const QUOTE = { after: 6, text: "I’ve worked with designers across companies like Cash App, Brex, and Uber Eats, and ==Valentina is in a league of her own==. With minimal context, ==she could translate our vision into high-fidelity designs and thoughtful product experiences across the web and mobile==. Rather than push pixels, ==Valentina collaboratively probed and furthered our holistic customer journeys, iterating quickly on design feedback. Plus, she can move effortlessly across product and brand design, a rarity for a Designer and a true gift to any startup.==", by: "Steve Austin, Co-founder and CTO at Benny API" };
+const QUOTE = { after: 6, text: "I’ve worked with designers across companies like Cash App, Brex, and Uber Eats, and ==Valentina is in a league of her own==. With minimal context, ==she could translate our vision into high-fidelity designs and thoughtful product experiences across the web and mobile==. Rather than push pixels, ==Valentina collaboratively probed and furthered our holistic customer journeys,== iterating quickly on design feedback. Plus, ==she can move effortlessly across product and brand design, a rarity for a Designer and a true gift to any startup.==", by: "Steve Austin, Co-founder and CTO at Benny API" };
 function quoteBand() {
   return `<figure class="quote-band is-collapsed" aria-label="Testimonial"><blockquote id="quote-text"><p>${esc(QUOTE.text).replace(/==(.+?)==/g, '<span class="q-hi">$1</span>')}</p></blockquote><button class="quote-more" type="button" aria-expanded="false" aria-controls="quote-text">Read more<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2.5v11M3.5 9 8 13.5 12.5 9"/></svg></button><figcaption>–&nbsp;${esc(QUOTE.by)}</figcaption></figure>`;
 }
