@@ -32,7 +32,7 @@
 <!-- Fonts are files of this site (no request to Google before the first paint); the About portrait loads early because it is the largest thing on the first screen -->
 <link rel="preload" href="fonts/inter-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/cormorant-garamond-latin-600-italic.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" as="image" type="image/webp" imagesrcset="img/about/avatar-wide-128.webp 128w, img/about/avatar-wide-256.webp 256w, img/about/avatar-wide-512.webp 512w" imagesizes="(max-width: 799px) 76px, 240px" fetchpriority="high">   <!-- the About card opens collapsed, so only the avatar is needed up front; the full portrait loads when it is expanded -->
+<link rel="preload" as="image" type="image/webp" imagesrcset="img/about/avatar-128.webp 128w, img/about/avatar-256.webp 256w, img/about/avatar-512.webp 512w" imagesizes="(max-width: 799px) 76px, 240px" fetchpriority="high">   <!-- the About card opens collapsed, so only the avatar is needed up front; the full portrait loads when it is expanded -->
 <style>
 /* Self-hosted fonts (Latin): Inter variable (weight 300–600, optical size 14–32) and Cormorant Garamond italic 400 / 500 / 600 */
 @font-face { font-family: "Inter"; font-style: normal; font-weight: 300 600; font-display: swap; src: url("fonts/inter-latin-opsz-normal.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
@@ -438,7 +438,7 @@ h2 { font-size: clamp(34px, 3.8vw, 44px); line-height: 1.08; letter-spacing: -0.
 
 .tile-about .tile-visual { grid-area: 1 / 1; position: relative; overflow: hidden; width: 100%; height: auto; border-radius: 0; }   /* square, like the card (Nov 19) */
 .tile-about .tile-visual canvas, .tile-about .photo { position: absolute; inset: 0; width: 100%; height: 100%; }
-.tile-about .photo { object-fit: cover; object-position: 50% 25%; }   /* Nov 19 portrait: keeps the whole head in frame whatever shape the box takes (tall on desktop, square on phones, wide on big screens), eyes about a third from the top */
+.tile-about .photo { object-fit: cover; object-position: 50% 22%; }   /* keeps the whole face in frame whatever shape the box takes (tall on desktop, square on phones, wide on big screens) */
 .tile-about .about-logo {
   position: absolute; left: 50%; top: 50%; width: 38%; height: auto; aspect-ratio: 1887 / 1781;
   transform: translate(-50%, -50%); color: #fff; opacity: .94;
@@ -537,7 +537,7 @@ h2 { font-size: clamp(34px, 3.8vw, 44px); line-height: 1.08; letter-spacing: -0.
   .about-body { grid-template-columns: 1fr; grid-template-areas: "photo" "text"; }
   .about-photo { padding: 8px; width: auto; align-self: stretch; justify-self: stretch; }
   .about-photo::before { padding-top: 100%; }   /* square on narrow screens too (Nov 18) */
-  .tile-about .photo { object-position: 50% 25%; }
+  .tile-about .photo { object-position: 50% 22%; }
 }
 
 /* No layout jump on load: until the project cards are rendered, the sections below them keep their place but stay invisible */
@@ -1130,7 +1130,7 @@ const SITE = {
   email: "vorlova.design@gmail.com",
   linkedin: "https://www.linkedin.com/in/valentinaorlova",
   telegram: "https://t.me/worlova",
-  photo: "img/about/portrait-nov",           // About card portrait files: img/about/portrait-nov-480/800/1200/1600 .avif + .webp (2500×3132 crop of the Nov 19 portrait); set to "" to show the painted placeholder
+  photo: "img/about/portrait",               // About card portrait files: img/about/portrait-480/800/1200 .avif + .webp (1200×1410 source); set to "" to show the painted placeholder
   // About card details (three columns)
   // Each area is shown as a colored pill; tone is one of: green, magenta, blue, neutral, yellow, orange, violet, mint.
   // keepWithNext: true keeps a pill on the same row as the one after it.
@@ -1765,7 +1765,7 @@ function cardLogoImg(p) {
 
 /* About portrait: three widths in AVIF (WebP for older browsers); sizes match the drawn photo box (it is cropped to fill it) */
 const PORTRAIT_SIZES = "(max-width: 999px) 91vw, (max-width: 1319px) 900px, (max-width: 1500px) 52vw, 48vw";
-function portraitSet(ext) { return [480, 800, 1200, 1600].map(w => `${esc(SITE.photo)}-${w}.${ext} ${w}w`).join(", "); }
+function portraitSet(ext) { return [480, 800, 1200].map(w => `${esc(SITE.photo)}-${w}.${ext} ${w}w`).join(", "); }
 /* Tools row: each mark in its brand colour on a black square (Nov 19). Marks: Simple Icons (CC0); ChatGPT and the full-colour Figma mark: Lobe Icons (MIT). */
 /* Testimonial shown between the 2nd and 3rd rows of project cards (Nov 19). Steve's words exactly as given. */
 const QUOTE = { after: 6, text: "I’ve worked with designers across companies like Cash App, Brex, and Uber Eats, and Valentina is in a league of her own. With minimal context, she could translate our vision into high-fidelity designs and thoughtful product experiences across the web and mobile. Rather than push pixels, Valentina collaboratively probed and furthered our holistic customer journeys, iterating quickly on design feedback. Plus, she can move effortlessly across product and brand design, a rarity for a Designer and a true gift to any startup.", by: "Steve Austin, Co-founder and CTO at Benny API" };
@@ -1781,14 +1781,14 @@ function renderCards() {
         <span class="about-title"><span>I’m Valentina, 4 times the 1st design&nbsp;hire.</span> <span>I love building products 0&nbsp;→&nbsp;1.</span></span>
         <span class="about-excerpt" aria-hidden="true">I’ve been designing digital products for 10 years, and it only gets more exciting with every project. In 2022, I took a break from my corporate career to partner with early-stage teams and build products from scratch. Turns&nbsp;out, that’s where I thrive.</span>
         ${SITE.photo
-          ? `<img class="about-avatar" src="img/about/avatar-wide-128.webp" srcset="img/about/avatar-wide-128.webp 128w, img/about/avatar-wide-256.webp 256w, img/about/avatar-wide-512.webp 512w" sizes="(max-width: 799px) 76px, 240px" width="128" height="128" alt="" aria-hidden="true">`
+          ? `<img class="about-avatar" src="img/about/avatar-128.webp" srcset="img/about/avatar-128.webp 128w, img/about/avatar-256.webp 256w, img/about/avatar-512.webp 512w" sizes="(max-width: 799px) 76px, 240px" width="128" height="128" alt="" aria-hidden="true">`
           : `<span class="about-avatar about-avatar-mark"><svg viewBox="0 0 1887 1781" aria-hidden="true"><use href="#logo-mark"/></svg></span>`}
         <span class="about-more">Read more<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2.5v11M3.5 9 8 13.5 12.5 9"/></svg></span>
         <svg class="about-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 6 8 10.5 12.5 6"/></svg>
       </button>
       <div class="about-body" id="about-body" hidden>
       <div class="about-photo">${SITE.photo
-        ? `<div class="tile-visual"><picture><source type="image/avif" srcset="${portraitSet("avif")}" sizes="${PORTRAIT_SIZES}"><img class="photo" src="${esc(SITE.photo)}-800.webp" srcset="${portraitSet("webp")}" sizes="${PORTRAIT_SIZES}" width="1200" height="1503" alt="${esc(SITE.name)}" loading="lazy" decoding="async"></picture></div>`
+        ? `<div class="tile-visual"><picture><source type="image/avif" srcset="${portraitSet("avif")}" sizes="${PORTRAIT_SIZES}"><img class="photo" src="${esc(SITE.photo)}-800.webp" srcset="${portraitSet("webp")}" sizes="${PORTRAIT_SIZES}" width="1200" height="1410" alt="${esc(SITE.name)}" loading="lazy" decoding="async"></picture></div>`
         : `<div class="tile-visual cover" data-pal="portrait" data-seed="41">
              <canvas aria-hidden="true"></canvas>
              <svg class="about-logo" viewBox="0 0 1887 1781" aria-hidden="true"><use href="#logo-mark"/></svg>
