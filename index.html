@@ -315,7 +315,7 @@ h2 { font-size: clamp(34px, 3.8vw, 44px); line-height: 1.08; letter-spacing: -0.
 /* Phones: the whole quote shows, no collapse (Nov 19); the attribution is left-aligned */
 @media (max-width: 600px) { .quote-band figcaption { text-align: left; } }
 /* Hovering a card dims the others to 70% (Nov 19) */
-#grid:has(> .tile:not(.is-open):hover) > .tile:not(:hover) { opacity: .7; }
+#grid:has(> .tile:not(.tile-about):not(.is-open):hover) > .tile:not(:hover) { opacity: .7; }   /* only a project card triggers it; hovering the About card dims nothing (Nov 20) */
 .tile:hover { background-color: #000000; box-shadow: 0 4px 64px 0 rgba(187, 187, 187, .15); z-index: 2; }   /* stays black on hover (Nov 19) */
 /* Hover: a 1px light runs around the outline (Nov 19). The border paints a rotating conic gradient: the resting outline with one bright streak. */
 @property --run { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
