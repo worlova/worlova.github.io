@@ -823,24 +823,8 @@ body.is-editing .lb-keys { display: none; }
   position: relative; z-index: 1;
   background: var(--surface); border-radius: var(--radius);
 }
-/* Colour behind the glass: three faint glows that drift very slowly */
-.glow {
-  position: absolute; inset: -16% -32%; pointer-events: none; z-index: 0;
-  --g1: #ffffff; --g2: #9a9a9a; --g3: #d8d8d8; --go: .14;  /* neutral: faint white and grey light */
-}
-.glow i {
-  position: absolute; border-radius: 50%; aspect-ratio: 1; filter: blur(56px); opacity: var(--go);
-  animation: drift 28s ease-in-out infinite alternate; transition: opacity .6s ease;
-}
-.glow i:nth-child(1) { width: 46%; left: 8%; top: 2%; background: radial-gradient(circle, var(--g1) 0%, transparent 68%); }
-.glow i:nth-child(2) { width: 52%; right: 4%; bottom: 0; background: radial-gradient(circle, var(--g2) 0%, transparent 68%); animation-duration: 34s; animation-delay: -9s; }
-.glow i:nth-child(3) { width: 36%; left: 40%; top: 30%; background: radial-gradient(circle, var(--g3) 0%, transparent 68%); animation-duration: 24s; animation-delay: -4s; }
-@keyframes drift {
-  0% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(4%, -3%) scale(1.04); }
-  100% { transform: translate(-3%, 4%) scale(.98); }
-}
-@media (prefers-reduced-motion: reduce) { .glow i { animation: none; } }
+
+/* The soft glow behind the email card was removed (Nov 19) */
 .to { overflow-wrap: anywhere; }
 /* The contact card holds the address and nothing else: one centered line inside the same glass frame */
 .mail.is-address { padding: 24px 32px; border-color: #1E202C; text-align: center; border-radius: 0; background: none; -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: none; }   /* square, no fill, 24px top/bottom, 32px sides, card outline colour (Nov 19) */
@@ -1091,7 +1075,6 @@ body.is-editing .lb-keys { display: none; }
   <section id="contact" class="wrap block contact" aria-labelledby="contact-h">
     <h3 id="contact-h">Working on something new?<br> Let's talk.</h3>
     <div class="mail-stage">
-      <div class="glow" aria-hidden="true"><i></i><i></i><i></i></div>
     <div class="mail is-address">
       <!-- The whole card is the address: a mailto link for anyone with an email app, a copy button for everyone else -->
       <div class="address-row">
