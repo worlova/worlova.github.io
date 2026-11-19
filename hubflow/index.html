@@ -287,8 +287,8 @@ h2 { font-size: clamp(34px, 3.8vw, 44px); line-height: 1.08; letter-spacing: -0.
   transition: box-shadow .25s cubic-bezier(0, 0, .2, 1), background-color .15s cubic-bezier(0, 0, .2, 1), border-color .15s cubic-bezier(0, 0, .2, 1), opacity .25s cubic-bezier(0, 0, .2, 1);
 }
 /* 3. hover: no lift; a slight white glow around the card instead, drawn above its neighbours (Nov 19) */
-/* Hovering a card dims the others by 10% (Nov 19) */
-#grid:has(> .tile:not(.is-open):hover) > .tile:not(:hover) { opacity: .9; }
+/* Hovering a card dims the others to 70% (Nov 19) */
+#grid:has(> .tile:not(.is-open):hover) > .tile:not(:hover) { opacity: .7; }
 .tile:hover { background-color: #000000; box-shadow: 0 4px 64px 0 rgba(187, 187, 187, .15); z-index: 2; }   /* stays black on hover (Nov 19) */
 /* Hover: a 1px light runs around the outline (Nov 19). The border paints a rotating conic gradient: the resting outline with one bright streak. */
 @property --run { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
