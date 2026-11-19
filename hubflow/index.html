@@ -367,7 +367,7 @@ h2 { font-size: clamp(34px, 3.8vw, 44px); line-height: 1.08; letter-spacing: -0.
 .grid-intro-desc { margin: 16px auto 0; max-width: none; color: var(--body); font-size: clamp(16px, 1.4vw, 18px); line-height: 1.5; text-wrap: balance; }   /* description under "Project highlights": one line wherever it fits, balanced lines on narrow screens */
 /* Badge below the title: hugs its copy, centered, 2pt corners, in the yellow of the "Product Audit" pill in the About card; a filled envelope on the left; opens an email */
 /* Tools row: "TOOLS:" in the case study label style (as ROLE), then 40×40 square tiles with the product marks (Nov 19) */
-.tools { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 0; margin: 8px auto 0; }   /* 8px under the About card (was 28px, Nov 19) */
+.tools { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 0; margin: 20px auto 0; }   /* 20px under the About card (8px + 12px, Nov 19) */
 .tools-row { grid-column: 1 / -1; }
 .tile-about:not(.is-open) { transition: transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .25s cubic-bezier(0, 0, .2, 1), background-color .15s cubic-bezier(0, 0, .2, 1), opacity .25s cubic-bezier(0, 0, .2, 1); }
 .tile-about:not(.is-open):hover { transform: scale(1.006); }   /* a very subtle pop (Nov 19) */
