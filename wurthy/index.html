@@ -796,17 +796,17 @@ body.is-editing .lb-keys { display: none; }
 @media (prefers-reduced-motion: reduce) { .glow i { animation: none; } }
 .to { overflow-wrap: anywhere; }
 /* The contact card holds the address and nothing else: one centered line inside the same glass frame */
-.mail.is-address { padding: 26px 24px; text-align: center; border-radius: 0; background: none; -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: none; }   /* square, no fill, 24px sides (Nov 19) */
+.mail.is-address { padding: 24px; text-align: center; border-radius: 0; background: none; -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: none; }   /* square, no fill, 24px all round (Nov 19) */
 .address-row { display: flex; align-items: center; justify-content: center; gap: 8px; }
 .address-row .to { white-space: nowrap; font-size: clamp(17px, 2.2vw, 21px); letter-spacing: -0.01em; color: inherit; text-decoration: none; border-bottom: 1px solid transparent; transition: border-color .2s; }
 .address-row .to:hover, .address-row .to:focus-visible { border-bottom-color: transparent; }   /* no underline (Nov 19) */
 @media (max-width: 520px) {
-  .mail.is-address { padding: 20px 24px; }
+  .mail.is-address { padding: 24px; }
   .address-row { gap: 4px; }
   .address-row .to { font-size: min(17px, 4.6vw); }   /* scales down with the screen so the address always stays on one line */
 }
 @media (max-width: 370px) {   /* the address stays on one line on the narrowest phones */
-  .mail.is-address { padding: 16px 24px; }
+  .mail.is-address { padding: 24px; }
   .address-row { gap: 0; }
 }
 .icon-btn {
