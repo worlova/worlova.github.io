@@ -304,7 +304,8 @@ h2 { font-size: clamp(34px, 3.8vw, 44px); line-height: 1.08; letter-spacing: -0.
 .tile-lottie svg { display: block; width: 100%; height: 100%; }
 @media (prefers-reduced-motion: reduce) { .tile-lottie { display: none !important; } .tile-thumb.is-replaced { display: block; } }
 .tile-thumb { position: absolute; left: 3%; top: 4%; width: 94%; height: 94%; object-fit: contain; transition: transform .6s cubic-bezier(.2,.7,.2,1); }
-.tile:hover .tile-thumb { transform: translateY(-6px); }
+.tile .tile-thumb { transition: transform .6s cubic-bezier(.2,.7,.2,1), scale .45s cubic-bezier(.2,.7,.2,1); }
+.tile:hover .tile-thumb { scale: 1.03; }   /* the image pops very slightly (Nov 19) */
 .next .tile-thumb { left: 4%; top: 6%; width: 92%; height: 88%; }
 /* thumb.motion "float": on the Home card it slowly bobs up and down and sways around the vertical axis (no tilt). thumb.size "small": 20% smaller on the card; "medium": 20% larger than small */
 .tile .tile-thumb.is-small { left: 16.4%; top: 18.2%; width: 67.2%; height: 65.6%; }
@@ -314,7 +315,7 @@ h2 { font-size: clamp(34px, 3.8vw, 44px); line-height: 1.08; letter-spacing: -0.
 .tile .tile-thumb.is-floating { animation: thumb-sway 11s ease-in-out infinite alternate, thumb-bob 4.2s ease-in-out infinite alternate; will-change: transform, translate; }
 @keyframes thumb-sway { from { transform: perspective(1100px) rotateY(-9deg); } to { transform: perspective(1100px) rotateY(9deg); } }
 @keyframes thumb-bob { from { translate: 0 5px; } to { translate: 0 -7px; } }
-@media (prefers-reduced-motion: reduce) { .tile-thumb { transition: none; } .tile:hover .tile-thumb { transform: none; } .tile .tile-thumb.is-floating { animation: none; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .tile-thumb, .tile .tile-thumb { transition: none; } .tile:hover .tile-thumb { transform: none; scale: none; } .tile .tile-thumb.is-floating { animation: none; transform: none; } .tile-about:not(.is-open):hover { transform: none; } }
 .tile-text { padding: 10px 38px 36px; }   /* +10px all round (Nov 19) */
 .tile h4 { font-size: clamp(22px, 2.4vw, 28px);   /* same size as the workflow step titles */ font-weight: 500; line-height: 1.25; letter-spacing: -0.015em; }
 .tile-text p { color: var(--body); font-size: 16px; margin-top: 4px; }
@@ -334,6 +335,8 @@ h2 { font-size: clamp(34px, 3.8vw, 44px); line-height: 1.08; letter-spacing: -0.
 /* Tools row: "TOOLS:" in the case study label style (as ROLE), then 40×40 square tiles with the product marks (Nov 19) */
 .tools { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 10px 14px; margin: 28px auto 0; }
 .tools-row { grid-column: 1 / -1; }
+.tile-about:not(.is-open) { transition: transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .25s cubic-bezier(0, 0, .2, 1), background-color .15s cubic-bezier(0, 0, .2, 1); }
+.tile-about:not(.is-open):hover { transform: scale(1.006); }   /* a very subtle pop (Nov 19) */
 /* Collapsed, the About card is as wide as two project cards; open, it spans the full width (Nov 19) */
 @media (min-width: 961px) { .grid > .tile-about:not(.is-open) { grid-column: 1 / -1; justify-self: center; width: calc(200% / 3); } }   /* centred (Nov 19) */   /* its own row, right under the About card (Nov 19) */
 .tools-label { color: var(--muted); font-family: var(--font-body); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; }
@@ -390,7 +393,7 @@ h2 { font-size: clamp(34px, 3.8vw, 44px); line-height: 1.08; letter-spacing: -0.
    The photo sits inside with 8px top, right and bottom; no padding on the text side. */
 /* Desktop: the photo fills the whole photo column – 40% of the card's width and its full height, inset 8px
    from the top, right and bottom edges – and crops to fit rather than stretching (Nov 18). */
-.about-photo { grid-area: photo; padding: 8px 8px 8px 0; align-self: stretch; justify-self: stretch; display: grid; }
+.about-photo { grid-area: photo; padding: 0; align-self: stretch; justify-self: stretch; display: grid; }   /* full height: flush with the top, right and bottom edges (Nov 19) */
 .about-photo::before { content: ""; grid-area: 1 / 1; padding-top: 0; }   /* no fixed ratio on desktop: the card's height sets it */
 /* Collapsed, the card is a button, so it lifts and lightens on hover like the project cards below.
    Opened it is not clickable any more, so it sits still. */
@@ -416,7 +419,7 @@ h2 { font-size: clamp(34px, 3.8vw, 44px); line-height: 1.08; letter-spacing: -0.
 .tile-about .about-meta > div { grid-column: span 2; }
 /* About card details: each label sits above its value */
 .tile-about .about-meta > div { grid-template-columns: 1fr; gap: 10px; align-content: start; }
-.tile-about .about-meta .tags { margin-top: 0; gap: 9px 6px; }   /* 9px between rows, 6px between pills */
+.tile-about .about-meta .tags { margin-top: 0; gap: 4px; }   /* 4px between pills and rows (Nov 19) */
 .tile-about .about-meta dd { font-size: 16px; line-height: 1.4; }
 .tile-about .about-meta dt { color: #ffffff; }   /* "Areas of expertise" / "Core strengths" labels */
 /* Core strengths: list with small diamond bullets (a rotated square, centered on the first line) */
@@ -447,7 +450,7 @@ h2 { font-size: clamp(34px, 3.8vw, 44px); line-height: 1.08; letter-spacing: -0.
 .tone-mint    { --tone-fg: #7cfbd5; --tone-bg: #17312a; }
 /* Two pills kept on one row; the wrapper is invisible and only wraps inside itself if the column is narrower than both */
 .tags li.tag-pair, .about-areas .tags li.tag-pair { padding: 0; border: 0; border-radius: 0; background: none; }
-.tag-pair > ul { list-style: none; display: flex; flex-wrap: wrap; gap: 9px 6px; margin: 0; padding: 0; }
+.tag-pair > ul { list-style: none; display: flex; flex-wrap: wrap; gap: 4px; margin: 0; padding: 0; }
 /* The details follow the text column's own width: 2 + 2 of 6 columns where Areas fits two pills per row,
    halves (3 + 3) below that, one column where even halves are too narrow for Core strengths */
 @container about-text (max-width: 799px) { .tile-about .about-meta > div { grid-column: span 3; } }
@@ -462,20 +465,20 @@ h2 { font-size: clamp(34px, 3.8vw, 44px); line-height: 1.08; letter-spacing: -0.
 /* Areas of expertise: on desktop, User Research, Iconography and Illustration always start a second row (Nov 18).
    The break is a zero-height full-width item, used only when the copy column is wide enough for the first five; elsewhere the pills wrap where they fit. */
 .about-areas .tags li.tag-break { display: none; }
-@container about-text (min-width: 680px) {   /* only where the first five pills (about 657px) fit on one row */
-  .tile-about .about-meta .about-areas .tags { row-gap: 0; margin-bottom: -9px; }
-  .about-areas .tags > li { margin-bottom: 9px; }   /* the row gap moves onto the pills, so the empty break line adds no space */
+@container about-text (min-width: 560px) {   /* only where the first four pills fit on one row */
+  .tile-about .about-meta .about-areas .tags { row-gap: 0; margin-bottom: -4px; }
+  .about-areas .tags > li { margin-bottom: 4px; }   /* the row gap moves onto the pills, so the empty break line adds no space */
   .about-areas .tags > li.tag-break { display: block; flex-basis: 100%; height: 0; margin: 0; padding: 0; border: 0; background: none; }
 }
 /* Core strengths: the same break, before Clear communication, where the first four fit on one row (about 530px) */
 .about-list li.tag-break { display: none; }
 @container about-text (min-width: 560px) {
-  .tile-about .about-meta .about-list { row-gap: 0; margin-bottom: -6px; }
-  .tile-about .about-list > li { margin-bottom: 6px; }
+  .tile-about .about-meta .about-list { row-gap: 0; margin-bottom: -4px; }
+  .tile-about .about-list > li { margin-bottom: 4px; }
   .tile-about .about-list > li.tag-break { display: block; flex-basis: 100%; height: 0; margin: 0; padding: 0; }
   .tile-about .about-list > li.tag-break::before { content: none; }
 }
-.tile-about .about-list { display: flex; flex-wrap: wrap; gap: 6px 13px; }   /* 22px → 13px between items (Nov 18) */
+.tile-about .about-list { display: flex; flex-wrap: wrap; gap: 4px; }   /* 4px between items and rows (Nov 19) */
 @media (max-width: 600px) { .tile-about .tile-text > :not(.about-ctas):not(.about-meta) { max-width: none; } }
 /* Two buttons on the card bottom: Contact Me (solid) then My Process (outlined) */
 .about-ctas { display: flex; flex-wrap: wrap; gap: 10px; margin-top: auto; align-self: flex-start; }
@@ -791,17 +794,17 @@ body.is-editing .lb-keys { display: none; }
 @media (prefers-reduced-motion: reduce) { .glow i { animation: none; } }
 .to { overflow-wrap: anywhere; }
 /* The contact card holds the address and nothing else: one centered line inside the same glass frame */
-.mail.is-address { padding: 26px 46px; text-align: center; border-radius: 0; }   /* square corners (Nov 19) */
+.mail.is-address { padding: 26px 24px; text-align: center; border-radius: 0; background: none; -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: none; }   /* square, no fill, 24px sides (Nov 19) */
 .address-row { display: flex; align-items: center; justify-content: center; gap: 8px; }
 .address-row .to { white-space: nowrap; font-size: clamp(17px, 2.2vw, 21px); letter-spacing: -0.01em; color: inherit; text-decoration: none; border-bottom: 1px solid transparent; transition: border-color .2s; }
-.address-row .to:hover, .address-row .to:focus-visible { border-bottom-color: currentColor; }
+.address-row .to:hover, .address-row .to:focus-visible { border-bottom-color: transparent; }   /* no underline (Nov 19) */
 @media (max-width: 520px) {
-  .mail.is-address { padding: 20px 40px; }
+  .mail.is-address { padding: 20px 24px; }
   .address-row { gap: 4px; }
   .address-row .to { font-size: min(17px, 4.6vw); }   /* scales down with the screen so the address always stays on one line */
 }
 @media (max-width: 370px) {   /* the address stays on one line on the narrowest phones */
-  .mail.is-address { padding: 16px 36px; }
+  .mail.is-address { padding: 16px 24px; }
   .address-row { gap: 0; }
 }
 .icon-btn {
@@ -1099,12 +1102,12 @@ const SITE = {
     { label: "Web Design",           tone: "magenta" },
     { label: "Marketing Collateral", tone: "blue" },
     { label: "Deck Design",          tone: "orange" },
-    { label: "Product Audit",        tone: "yellow" },
-    { label: "User Research",        tone: "neutral", breakBefore: true },   /* starts the second row on wide screens */
+    { label: "Product Audit",        tone: "yellow", breakBefore: true },   /* starts the second row on wide screens (Nov 19) */
+    { label: "User Research",        tone: "neutral" },
     { label: "Iconography",          tone: "violet", keepWithNext: true },
     { label: "Illustration",         tone: "mint" }
   ],
-  strengths: ["Agility", "Ownership mentality", "Dedication to craft", "Quick turnaround", "Clear communication", "Product thinking", "Collaboration"],
+  strengths: ["Agility", "Ownership mentality", "Dedication to craft", "Clear communication", "Product thinking", "Collaboration"],
   strengthsBreakBefore: "Clear communication",   /* starts the second row on wide screens */
   // The contact form composes the message in the visitor's own email client and sends it to SITE.email.
   // There is no server and no form service behind it, so there is nothing that can stop delivering.
