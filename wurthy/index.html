@@ -86,7 +86,7 @@ h3, h4 { font-family: var(--font-body); font-weight: 400; text-wrap: balance; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
 [tabindex="-1"]:focus { outline: none; }
 
-.wrap { width: calc(100% - 2 * var(--gutter)); margin-inline: auto; }
+.wrap { width: calc(100% - 2 * var(--gutter)); max-width: 1800px; margin-inline: auto; }   /* the grid stops growing at 1800px (Nov 19) */
 @media (max-width: 600px) { :root { --gutter: 20px; } }
 .mono {
   font-family: var(--font-body);
@@ -661,7 +661,7 @@ body:has(#grid:empty) :is(#process, #contact), body:has(#grid:empty) > .site-foo
 @media (max-width: 720px) { .shot-stage.is-pair { flex-direction: column; } .shot-stage.is-pair img { width: 100%; flex: none; } }   /* two full pages are unreadable side by side on a phone */   /* a titled section between images: extra air above, so it reads as the heading of what follows */
 @media (max-width: 720px) { .proj-ps.proj-extra { grid-template-columns: 1fr; } }
 /* Case study content: 8 of the 12 columns, centered (full width below 820px) */
-#view-project > .wrap { width: calc((100% - 2 * var(--gutter) - 11 * 20px) / 12 * 8 + 7 * 20px); }
+#view-project > .wrap { width: calc((min(100% - 2 * var(--gutter), 1800px) - 11 * 20px) / 12 * 8 + 7 * 20px); }   /* 8 of the 12 columns of the (max 1800px) grid */
 @media (max-width: 820px) { #view-project > .wrap { width: calc(100% - 2 * var(--gutter)); } }
 .proj-section { margin-top: clamp(88px, 10vw, 140px); }
 .proj-section > h3 { font-size: clamp(34px, 3.8vw, 44px); line-height: 1.15; letter-spacing: -0.02em; }   /* section title (H3): Inter 400 */
