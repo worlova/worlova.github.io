@@ -143,7 +143,13 @@ h3, h4 { font-family: var(--font-body); font-weight: 400; text-wrap: balance; }
 .social a { color: #ffffff; display: grid; place-items: center; width: 22px; height: 22px; transition: opacity .2s; }
 .social a:hover { opacity: .7; }
 .social svg { width: 18px; height: 18px; }
-.menu-btn { display: none; background: none; border: 0; color: var(--text); font: inherit; font-size: 16px; cursor: pointer; padding: 6px 0; }
+.menu-btn { display: none; place-items: center; width: 40px; height: 40px; margin-right: -9px; padding: 0; background: none; border: 0; color: var(--text); cursor: pointer; }   /* hamburger icon instead of the "Menu" label (Nov 19); the icon's right edge sits on the gutter */
+.menu-btn svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.5; overflow: visible; }
+.menu-btn path { transform-box: view-box; transform-origin: 12px 12px; transition: transform .3s cubic-bezier(.2, .7, .2, 1), opacity .2s ease; }
+.menu-btn[aria-expanded="true"] .l1 { transform: rotate(45deg) translateY(5px); }   /* open: the lines fold into an × */
+.menu-btn[aria-expanded="true"] .l2 { opacity: 0; }
+.menu-btn[aria-expanded="true"] .l3 { transform: rotate(-45deg) translateY(-5px); }
+@media (prefers-reduced-motion: reduce) { .menu-btn path { transition: none; } }
 .menu { background: var(--bg); padding: 16px var(--gutter) 28px; }
 .menu[hidden] { display: none; }
 .menu nav { display: flex; flex-direction: column; gap: 4px; }
@@ -156,7 +162,7 @@ h3, h4 { font-family: var(--font-body); font-weight: 400; text-wrap: balance; }
 .site-head.open .head-fx { opacity: 0; }
 @media (max-width: 760px) {
   .head-right .site-nav, .head-right .social { display: none; }
-  .menu-btn { display: block; }
+  .menu-btn { display: grid; }
 }
 @media (min-width: 761px) { .menu { display: none !important; } }
 
@@ -1035,7 +1041,7 @@ body.is-editing .lb-keys { display: none; }
         <a data-resume hidden>CV</a>
       </nav>
       <div class="social" data-social></div>
-      <button class="menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
+      <button class="menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="menu" aria-label="Open menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="l1" d="M3 7h18"/><path class="l2" d="M3 12h18"/><path class="l3" d="M3 17h18"/></svg></button>
     </div>
   </div>
   <div class="menu" id="menu" hidden>
@@ -2215,7 +2221,7 @@ const menuBtn = document.getElementById("menu-btn");
 function setMenu(open) {
   menu.hidden = !open;
   menuBtn.setAttribute("aria-expanded", String(open));
-  menuBtn.textContent = open ? "Close" : "Menu";
+  menuBtn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
   head.classList.toggle("open", open);
 }
 menuBtn.addEventListener("click", () => setMenu(menu.hidden));
