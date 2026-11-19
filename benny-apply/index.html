@@ -32,7 +32,7 @@
 <!-- Fonts are files of this site (no request to Google before the first paint); the About portrait loads early because it is the largest thing on the first screen -->
 <link rel="preload" href="fonts/inter-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/cormorant-garamond-latin-600-italic.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" as="image" type="image/webp" imagesrcset="img/about/avatar-nov-128.webp 128w, img/about/avatar-nov-256.webp 256w, img/about/avatar-nov-512.webp 512w" imagesizes="(max-width: 799px) 76px, 240px" fetchpriority="high">   <!-- the About card opens collapsed, so only the avatar is needed up front; the full portrait loads when it is expanded -->
+<link rel="preload" as="image" type="image/webp" imagesrcset="img/about/avatar-wide-128.webp 128w, img/about/avatar-wide-256.webp 256w, img/about/avatar-wide-512.webp 512w" imagesizes="(max-width: 799px) 76px, 240px" fetchpriority="high">   <!-- the About card opens collapsed, so only the avatar is needed up front; the full portrait loads when it is expanded -->
 <style>
 /* Self-hosted fonts (Latin): Inter variable (weight 300–600, optical size 14–32) and Cormorant Garamond italic 400 / 500 / 600 */
 @font-face { font-family: "Inter"; font-style: normal; font-weight: 300 600; font-display: swap; src: url("fonts/inter-latin-opsz-normal.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
@@ -1777,10 +1777,10 @@ function renderCards() {
     <article class="tile tile-about" id="about" aria-labelledby="about-h">
       <!-- Collapsed: the title, the first two lines of the bio fading out, and the portrait thumbnail on the right -->
       <button class="about-peek" type="button" aria-expanded="false" aria-controls="about-body">
-        <span class="about-title"><span>I’m Valentina, 4 times a Founding Designer.</span> <span>I love building products 0&nbsp;→&nbsp;1.</span></span>
-        <span class="about-excerpt" aria-hidden="true">I’ve been designing digital products for 10 years, and it only gets more exciting with every project. In 2022, I took a break from my corporate career to partner with early-stage teams and build new products from scratch. Turns&nbsp;out, that’s where I thrive.</span>
+        <span class="about-title"><span>I’m Valentina, 4 times the 1st design&nbsp;hire.</span> <span>I love building products 0&nbsp;→&nbsp;1.</span></span>
+        <span class="about-excerpt" aria-hidden="true">I’ve been designing digital products for 10 years, and it only gets more exciting with every project. In 2022, I took a break from my corporate career to partner with early-stage teams and build products from scratch. Turns&nbsp;out, that’s where I thrive.</span>
         ${SITE.photo
-          ? `<img class="about-avatar" src="img/about/avatar-nov-128.webp" srcset="img/about/avatar-nov-128.webp 128w, img/about/avatar-nov-256.webp 256w, img/about/avatar-nov-512.webp 512w" sizes="(max-width: 799px) 76px, 240px" width="128" height="128" alt="" aria-hidden="true">`
+          ? `<img class="about-avatar" src="img/about/avatar-wide-128.webp" srcset="img/about/avatar-wide-128.webp 128w, img/about/avatar-wide-256.webp 256w, img/about/avatar-wide-512.webp 512w" sizes="(max-width: 799px) 76px, 240px" width="128" height="128" alt="" aria-hidden="true">`
           : `<span class="about-avatar about-avatar-mark"><svg viewBox="0 0 1887 1781" aria-hidden="true"><use href="#logo-mark"/></svg></span>`}
         <span class="about-more">Read more<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2.5v11M3.5 9 8 13.5 12.5 9"/></svg></span>
         <svg class="about-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 6 8 10.5 12.5 6"/></svg>
@@ -1793,8 +1793,8 @@ function renderCards() {
              <svg class="about-logo" viewBox="0 0 1887 1781" aria-hidden="true"><use href="#logo-mark"/></svg>
            </div>`}</div>
       <div class="tile-text">
-        <h3 id="about-h"><span>I’m Valentina, 4 times a Founding Designer.</span> <span>I love building products 0&nbsp;→&nbsp;1.</span></h3>
-        <p>I’ve been designing digital products for&nbsp;10&nbsp;years, and&nbsp;it&nbsp;only gets more exciting with&nbsp;every project. In&nbsp;2022, I&nbsp;took a&nbsp;break from&nbsp;my&nbsp;corporate career to&nbsp;partner with&nbsp;<span class="nowrap">early-stage</span> teams and&nbsp;build new products from&nbsp;scratch. Turns&nbsp;out, that’s where I&nbsp;thrive. Now I’m ready to&nbsp;bring that experience to&nbsp;companies of&nbsp;any size. Together, we’ll&nbsp;figure out how to&nbsp;get you where you want to&nbsp;be.</p>
+        <h3 id="about-h"><span>I’m Valentina, 4 times the 1st design&nbsp;hire.</span> <span>I love building products 0&nbsp;→&nbsp;1.</span></h3>
+        <p>I’ve been designing digital products for&nbsp;10&nbsp;years, and&nbsp;it&nbsp;only gets more exciting with&nbsp;every project. In&nbsp;2022, I&nbsp;took a&nbsp;break from&nbsp;my&nbsp;corporate career to&nbsp;partner with&nbsp;<span class="nowrap">early-stage</span> teams and&nbsp;build products from&nbsp;scratch. Turns&nbsp;out, that’s where I&nbsp;thrive. Now I’m ready to&nbsp;bring that experience to&nbsp;companies of&nbsp;any size. Together, we’ll&nbsp;figure out how to&nbsp;get you where you want to&nbsp;be.</p>
         <dl class="proj-meta about-meta">
           <div class="about-areas"><dt>Areas of expertise</dt><dd><ul class="tags">${expertisePills()}</ul></dd></div>
           <div><dt>Core strengths</dt><dd><ul class="about-list">${SITE.strengths.map(t => (t === SITE.strengthsBreakBefore ? `<li class="tag-break" aria-hidden="true"></li>` : "") + `<li>${esc(t)}</li>`).join("")}</ul></dd></div>
