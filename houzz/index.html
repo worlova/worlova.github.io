@@ -284,9 +284,11 @@ h2 { font-size: clamp(34px, 3.8vw, 44px); line-height: 1.08; letter-spacing: -0.
 .tile {
   aspect-ratio: 1 / 1.4; border-radius: 0; background: #000000; border: 1px solid #1E202C; overflow: hidden;   /* black, square, outlined (Nov 19) */
   display: flex; flex-direction: column; isolation: isolate; position: relative;
-  transition: box-shadow .25s cubic-bezier(0, 0, .2, 1), background-color .15s cubic-bezier(0, 0, .2, 1), border-color .15s cubic-bezier(0, 0, .2, 1);
+  transition: box-shadow .25s cubic-bezier(0, 0, .2, 1), background-color .15s cubic-bezier(0, 0, .2, 1), border-color .15s cubic-bezier(0, 0, .2, 1), opacity .25s cubic-bezier(0, 0, .2, 1);
 }
 /* 3. hover: no lift; a slight white glow around the card instead, drawn above its neighbours (Nov 19) */
+/* Hovering a card dims the others by 10% (Nov 19) */
+#grid:has(> .tile:not(.is-open):hover) > .tile:not(:hover) { opacity: .9; }
 .tile:hover { background-color: #000000; box-shadow: 0 4px 64px 0 rgba(187, 187, 187, .15); z-index: 2; }   /* stays black on hover (Nov 19) */
 /* Hover: a 1px light runs around the outline (Nov 19). The border paints a rotating conic gradient: the resting outline with one bright streak. */
 @property --run { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
@@ -338,7 +340,7 @@ h2 { font-size: clamp(34px, 3.8vw, 44px); line-height: 1.08; letter-spacing: -0.
 /* Tools row: "TOOLS:" in the case study label style (as ROLE), then 40×40 square tiles with the product marks (Nov 19) */
 .tools { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 0; margin: 28px auto 0; }
 .tools-row { grid-column: 1 / -1; }
-.tile-about:not(.is-open) { transition: transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .25s cubic-bezier(0, 0, .2, 1), background-color .15s cubic-bezier(0, 0, .2, 1); }
+.tile-about:not(.is-open) { transition: transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .25s cubic-bezier(0, 0, .2, 1), background-color .15s cubic-bezier(0, 0, .2, 1), opacity .25s cubic-bezier(0, 0, .2, 1); }
 .tile-about:not(.is-open):hover { transform: scale(1.006); }   /* a very subtle pop (Nov 19) */
 /* Collapsed, the About card is as wide as two project cards; open, it spans the full width (Nov 19) */
 @media (min-width: 961px) { .grid > .tile-about:not(.is-open) { grid-column: 1 / -1; justify-self: center; width: calc(200% / 3); } }   /* centred (Nov 19) */   /* its own row, right under the About card (Nov 19) */
@@ -436,7 +438,7 @@ h2 { font-size: clamp(34px, 3.8vw, 44px); line-height: 1.08; letter-spacing: -0.
 .tile-about .about-meta > div { grid-column: span 2; }
 /* About card details: each label sits above its value */
 .tile-about .about-meta > div { grid-template-columns: 1fr; gap: 10px; align-content: start; }
-.tile-about .about-meta .tags { margin-top: 0; gap: 4px; }   /* 4px between pills and rows (Nov 19) */
+.tile-about .about-meta .tags { margin-top: 0; gap: 2px; }   /* 2px between pills and rows (Nov 19) */
 .tile-about .about-meta dd { font-size: 16px; line-height: 1.4; }
 .tile-about .about-meta dt { color: #ffffff; }   /* "Areas of expertise" / "Core strengths" labels */
 /* Core strengths: list with small diamond bullets (a rotated square, centered on the first line) */
@@ -458,7 +460,7 @@ h2 { font-size: clamp(34px, 3.8vw, 44px); line-height: 1.08; letter-spacing: -0.
 .proj-intro .proj-meta .tags li { border-color: transparent; background: #303030; color: #ffffff; font-weight: 500; line-height: 1.4; }
 /* Home card pills inherit the case study style. White at 10% over the card fill reads as the same #303030 at rest
    and stays visible when the card brightens on hover. */
-.tile:not(.tile-about) .tile-text .tags { gap: 4px; }   /* 4px between the pills on project cards (Nov 19) */
+.tile:not(.tile-about) .tile-text .tags { gap: 2px; }   /* 2px between the pills on project cards (Nov 19) */
 .tile:not(.tile-about) .tags li { border-color: transparent; background: rgba(255,255,255,.1); color: #ffffff; font-weight: 500; }
 .tile .tags li.tone-yellow, .proj-intro .proj-meta .tags li.tone-yellow { background: var(--tone-bg); color: var(--tone-fg); }   /* a toned pill on a card keeps its tone, e.g. 0 → 1 in the yellow of Product Audit */
 .tone-yellow  { --tone-fg: #fdf58e; --tone-bg: #32301e; }
@@ -467,7 +469,7 @@ h2 { font-size: clamp(34px, 3.8vw, 44px); line-height: 1.08; letter-spacing: -0.
 .tone-mint    { --tone-fg: #7cfbd5; --tone-bg: #17312a; }
 /* Two pills kept on one row; the wrapper is invisible and only wraps inside itself if the column is narrower than both */
 .tags li.tag-pair, .about-areas .tags li.tag-pair { padding: 0; border: 0; border-radius: 0; background: none; }
-.tag-pair > ul { list-style: none; display: flex; flex-wrap: wrap; gap: 4px; margin: 0; padding: 0; }
+.tag-pair > ul { list-style: none; display: flex; flex-wrap: wrap; gap: 2px; margin: 0; padding: 0; }
 /* The details follow the text column's own width: 2 + 2 of 6 columns where Areas fits two pills per row,
    halves (3 + 3) below that, one column where even halves are too narrow for Core strengths */
 @container about-text (max-width: 799px) { .tile-about .about-meta > div { grid-column: span 3; } }
@@ -483,8 +485,8 @@ h2 { font-size: clamp(34px, 3.8vw, 44px); line-height: 1.08; letter-spacing: -0.
    The break is a zero-height full-width item, used only when the copy column is wide enough for the first five; elsewhere the pills wrap where they fit. */
 .about-areas .tags li.tag-break { display: none; }
 @container about-text (min-width: 560px) {   /* only where the first four pills fit on one row */
-  .tile-about .about-meta .about-areas .tags { row-gap: 0; margin-bottom: -4px; }
-  .about-areas .tags > li { margin-bottom: 4px; }   /* the row gap moves onto the pills, so the empty break line adds no space */
+  .tile-about .about-meta .about-areas .tags { row-gap: 0; margin-bottom: -2px; }
+  .about-areas .tags > li { margin-bottom: 2px; }   /* the row gap moves onto the pills, so the empty break line adds no space */
   .about-areas .tags > li.tag-break { display: block; flex-basis: 100%; height: 0; margin: 0; padding: 0; border: 0; background: none; }
 }
 /* Core strengths: the same break, before Clear communication, where the first four fit on one row (about 530px) */
