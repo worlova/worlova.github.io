@@ -290,8 +290,9 @@ h2 { font-size: clamp(34px, 3.8vw, 44px); line-height: 1.08; letter-spacing: -0.
 @property --run { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
 @keyframes outline-run { to { --run: 360deg; } }
 .tile:not(.is-open):hover {
-  border-image: conic-gradient(from var(--run), #1E202C 0deg, #1E202C 230deg, rgba(255, 255, 255, .6) 290deg, #ffffff 325deg, rgba(255, 255, 255, .6) 345deg, #1E202C 360deg) 1;   /* only the 1px streak moves; the rest stays the resting outline */
-  animation: outline-run 2.6s linear infinite;
+  /* same values as the "Available for new projects" sheen (Nov 19), in white over the resting outline */
+  border-image: conic-gradient(from var(--run), #1E202C 0deg, #1E202C 250deg, rgba(255, 255, 255, .35) 300deg, rgba(255, 255, 255, .95) 338deg, rgba(255, 255, 255, .35) 352deg, #1E202C 360deg) 1;
+  animation: outline-run 3.2s linear infinite;
 }
 @media (prefers-reduced-motion: reduce) { .tile:not(.is-open):hover { animation: none; border-image: none; } }
 /* 2. no gaps: the cards touch and share one 1px outline (each overlaps its neighbour by 1px) */
@@ -333,16 +334,29 @@ h2 { font-size: clamp(34px, 3.8vw, 44px); line-height: 1.08; letter-spacing: -0.
 .grid-intro-desc { margin: 16px auto 0; max-width: none; color: var(--body); font-size: clamp(16px, 1.4vw, 18px); line-height: 1.5; text-wrap: balance; }   /* description under "Project highlights": one line wherever it fits, balanced lines on narrow screens */
 /* Badge below the title: hugs its copy, centered, 2pt corners, in the yellow of the "Product Audit" pill in the About card; a filled envelope on the left; opens an email */
 /* Tools row: "TOOLS:" in the case study label style (as ROLE), then 40×40 square tiles with the product marks (Nov 19) */
-.tools { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 10px 14px; margin: 28px auto 0; }
+.tools { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 0; margin: 28px auto 0; }
 .tools-row { grid-column: 1 / -1; }
 .tile-about:not(.is-open) { transition: transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .25s cubic-bezier(0, 0, .2, 1), background-color .15s cubic-bezier(0, 0, .2, 1); }
 .tile-about:not(.is-open):hover { transform: scale(1.006); }   /* a very subtle pop (Nov 19) */
 /* Collapsed, the About card is as wide as two project cards; open, it spans the full width (Nov 19) */
 @media (min-width: 961px) { .grid > .tile-about:not(.is-open) { grid-column: 1 / -1; justify-self: center; width: calc(200% / 3); } }   /* centred (Nov 19) */   /* its own row, right under the About card (Nov 19) */
-.tools-label { color: var(--muted); font-family: var(--font-body); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; }
+.tools-label { color: var(--muted); font-family: var(--font-body); font-size: 11px; letter-spacing: .06em; text-transform: uppercase;
+  height: 40px; display: inline-flex; align-items: center; padding: 0 14px; border: 1px solid #1E202C; background: #000000; margin-right: -1px; }   /* boxed like the logo tiles and joined to them (Nov 19) */
 .tools-list { display: flex; flex-wrap: wrap; justify-content: center; gap: 0; list-style: none; margin: 0; padding: 0 1px 0 0; }   /* tiles touch and share one outline (Nov 19) */
 .tools-list li { width: 40px; height: 40px; margin-right: -1px; display: grid; place-items: center; background: var(--bg, #000000); border: 1px solid #1E202C; border-radius: 0; color: var(--fg, #ffffff); }   /* brand-colour squares; the outline keeps the near-black ones visible (Nov 19) */
 .tools-list svg { width: 20px; height: 20px; display: block; }   /* 40×40 tiles (Nov 19) */
+/* Tooltip with the product name above each tile, on hover and keyboard focus (Nov 19) */
+.tools-list li { position: relative; }
+.tools-list li::after {
+  content: attr(data-tip); position: absolute; left: 50%; bottom: calc(100% + 8px); z-index: 5;
+  transform: translate(-50%, 4px); opacity: 0; pointer-events: none; white-space: nowrap;
+  padding: 6px 9px; background: #000000; border: 1px solid #1E202C; color: #ffffff;
+  font-family: var(--font-body); font-size: 12px; font-weight: 500; line-height: 1; letter-spacing: 0;
+  transition: opacity .15s cubic-bezier(0, 0, .2, 1), transform .15s cubic-bezier(0, 0, .2, 1);
+}
+.tools-list li:hover::after, .tools-list li:focus-visible::after { opacity: 1; transform: translate(-50%, 0); }
+.tools-list li:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; z-index: 6; }
+@media (prefers-reduced-motion: reduce) { .tools-list li::after { transition: none; } }
 .intro-badge { display: flex; align-items: center; gap: 6px; text-decoration: none; width: fit-content; max-width: 100%; margin: 20px auto 0;
   font-family: var(--font-body); font-size: 11px; font-weight: 500; line-height: 1.4; letter-spacing: .06em; text-transform: uppercase; text-align: center;
   color: #fdf58e; background: #32301e; border: 1px solid transparent; border-radius: 0; padding: 6px calc(11px - .06em) 4px 11px; }
@@ -360,7 +374,8 @@ h2 { font-size: clamp(34px, 3.8vw, 44px); line-height: 1.08; letter-spacing: -0.
   width: 100%; display: grid; align-items: center;
   grid-template-columns: minmax(0, 1fr); grid-template-areas: "title" "excerpt" "more";
   padding: clamp(20px, 2.4vw, 28px) clamp(20px, 3vw, 36px);
-  padding-right: clamp(200px, 21vw, 246px);   /* keeps the text clear of the thumbnail (which grew with the Read more row) */
+  --peek-pad: clamp(20px, 3vw, 36px);
+  padding-right: calc(var(--avatar-w, 220px) + var(--peek-pad));   /* the gap between text and photo equals the left padding (Nov 19); --avatar-w is measured by script */
   background: none; border: 0; color: inherit; font: inherit; text-align: left; cursor: pointer;
   border-radius: inherit;
 }
@@ -373,7 +388,7 @@ h2 { font-size: clamp(34px, 3.8vw, 44px); line-height: 1.08; letter-spacing: -0.
 /* The thumbnail fills the card's height, inset 10px from the top, right and bottom edges.
    The corner is concentric with the card's (16px outer radius, 10px inset). */
 .about-avatar {
-  position: absolute; top: 10px; right: 10px; height: calc(100% - 20px); width: auto; aspect-ratio: 1;
+  position: absolute; top: 0; right: 0; height: 100%; width: auto; aspect-ratio: 1;   /* flush with the card, no padding (Nov 19) */
   border-radius: 0; object-fit: cover; display: block;   /* square, like the card (Nov 19) */
 }
 .about-avatar-mark { display: grid; place-items: center; background: rgba(255, 255, 255, .10); }
@@ -381,7 +396,7 @@ h2 { font-size: clamp(34px, 3.8vw, 44px); line-height: 1.08; letter-spacing: -0.
 .about-chevron { display: none; }   /* hidden for now */
 /* The first two lines of the bio, faded out at the bottom so it reads as a preview */
 .about-excerpt {
-  display: block; margin-top: 10px; max-width: 62ch;
+  display: block; margin-top: 10px; max-width: none;   /* runs up to the gap before the photo (Nov 19) */
   color: var(--muted); font-size: 15px; line-height: 1.55; max-height: 3.1em; overflow: hidden;
   mask-image: linear-gradient(to bottom, #000 0 1.2em, rgba(0, 0, 0, .18) 2.9em);
   -webkit-mask-image: linear-gradient(to bottom, #000 0 1.2em, rgba(0, 0, 0, .18) 2.9em);
@@ -481,7 +496,7 @@ h2 { font-size: clamp(34px, 3.8vw, 44px); line-height: 1.08; letter-spacing: -0.
 .tile-about .about-list { display: flex; flex-wrap: wrap; gap: 4px; }   /* 4px between items and rows (Nov 19) */
 @media (max-width: 600px) { .tile-about .tile-text > :not(.about-ctas):not(.about-meta) { max-width: none; } }
 /* Two buttons on the card bottom: Contact Me (solid) then My Process (outlined) */
-.about-ctas { display: flex; flex-wrap: wrap; gap: 10px; margin-top: auto; align-self: flex-start; }
+.about-ctas { display: flex; flex-wrap: wrap; gap: 0; margin-top: auto; align-self: flex-start; }   /* the two buttons touch (Nov 19) */
 .about-cta { display: inline-flex; align-items: center; gap: 8px; }
 @media (max-width: 420px) { .about-ctas .pill { padding-inline: 16px; } }   /* keeps both buttons on one row on small phones */
 .about-cta .arrow-down { width: 15px; height: 15px; flex: none; }
@@ -490,8 +505,8 @@ h2 { font-size: clamp(34px, 3.8vw, 44px); line-height: 1.08; letter-spacing: -0.
    taller and the thumbnail wider again. So it becomes a fixed square tucked into the top-right corner, still 10px
    from both edges, and the preview runs the full width under the title. */
 @media (max-width: 799px) {
-  .about-peek { padding-right: 20px; }
-  .about-title { padding-right: 84px; }
+  .about-peek { padding-right: var(--peek-pad); }
+  .about-title { padding-right: calc(76px + var(--peek-pad)); }   /* same gap as the left padding */
   .about-avatar { height: 76px; width: 76px; }
   .about-excerpt { margin-top: 14px; }
 }
@@ -794,17 +809,17 @@ body.is-editing .lb-keys { display: none; }
 @media (prefers-reduced-motion: reduce) { .glow i { animation: none; } }
 .to { overflow-wrap: anywhere; }
 /* The contact card holds the address and nothing else: one centered line inside the same glass frame */
-.mail.is-address { padding: 24px; text-align: center; border-radius: 0; background: none; -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: none; }   /* square, no fill, 24px all round (Nov 19) */
+.mail.is-address { padding: 24px 32px; border-color: #1E202C; text-align: center; border-radius: 0; background: none; -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: none; }   /* square, no fill, 24px top/bottom, 32px sides, card outline colour (Nov 19) */
 .address-row { display: flex; align-items: center; justify-content: center; gap: 8px; }
 .address-row .to { white-space: nowrap; font-size: clamp(17px, 2.2vw, 21px); letter-spacing: -0.01em; color: inherit; text-decoration: none; border-bottom: 1px solid transparent; transition: border-color .2s; }
 .address-row .to:hover, .address-row .to:focus-visible { border-bottom-color: transparent; }   /* no underline (Nov 19) */
 @media (max-width: 520px) {
-  .mail.is-address { padding: 24px; }
+  .mail.is-address { padding: 24px 32px; }
   .address-row { gap: 4px; }
   .address-row .to { font-size: min(17px, 4.6vw); }   /* scales down with the screen so the address always stays on one line */
 }
 @media (max-width: 370px) {   /* the address stays on one line on the narrowest phones */
-  .mail.is-address { padding: 24px; }
+  .mail.is-address { padding: 24px 32px; }
   .address-row { gap: 0; }
 }
 .icon-btn {
@@ -1766,7 +1781,7 @@ function renderCards() {
       </div>
     </article>`;
   const intro = `<div class="grid-intro" id="projects"><h2>${SITE.projectsIntro.map(t => `<span>${esc(t)}</span>`).join(" ")}</h2>${SITE.projectsDesc ? `<p class="grid-intro-desc">${esc(SITE.projectsDesc)}</p>` : ""}<a class="intro-badge" href="mailto:${esc(SITE.email)}" title="${esc(SITE.email)}"><svg class="intro-badge-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.5 4h15A2.5 2.5 0 0 1 22 6.5v.3l-9.4 6.1a1.1 1.1 0 0 1-1.2 0L2 6.8v-.3A2.5 2.5 0 0 1 4.5 4z"/><path d="M2 9.2l8.3 5.4a3.1 3.1 0 0 0 3.4 0L22 9.2v8.3a2.5 2.5 0 0 1-2.5 2.5h-15A2.5 2.5 0 0 1 2 17.5z"/></svg><span>${esc(SITE.projectsBadge)}</span></a></div>`;
-  const tools = `<div class="tools tools-row"><span class="tools-label">Tools:</span><ul class="tools-list">${TOOLS.map(t => `<li title="${esc(t.name)}" style="--bg: ${t.bg}; --fg: ${t.fg}"><svg viewBox="0 0 24 24" fill="currentColor" role="img" aria-label="${esc(t.name)}">${t.svg}</svg></li>`).join("")}</ul></div>`;
+  const tools = `<div class="tools tools-row"><span class="tools-label">Tools:</span><ul class="tools-list">${TOOLS.map(t => `<li data-tip="${esc(t.name)}" tabindex="0" style="--bg: ${t.bg}; --fg: ${t.fg}"><svg viewBox="0 0 24 24" fill="currentColor" role="img" aria-label="${esc(t.name)}">${t.svg}</svg></li>`).join("")}</ul></div>`;
   document.getElementById("grid").innerHTML = aboutCard + tools + intro + PROJECTS.map((p, i) => `
     <article class="tile">
       ${p.thumb ? `<div class="tile-visual tile-thumb-wrap">${thumbImg(p)}</div>` : `<div class="tile-visual cover center">${stage(p.mock)}</div>`}
@@ -2074,6 +2089,18 @@ function setAbout(open, animate = true) {
   const done = () => { if (card._aboutAnim === a) { card.style.overflow = ""; card._aboutAnim = null; } };
   a.addEventListener("finish", done); a.addEventListener("cancel", done);
 }
+/* Collapsed About card: the photo is as wide as the card is tall, and the text keeps a gap to it equal to the
+   left padding. The width is measured and fed back to the padding (a few passes settle it). */
+function fitAboutPeek() {
+  const btn = document.querySelector("#about .about-peek"), av = btn && btn.querySelector(".about-avatar");
+  if (!btn || !av || btn.hidden) return;
+  for (let k = 0; k < 4; k++) {
+    const w = av.getBoundingClientRect().width;
+    const cur = parseFloat(btn.style.getPropertyValue("--avatar-w")) || 0;
+    if (Math.abs(w - cur) < 0.5) break;
+    btn.style.setProperty("--avatar-w", w + "px");
+  }
+}
 function setupAbout() {
   const btn = document.querySelector("#about .about-peek");
   if (!btn || btn.dataset.wired) return;
@@ -2086,6 +2113,11 @@ function setupAbout() {
     setAbout(open);
     if (!open) document.getElementById("about").scrollIntoView({ block: "nearest", behavior: "smooth" });
   });
+  fitAboutPeek();
+  if (window.ResizeObserver) new ResizeObserver(() => requestAnimationFrame(fitAboutPeek)).observe(btn);
+  const av = btn.querySelector(".about-avatar");
+  if (av && av.tagName === "IMG" && !av.complete) av.addEventListener("load", fitAboutPeek, { once: true });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitAboutPeek);
 }
 /* A link to #about (the nav, or a shared link) opens the card rather than scrolling to a closed one */
 function openAboutForHash() {
