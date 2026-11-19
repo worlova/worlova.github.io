@@ -504,7 +504,7 @@ h2 { font-size: clamp(34px, 3.8vw, 44px); line-height: 1.08; letter-spacing: -0.
    halves (3 + 3) below that, one column where even halves are too narrow for Core strengths */
 @container about-text (max-width: 799px) { .tile-about .about-meta > div { grid-column: span 3; } }
 @container about-text (max-width: 399px) { .tile-about .about-meta { grid-template-columns: 1fr; } .tile-about .about-meta > div { grid-column: auto; } }
-.tile-about .tile-text > :not(.about-ctas):not(.about-meta) { max-width: 75%; }
+.tile-about .tile-text > :not(.about-ctas):not(.about-meta):not(p) { max-width: 75%; }   /* the bio paragraph runs the full width of the text column (Nov 20) */
 /* Inline details (Nov 18): the two groups stack, each running across the full copy width;
    the pills and the strengths flow in a line and wrap, the strengths keeping their diamond markers. */
 .tile-about .about-meta, .tile-about .about-meta > div { grid-template-columns: 1fr; }
