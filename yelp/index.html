@@ -290,20 +290,20 @@ h2 { font-size: clamp(34px, 3.8vw, 44px); line-height: 1.08; letter-spacing: -0.
 /* Quote band between the 2nd and 3rd rows of project cards (Nov 19): full width, not a card, so not clickable and no hover.
    The quote is set in the Cormorant italic at the H3 size; big semi-transparent quotation marks sit behind it. */
 .quote-band { grid-column: 1 / -1; position: relative; overflow: hidden; isolation: isolate; margin: 0 -1px -1px 0;
-  --q-size: max(22px, calc(clamp(39px, 6.2vw, 73px) - 22pt));   /* the H3 size less 10pt (Nov 19): 43.7px on desktop, 22px floor on phones */
+  --q-col: calc(30 * max(22px, calc(clamp(39px, 6.2vw, 73px) - 22pt)));   /* the quote column keeps the width it had in the Garamond version (1310px on a 16" MacBook) */
   border: 1px solid #1E202C; background: #000000; padding: clamp(24px, calc(5vw - 30px), 50px) clamp(24px, 7vw, 140px);   /* less empty space above and below (Nov 19): then −10px, then −20px more */
   display: grid; justify-items: center; transition: opacity .25s cubic-bezier(0, 0, .2, 1); }
 .quote-band::before, .quote-band::after { position: absolute; z-index: -1; pointer-events: none;
   font-family: var(--font-display); font-style: italic; font-weight: 500; line-height: 1; color: rgba(255, 255, 255, .07);
-  font-size: clamp(180px, 24vw, 420px); }   /* a little smaller with the tighter band (Nov 19) */
+  font-size: clamp(160px, 17vw, 300px); }   /* scaled to the shorter band of the Inter quote (Nov 19) */
 .quote-band::before { content: "\201C" / ""; top: -.12em; left: .02em; }
 .quote-band::after { content: "\201D" / ""; bottom: -.5em; right: .01em; }   /* bottom-right corner, clear of the attribution */
-.quote-band blockquote { max-width: 30em; font-family: var(--font-display); font-style: italic; font-weight: 500;
-  font-size: var(--q-size); line-height: 1.16; letter-spacing: -0.005em; color: rgba(255, 255, 255, .6);   /* 60% white, with the key phrases in full white (Nov 19) */
+.quote-band blockquote { max-width: var(--q-col); font-family: var(--font-body); font-style: normal; font-weight: 400;   /* the site's H3 style in Inter (Nov 19), like the About title */
+  font-size: clamp(22px, 2.4vw, 28px); line-height: 1.25; letter-spacing: -0.02em; color: rgba(255, 255, 255, .6);   /* 60% white, with the key phrases in full white (Nov 19) */
   text-wrap: pretty; font-variant-numeric: lining-nums; }
 .quote-band blockquote p { margin: 0; }
 .quote-band .q-hi { color: #ffffff; }
-.quote-band figcaption { width: 100%; max-width: calc(30 * var(--q-size));   /* quote column 30% wider: 23em → 30em (Nov 19) */
+.quote-band figcaption { width: 100%; max-width: var(--q-col);   /* quote column 30% wider: 23em → 30em (Nov 19) */
   margin-top: clamp(24px, 3vw, 40px); color: var(--body); font-size: 17px; line-height: 1.55; text-align: right; }   /* right-aligned to the quote's column, led by a spaced en dash (Nov 19) */
 #grid:has(> .tile:not(.is-open):hover) > .quote-band { opacity: .7; }   /* dims with the other cards while a card is hovered */
 /* Phones (Nov 19): the quote starts collapsed to 3 lines, fading out like the About preview, with "Read more ↓";
@@ -311,7 +311,7 @@ h2 { font-size: clamp(34px, 3.8vw, 44px); line-height: 1.08; letter-spacing: -0.
 .quote-more { display: none; }
 @media (max-width: 600px) {
   .quote-band.is-collapsed { cursor: pointer; }
-  .quote-band.is-collapsed blockquote { max-height: calc(3 * 1.16em); overflow: hidden;
+  .quote-band.is-collapsed blockquote { max-height: calc(3 * 1.25em); overflow: hidden;
     mask-image: linear-gradient(to bottom, #000 0 calc(100% - 1.4em), rgba(0, 0, 0, .18) 100%);
     -webkit-mask-image: linear-gradient(to bottom, #000 0 calc(100% - 1.4em), rgba(0, 0, 0, .18) 100%); }
   .quote-band.is-collapsed .quote-more { display: inline-flex; justify-self: start; align-items: center; gap: 6px; margin-top: 16px; padding: 0;
