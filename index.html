@@ -693,7 +693,7 @@ body:has(#grid:empty) :is(#process, #contact), body:has(#grid:empty) > .site-foo
 
 .video-bar { display: flex; align-items: center; gap: 10px; margin-top: 14px; }   /* controls sit in a row under the video, not on top of it */
 .video-toggle { flex: none; width: 44px; height: 44px; padding: 0; display: grid; place-items: center; border-radius: 50%; border: 1px solid #2e2e2e; background: var(--surface); color: #fff; cursor: pointer; transition: background .2s, transform .2s; }
-.video-track { flex: 1; min-width: 0; height: 44px; padding: 0 16px; display: flex; align-items: center; gap: 12px; border-radius: 0; border: 1px solid #2e2e2e; background: var(--surface); color: #fff; }
+.video-track { flex: 1; min-width: 0; height: 44px; padding: 0 16px; display: flex; align-items: center; gap: 12px; border-radius: 999px; border: 1px solid #2e2e2e; background: var(--surface); color: #fff; }   /* pill (Nov 20) */
 .video-time { flex: none; font-size: 12px; line-height: 1; font-variant-numeric: tabular-nums; letter-spacing: .02em; color: rgba(255,255,255,.85); }
 .video-seek, .video-level { -webkit-appearance: none; appearance: none; flex: 1; min-width: 0; height: 20px; margin: 0; background: transparent; cursor: pointer; --p: 0%; }
 /* Sound, on the one video that has any: a mute button beside the play button and a short level slider */
@@ -703,12 +703,12 @@ body:has(#grid:empty) :is(#process, #contact), body:has(#grid:empty) > .site-foo
 .video-mute.is-on .i-sound { display: block; }
 .video-mute.is-on .i-mute { display: none; }
 .video-seek:disabled, .video-level:disabled { cursor: default; opacity: .6; }
-.video-seek::-webkit-slider-runnable-track, .video-level::-webkit-slider-runnable-track { height: 4px; border-radius: 0; background: linear-gradient(to right, #fff var(--p), rgba(255,255,255,.28) var(--p)); }
-.video-seek::-moz-range-track, .video-level::-moz-range-track { height: 4px; border-radius: 0; background: rgba(255,255,255,.28); }
-.video-seek::-moz-range-progress, .video-level::-moz-range-progress { height: 4px; border-radius: 0; background: #fff; }
+.video-seek::-webkit-slider-runnable-track, .video-level::-webkit-slider-runnable-track { height: 4px; border-radius: 2px; background: linear-gradient(to right, #fff var(--p), rgba(255,255,255,.28) var(--p)); }
+.video-seek::-moz-range-track, .video-level::-moz-range-track { height: 4px; border-radius: 2px; background: rgba(255,255,255,.28); }
+.video-seek::-moz-range-progress, .video-level::-moz-range-progress { height: 4px; border-radius: 2px; background: #fff; }
 .video-seek::-webkit-slider-thumb, .video-level::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; margin-top: -5px; border-radius: 50%; border: 0; background: #fff; box-shadow: 0 0 0 1px rgba(0,0,0,.25); }
 .video-seek::-moz-range-thumb, .video-level::-moz-range-thumb { width: 14px; height: 14px; border-radius: 50%; border: 0; background: #fff; box-shadow: 0 0 0 1px rgba(0,0,0,.25); }
-.video-seek:focus-visible, .video-level:focus-visible { outline: 2px solid #fff; outline-offset: 4px; border-radius: 0; }
+.video-seek:focus-visible, .video-level:focus-visible { outline: 2px solid #fff; outline-offset: 4px; border-radius: 999px; }
 .video-toggle:hover { background: #262626; transform: scale(1.06); }
 .video-toggle:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
 .video-toggle svg { width: 18px; height: 18px; fill: currentColor; }
@@ -808,17 +808,17 @@ body:has(#grid:empty) :is(#process, #contact), body:has(#grid:empty) > .site-foo
 /* Keyboard shortcuts, pinned to the bottom of the lightbox panel (the panel doesn't scroll; its body does) */
 .lb-keys {
   position: absolute; left: 50%; bottom: 20px; transform: translateX(-50%); z-index: 3;
-  display: flex; align-items: center; gap: 2px; padding: 5px; border-radius: 0;
+  display: flex; align-items: center; gap: 2px; padding: 5px; border-radius: 999px;   /* pill, with pill buttons and keys inside (Nov 20) */
   background: rgba(22, 22, 22, .78); -webkit-backdrop-filter: blur(16px) saturate(140%); backdrop-filter: blur(16px) saturate(140%);
   box-shadow: 0 0 0 1px rgba(255,255,255,.12), 0 12px 40px rgba(0,0,0,.55);
 }
 .lb-keys button {
-  display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 12px 0 6px; border: 0; border-radius: 0;
+  display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 12px 0 6px; border: 0; border-radius: 999px;
   background: transparent; color: var(--muted); font: 500 13px/1 var(--font-body); cursor: pointer; transition: background-color .15s, color .15s;
 }
 .lb-keys button:hover { background: rgba(255,255,255,.08); color: var(--text); }
 .lb-keys kbd {
-  display: inline-grid; place-items: center; min-width: 24px; height: 22px; padding: 0 6px; border-radius: 0;
+  display: inline-grid; place-items: center; min-width: 24px; height: 22px; padding: 0 6px; border-radius: 999px;
   font: 500 12px/1 var(--font-body); color: var(--text); background: rgba(255,255,255,.08); box-shadow: inset 0 0 0 1px rgba(255,255,255,.16);
 }
 .lb-keys button.is-pressed kbd { background: rgba(255,255,255,.22); }
