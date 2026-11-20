@@ -1036,6 +1036,7 @@ body.is-editing .lb-keys { display: none; }
     .then(function (r) { if (r.some(function (a) { return !a.length || a.some(function (x) { return x.status === "error"; }); })) google(); }, google);
 })();
 </script>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="3dbe37b6-2c9b-42f6-b9ba-c1f22116fab1" data-domains="www.worlova.com,worlova.com"></script>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><symbol id="logo-mark" viewBox="0 0 1887 1781"><path fill="currentColor" d="M639.273 0C644.881 2.47379e-05 647.685 5.66929 647.685 17.0078C647.685 28.3465 644.881 34.0166 639.273 34.0166C564.505 34.0166 513.101 51.0247 485.062 85.041C457.024 117.168 459.829 170.082 493.475 243.784L1048.22 1463.98L1377.61 615.046C1397.49 644.938 1411.1 675.313 1419.2 696.195L1003.77 1768.85C1001.9 1776.41 991.622 1780.19 972.93 1780.19C956.107 1780.19 945.825 1776.41 942.087 1768.85L898.56 1674C898.496 1674 898.432 1674 898.368 1674C789.29 1674 690.06 1655.07 600.677 1617.21C512.808 1577.84 437.059 1524.07 373.431 1455.93C311.317 1387.78 262.838 1309.79 227.994 1221.95C194.665 1132.6 178 1037.95 178 938C178 815.333 201.482 707.81 248.446 615.432C259.325 594.701 270.967 574.772 283.372 555.644L341.628 677.613C329.501 733.815 323.438 794.866 323.438 860.766C323.438 966.774 338.586 1066.72 368.886 1160.62C400.7 1253 445.392 1334.77 502.961 1405.95C562.045 1475.61 631.734 1530.13 712.027 1569.51C762.422 1594.22 816.397 1611.17 873.952 1620.38L238.325 235.279C206.548 165.357 172.903 114.332 137.388 82.2061C103.742 50.0795 60.7493 34.0166 8.41113 34.0166C2.80371 34.0164 0 28.3463 0 17.0078C4.91863e-05 5.66951 2.80376 0.000242269 8.41113 0C32.7109 0 55.1418 0.945205 75.7031 2.83496C96.2645 4.72473 118.695 6.61414 142.995 8.50391H414.967C465.436 6.61413 508.428 4.72473 543.943 2.83496C579.458 0.945195 611.235 0 639.273 0ZM977.904 202C1090.01 202 1190 222.444 1277.87 263.333C1367.25 302.707 1443 356.469 1505.11 424.617C1567.23 492.765 1614.19 570 1646.01 656.321C1679.34 742.642 1696 831.235 1696 922.099C1696 1028.11 1674.79 1126.54 1632.37 1217.41C1589.95 1308.27 1531.63 1387.78 1457.39 1455.93C1384.67 1524.07 1299.84 1577.84 1202.88 1617.21C1177.38 1627.32 1151.45 1636.08 1125.09 1643.5L1138.7 1608.63C1184.29 1596.54 1227.65 1578.96 1268.78 1555.88C1355.13 1505.9 1423.31 1433.21 1473.3 1337.8C1524.81 1240.88 1550.56 1123.51 1550.56 985.704C1550.56 841.836 1522.54 715.383 1466.48 606.346C1411.94 495.794 1334.68 409.473 1234.69 347.383C1134.7 283.778 1017.29 251.976 882.461 251.976C780.71 251.976 691.909 270.253 616.06 306.807L606.065 283.448C635.982 269.64 666.757 257.633 698.393 247.432C792.321 217.144 885.491 202 977.904 202ZM1878.57 0C1884.17 0 1886.98 5.66926 1886.98 17.0078C1886.98 28.3466 1884.17 34.0166 1878.57 34.0166C1815.01 34.0166 1757.07 54.8044 1704.73 96.3799C1654.26 136.066 1611.27 201.263 1575.75 291.974L1548.97 361.133L1499.32 301.35L1508.46 277.8C1538.37 200.318 1538.37 140.789 1508.46 99.2139C1480.42 55.7487 1416.87 34.0166 1317.8 34.0166C1312.19 34.0166 1309.39 28.3466 1309.39 17.0078C1309.39 5.66926 1312.19 0 1317.8 0C1366.4 6.59478e-06 1412.2 1.88941 1455.19 5.66895C1500.05 7.55871 1558 8.5039 1629.03 8.50391C1683.23 8.50391 1726.23 7.55872 1758 5.66895C1791.65 1.88942 1831.84 4.31431e-06 1878.57 0Z"/></symbol></svg>
@@ -2374,6 +2375,30 @@ window.addEventListener("resize", () => {
   if (h === "cv" || PROJECTS.some(p => p.slug === h)) route();
 });
 window.addEventListener("hashchange", () => { route(); openAboutForHash(); });
+/* Visitor analytics (Nov 20). Umami is added to the live site only (build-site.py, limited to www.worlova.com);
+   everywhere else window.umami is missing and these calls do nothing. No personal data is sent. */
+function track(...args) { try { if (window.umami && typeof window.umami.track === "function") window.umami.track(...args); } catch (e) {} }
+/* case studies and the CV opened in place (#slug, #cv) count as visits to their own pages, /slug/ and /cv/ */
+function trackRoute() {
+  const h = decodeURIComponent((location.hash || "").slice(1));
+  if (h !== "cv" && !PROJECTS.some(p => p.slug === h)) return;
+  setTimeout(() => track(props => ({ ...props, url: "/" + h + "/", title: h === "cv" ? "Valentina Orlova - CV" : document.title })), 0);
+}
+window.addEventListener("hashchange", trackRoute);
+window.addEventListener("load", () => { if (location.hash) setTimeout(trackRoute, 300); });
+/* the clicks that matter: contact routes, the CV, the About card */
+document.addEventListener("click", e => {
+  const el = e.target.closest("a, button");
+  if (!el) return;
+  const href = el.getAttribute("href") || "";
+  if (el.id === "copy") track("Email copied");
+  else if (href.startsWith("mailto:")) track("Email link");
+  else if (href.includes("linkedin.com")) track("LinkedIn");
+  else if (href.includes("t.me/")) track("Telegram");
+  else if (/\.pdf(\?|#|$)/i.test(href)) track("CV PDF opened");
+  else if (el.matches(".about-peek")) track("About card opened");
+  else if (el.matches(".about-cta") && href === "#contact") track("Contact Me");
+}, true);
 // The intro animation plays once; without this it replays (and shifts scroll targets) when Home is shown again
 document.querySelectorAll(".rise").forEach(el => el.addEventListener("animationend", () => el.classList.remove("rise"), { once: true }));
 // A link to the page you're already on: no hashchange fires, so handle it here
