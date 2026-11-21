@@ -2386,6 +2386,30 @@ function trackRoute() {
 }
 window.addEventListener("hashchange", trackRoute);
 window.addEventListener("load", () => { if (location.hash) setTimeout(trackRoute, 300); });
+/* attention without clicks (Nov 21). Either event takes a visit out of Umami's bounces: Umami counts a bounce as a
+   visit with one pageview and no custom events. They add no visit duration, because Umami times a visit from its
+   pageviews only. Each fires at most once per page load. */
+(() => {   /* "Scrolled past first row": the bottom of the first row of project cards rises above the middle of the window */
+  let done = false, queued = false;
+  const check = () => {
+    queued = false;
+    if (done || window.scrollY <= 0) return;
+    const tiles = [...document.querySelectorAll("#grid > .tile:not(.tile-about)")];
+    if (!tiles.length) return;
+    const top0 = tiles[0].getBoundingClientRect().top;
+    const bottom = Math.max(...tiles.map(t => t.getBoundingClientRect()).filter(r => Math.abs(r.top - top0) < 4).map(r => r.bottom));
+    if (bottom < innerHeight / 2) { done = true; removeEventListener("scroll", onScroll); track("Scrolled past first row"); }
+  };
+  const onScroll = () => { if (!queued) { queued = true; requestAnimationFrame(check); } };
+  addEventListener("scroll", onScroll, { passive: true });
+})();
+(() => {   /* "Stayed 30 seconds": 30 s with the tab in view, added up across visits to the tab */
+  let seen = 0, since = null, timer = 0, done = false;
+  const start = () => { if (done || since !== null) return; since = performance.now(); timer = setTimeout(() => { done = true; track("Stayed 30 seconds"); }, Math.max(0, 30000 - seen)); };
+  const stop = () => { if (since === null) return; seen += performance.now() - since; since = null; clearTimeout(timer); };
+  document.addEventListener("visibilitychange", () => (document.visibilityState === "visible" ? start() : stop()));
+  if (document.visibilityState === "visible") start();
+})();
 /* the clicks that matter: contact routes, the CV, the About card */
 document.addEventListener("click", e => {
   const el = e.target.closest("a, button");
